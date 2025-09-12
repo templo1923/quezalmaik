@@ -1,0 +1,1147 @@
+<html lang="es"><head>
+
+<meta charset="UTF-8">
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canales de Deportes - Reproductor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d1b2a, #1b263b);
+            color: #e0e0e0;
+            overflow-x: hidden;
+            padding-bottom: 100px; /* Space for bottom nav */
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #1e3a8a, #60a5fa);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title h1 {
+            color: #ffffff;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .soccer-ball {
+            font-size: 38px;
+            color: #ffffff;
+            animation: spin 3s linear infinite, bounce 1.2s ease-in-out infinite, glow 2s ease-in-out infinite;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6));
+            transform-origin: center;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6)); }
+            50% { filter: drop-shadow(0 3px 12px rgba(96, 165, 250, 0.9)); }
+        }
+
+        .back-button {
+            background: #2a2a2a;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+            transition: background 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: #60a5fa;
+            transform: scale(1.1);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 8px 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            width: auto;
+            max-width: calc(100% - 15px);
+            justify-content: center;
+        }
+
+        .bottom-nav a {
+            display: flex;
+            flex-direction: column; /* Ícono arriba, título abajo */
+            align-items: center;
+            justify-content: center;
+            gap: 4px; /* Espacio entre ícono y título */
+            padding: 8px 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .bottom-nav a i {
+            font-size: 20px; /* Íconos más grandes */
+        }
+
+        .bottom-nav a:hover {
+            background: rgba(96, 165, 250, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .bottom-nav {
+                padding: 6px 4px;
+                gap: 6px;
+                border-radius: 10px;
+                max-width: calc(100% - 10px);
+            }
+
+            .bottom-nav a {
+                padding: 6px 35px;
+                font-size: 14px; /* Títulos más pequeños pero visibles */
+                gap: 3px;
+            }
+
+            .bottom-nav a i {
+                font-size: 20px; /* Íconos más grandes en móviles */
+            }
+        }
+
+        /* Content Styling */
+        .content-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .live-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #ef4444, #f87171);
+            padding: 10px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            animation: pulseGlow 2s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 6px 16px rgba(239, 68, 68, 0.7);
+            }
+        }
+
+        .live-text .live-indicator {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .live-text .live-indicator svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .live-text .live-indicator .pulse {
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2;
+            transform-origin: center;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .live-text .live-indicator .dot {
+            fill: #ffffff;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.3; }
+        }
+
+        .embed-responsive {
+            max-width: 100%;
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            background: #1e293b;
+            padding: 10px;
+        }
+
+        .embed-responsive-item {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+        }
+
+        .reload-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            margin: 20px auto;
+        }
+
+        .reload-button:hover {
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .sharethis-inline-share-buttons {
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .header-title h1 {
+                font-size: 22px;
+            }
+
+            .soccer-ball {
+                font-size: 30px;
+            }
+
+            .back-button {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+
+            .bottom-nav {
+                width: calc(100% - 40px);
+                justify-content: space-between;
+                padding: 10px 15px;
+            }
+
+            .bottom-nav a {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .bottom-nav a i {
+                font-size: 18px;
+            }
+
+            .live-text {
+                font-size: 20px;
+                padding: 8px 15px;
+            }
+
+            .reload-button {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+        }
+        
+        .bottom-nav a.active {
+    background: rgba(96, 165, 250, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+    </style>
+    <style type="text/css">
+*{margin:0;padding:0;box-sizing:border-box;list-style:none;}
+a{text-decoration:none;}
+body{background:#000;font-family:Nunito,sans-serif;}
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;}
+
+@media (max-width: 3025px) {
+    .cards {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Seis columnas */
+    }
+}
+
+@media (max-width: 2025px) {
+    .cards {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; /* Seis columnas */
+    }
+}
+
+
+
+@media (max-width: 1024px) {
+    .cards {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr ; /* Seis columnas */
+    }
+}
+
+/* Para pantallas de teléfonos */
+@media (max-width: 600px) {
+    .cards {
+        grid-template-columns: 1fr 1fr 1fr; /* Una columna */
+    }
+}
+
+
+
+
+
+
+
+.card{text-align:center;}
+
+.card img{height:114px;
+width:114px;
+
+border-radius:10%;
+border:3.5px solid #0e2b9d;
+padding: 7px;
+    margin:6px;
+
+}
+
+
+
+.card img:hover{height:120px;
+width:120px;
+border:6px solid #21ff00;
+border-radius:10%;webkit-box-shadow: 0px 10px 10px 10px rgb(0,255,64);
+-moz-box-shadow: 10px 10px 10px 10px rgb(0,255,42);
+box-shadow: 0px 3px 20px 3px rgb(10,255,50);}
+.print:active{height:150px;
+
+width:10px;
+border:5px solid #08ff08;
+border-radius:9px;
+webkit-box-shadow: 0px 10px 0px 0px rgb(0,255,0);
+-moz-box-shadow: 0px 10px 0px 0px rgb(0,255,0);
+box-shadow: 0px 3px 20px 3px rgb(0,255,0);}
+
+
+.card span{padding:0 .3rem;display:none;}
+a{-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;} 
+.form__group{position:relative;padding:15px 0 0;margin:0 auto;margin-top:10px;margin-bottom:1rem;width:90%;}
+.form__field{font-family:inherit;width:100%;border:0;border-bottom:2px solid #9b9b9b;outline:0;font-size:1.3rem;color:#fff;padding:7px 0;background:0 0;transition:border-color .2s;}
+.form__field::placeholder{color:transparent;}
+.form__field:placeholder-shown~.form__label{font-size:1.3rem;cursor:text;top:20px;}
+.form__label{position:absolute;top:0;display:block;transition:.2s;font-size:1rem;color:#fff;font-weight:800;}
+.form__field:focus{padding-bottom:6px;font-weight:700;border-width:3px;border-image:linear-gradient(to right,red,#008cf7,red);border-image-slice:1;}
+.form__field:focus~.form__label{position:absolute;top:0;display:block;transition:.2s;font-size:1rem;color:red;font-weight:700;}
+.form__field:invalid,.form__field:required{box-shadow:none;}
+.listado{display:grid;grid-template-columns:repeat(1,1fr);}
+/*Fix: Unnecessary elements removed*/
+.widget-item-control,.item-control.blog-admin,
+.continue,.loadmore,.thread-chrome.thread-collapsed,
+.singleton-element:not(.cookie-choices-info),
+.noAllowNewComments .comment-reply,
+.comments .hidden {display:none;}
+/*Fix: Show lightbox*/
+.CSS_LIGHTBOX{z-index:90001!important;}
+/*Fix: Image responsive*/
+a[imageanchor]:not([style*=float]){margin-right:0!important;margin-left:0!important;}
+.widget-content img,
+img[data-original-height],
+img[data-original-width] {height: auto;}
+/*Fix: Comment Editor*/
+#comment-editor{border:0;width:100%;min-height:220px;}
+.box{margin:0 auto;margin-bottom:2rem;width:60%;display:flex;align-items:center;}
+#caps{font-size:1.3rem;}
+.progress{background:#212042;width:100%;height:15px;border-radius:10px;}
+.progress-bar{width:0;opacity:0;height:15px;background:linear-gradient(to right,#228ee9,#1b7dbf);border-radius:10px;display:flex;justify-content:center;align-items:center;transition:1s ease;}
+.box span{padding-left:10px;color:#fff;}
+.xaviec{background:#000;position:fixed;top:-5px;width:100%;}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Nunito&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&amp;display=swap" rel="stylesheet">
+
+</head>
+<body ondragstart="return false;">
+
+
+
+
+    <header>
+        <div class="header-content">
+            <div class="header-title">
+                <span class="soccer-ball">⚽</span>
+                <h1>Maik Sport</h1>
+            </div>
+            <a href="/home.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <p class="live-text">
+            <span class="live-indicator">
+                <svg viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="10" class="pulse"></circle>
+                    <circle cx="20" cy="20" r="5" class="dot"></circle>
+                </svg>
+            </span>
+           CANALES EN VIVO
+        </p>
+
+
+
+
+
+
+<div class="form__group field">
+<input autocomplete="off" type="input" onkeyup="myFunction()" class="form__field" placeholder="Buscar" name="name" id="myInput" required="">
+<label for="name" class="form__label">Buscar...</label>
+</div>
+
+</div>
+ <center>
+    <ul class="cards" id="cards">
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly90aW9nb2wuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3Bu" class="card">
+<img alt="imagen" src="https://i.postimg.cc/1tZ3yhMb/20221124-001713.jpg">
+<span>Espn</span></a></li>
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJWTlFUakpmUVhKbiZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/sgjhYSrv/20221124-002123.jpg">
+<span>Espn 2</span></a></li>
+
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJWTlFUak0mc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/7L7JDN1t/20221124-002458.jpg">
+<span>Espn 3</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJWTlFUa2hFJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/bJ2g7L5Z/20230130-004350.jpg">
+<span>Espn 4</span></a></li>
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJtOTRVM0J2Y25Sek0xOVZXUT09JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/PxDWYmNz/20241001-080044.jpg">
+<span>ESpn 6</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJtOTRVM0J2Y25Sek1sOVZXUT09JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/cJwCcTMH/20241001-080314.jpg">
+<span>espn 7</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJtOTRVM0J2Y25SeiZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/2SN62GwG/20221124-000255.jpg">
+<span>Fox Sports</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJtOTRVM0J2Y25Sek1raEUmc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/DzGMd13r/20230412-135636.jpg">
+<span>Fox Sports 2</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJtOTRVM0J2Y25Sek0waEUmc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/5y5hbL25/20230412-140322.jpg">
+<span>Fox Sports 3</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZFNVVYMU53YjNKMGMxOUlSQSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/9FynKNjs/20230130-001736.jpg">
+<span>TNT Sports</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJtOTRYMU53YjNKMGMxOVFjbVZ0YVhWdVgwaEUmc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/sDpjjrWc/20230130-004742.jpg">
+<span>Espn premium</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZIbERVM0J2Y25RJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/RZjXqMtH/20221224-001237.jpg">
+<span>TyC sports</span></a></li>
+
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZIbERYMGx1ZEdWeWJtRmphVzl1WVd3JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/RZjXqMtH/20221224-001237.jpg">
+<span>tyc Sports Internacional</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEyRnVZV3czJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/GhpkjB7D/20241001-082347.jpg">
+<span>Tv publica</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHVndiM0pVVmtoRSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/8cfJFxzH/20230528-000626.jpg">
+<span>Deportv</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZsUldYMGhFJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/hGw2xLbp/20241001-082905.jpg">
+<span>vtv</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZsUldYMUJzZFhOZlNFUSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/RZJdm6zt/20241001-083159.jpg">
+<span>vtv plus</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJYWmxiblJ2Y3pGSVJBJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/ryrkyY79/20221124-003414.jpg">
+<span>Espn extra</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRrSkJYMVJXJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/V6hKR0Jy/20230526-210830.jpg">
+<span>NBA Tv</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PTFRVzFsY21sallUSTAmc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/6pLpPc11/20241001-083733.jpg">
+<span>America 24</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFUTmZRMmx1WlE9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/wMHgCKBk/20240825-161817.jpg">
+<span>A3cine</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFVVklSQT09JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/sXBgnksY/20221122-032236.jpg">
+<span>AyE</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFVMUQmc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/nhqGdVBQ/20221219-183805.jpg">
+<span>Amc</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFXNXBiV0ZzVUd4aGJtVjAmc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/rFYQKF2B/20221219-192256.jpg">
+<span>Animal planet</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFXNTBaVzVoWHpNPSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Vs3VJBsY/20230204-021903.jpg">
+<span>Antena 3</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFYSm5aVzUwYVc1cGMybHRZUSZzdGFydD10cn" class="card">
+<img alt="imagen" src="https://i.postimg.cc/4dsG9Hv7/20241001-084811.jpg">
+<span>Argentinisima</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFWaE9TRVE9JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/sDnHRgNQ/20221219-180240.jpg">
+<span>Axn</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFuSmhkbTlVVmc9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/8kv3SzLx/20241001-085200.jpg">
+<span>Bravo tv</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVF6Vk8mc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/RVJgxJ1y/20230130-000317.jpg">
+<span>C5n</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVF6bE9YME0wJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/7Ls6wVrP/20241001-085459.jpg">
+<span>C9n</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEyRnVZV3d4TUY5VlVsVT0mc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/prttHhrX/20241001-085656.jpg">
+<span>Canal 10 Uruguay</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEyRnVZV3hmTVRKZlEwSkImc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/7LW2mD6N/20241001-085853.jpg">
+<span>Canal 12 Cba</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PU1qWmZWRlpmU0VRJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/rFkQSG7w/20241001-090130.jpg">
+<span>26 tv</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEyRnVZV3cwWDFWU1ZRPT09JnN0YXJ0PXRydW" class="card">
+<img alt="imagen" src="https://i.postimg.cc/7YSPR4BN/20241001-090411.jpg">
+<span>Canal 4 Uruguay</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEyRnlkRzl2Yms1bGRIZHZjbXM9JnN0YXJ0PX" class="card">
+<img alt="imagen" src="https://i.postimg.cc/j5s44dzF/20221122-015720.jpg">
+<span>Cartoon Network</span></a></li>
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFtOXZiV1Z5WVc1biZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/G3MBm0Qr/20221122-022517.jpg">
+<span>Cartoonito</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNVNURRVUZmVkhZPSZzdGFydD10" class="card">
+<img alt="imagen" src="https://i.postimg.cc/7Zm9xcHT/20241001-090955.jpg">
+<span>Incaa tv cine ar</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEybHVaV05oYm1Gc1NFUT0mc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/26V9yRLj/20221219-181621.jpg">
+<span>Cinecanal</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEybHVaVzFoZUE9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/xjHdkY7V/20221122-004732.jpg">
+<span>Cinemax</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRXRm5ZWHBwYm1VPSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/zGqXDjZQ/20230204-004351.jpg">
+<span>Ciudad Magazine</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEwMD0mc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/pdCwMk70/20241001-091702.jpg">
+<span>Cm</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEyOXRaV1I1UTJWdWRISmhiQSZzdGFydD10cn" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Dz5tw7th/20221122-012204.jpg">
+<span>Comedy Central</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEzSnZibWxqWVZSVyZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/hvW69w7t/20241001-092037.jpg">
+<span>Cronica tv</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHpZMjkyWlhKNVNFUT0mc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/x8LZcM4h/20221122-024436.jpg">
+<span>Discovery Channel</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHpZMjkyWlhKNVNHOXRaVWhsWVd4MGFFaEUmc3RhcnQ9dHJ1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/sx3wCQJy/20221122-034231.jpg">
+<span>Discovery Hyh</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNVUT0mc3RhcnQ9dHJ1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Rhw4qbN8/20221219-191318.jpg">
+<span>Discovery ID</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHpZMjkyWlhKNVgwdHBaSE09JnN0YXJ0PXRydQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/2Smv1Tvg/20221123-031108.jpg">
+<span>Discovery Kids</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHpZMjkyWlhKNVgxTmphV1Z1WTJVPSZzdGFydD10cnU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/v86zGNhc/20221127-000847.jpg">
+<span>Discovery Science</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZHaGxZWFJsY2w5SVJBPT0mc3RhcnQ9dHJ1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Y95M4zFF/20230204-014558.jpg">
+<span>Discovery theaher</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZFeEQmc3RhcnQ9dHJ1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/hj2LMj7v/20221122-024952.jpg">
+<span>Discovery TLC </span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHpZMjkyWlhKNVZIVnlZbTg9JnN0YXJ0PXRydQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/zfv7M6T0/20221122-025512.jpg">
+<span>Discovery Turbo</span></a></li>
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHpZMjkyWlhKNVgxZHZjbXhrWDBoRSZzdG" class="card">
+<img alt="imagen" src="https://i.postimg.cc/v8Sb6Mry/20230204-015004.jpg">
+<span>Discovery World</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHpibVY1UTJoaGJtNWxiRWhFJnN0YXJ0PXRydQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/cC3MBDDF/20221122-020625.jpg">
+<span>Disney Channel</span></a></li>
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHpibVY1U25JPSZzdGFydD10cnU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Z5FD6qg1/20221122-020203.jpg">
+<span>Disney Junior</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJISmxZVzEzYjNKcmN3PT0mc3RhcnQ9dHJ1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/KY3c51Yc/20241001-093846.jpg">
+<span>Dreamworks</span></a></li>
+
+
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJHbHdkWFJoWkc5elgxUlcmc3RhcnQ9dHJ1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/bv5TKB8H/20241001-094111.jpg">
+<span>Diputados tv</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVFYSjBaV0Z5U0VRJnN0YXJ0PXRydQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/cCG1XndY/20230130-000750.jpg">
+<span>El trece</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJWOUZiblJsY25SaGFXNXRaVzUwWDFSbGJHVjJhWE5wYjI0PSZzdGFydD10cnU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/vHSCQ3QT/20241001-094612.jpg">
+<span>E Entertainment </span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJYVnliMk5vWVc1dVpXdz0mc3RhcnQ9dHJ1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/50Tphk5W/20241001-094839.jpg">
+<span>Eurochannel </span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJYVnliMjVsZDNNPSZzdGFydD10cnU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/x1NjYkSr/20241001-095056.jpg">
+<span>Euronews </span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJtbHNiVjlCY25SeiZzdGFydD10cnU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/mDH6gsgg/20241001-095506.jpg">
+<span>Film y arts </span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJteHZkMTlOZFhOcFkxOVlVQT09JnN0YXJ0PXRydQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Rhn9m8j7/20241001-095804.jpg">
+<span>flow music</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJteHZkMTlOZFhOcFkxOHgmc3RhcnQ9dHJ1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/wjFMwtVv/20221231-152128.jpg">
+<span>Universal Premiere</span></a></li>
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJtOXZaRjlPWlhSM2IzSnImc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/rz2zYJy6/20230414-015518.jpg">
+<span>Food Network</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJsaElSQT09JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Twt98F8t/20221122-010903.jpg">
+<span>FX</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJXeGZSMkZ5WVdkbCZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/MT5tTp8x/20241001-100427.jpg">
+<span>El garage</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVIwVk9YMVJXJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/CxM8hsxZ/20241001-100802.jpg">
+<span>Gen tv</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVIyOTFjbTFsZEE9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/W3KDxF6f/20221122-013757.jpg">
+<span>Gourmet</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNFSlBTRVE9JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/zfTLqZdf/20221120-233950.jpg">
+<span>HBO</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNFSlBYekk9JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/hvg0b1YS/20221120-234705.jpg">
+<span>Hbo 2</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNFSlBYMFpoYldsc2VRPT0mc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/KjYsMg8p/20221121-001228.jpg">
+<span>Hbo family</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNFSlBYMDExYm1ScCZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/J4JGKsGF/20240825-144450.jpg">
+<span>Hbo mundi</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNFSlBYMUJzZFhNPSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/52QGN1ZL/20221120-235517.jpg">
+<span>HBO plus</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNFSlBYMUJQVUE9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/CxbhJJDq/20221121-004154.jpg">
+<span>Hbo pop</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNFSlBYMU5wWjI1aGRIVnlaUT09JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/ZKy7GNCZ/20221121-002847.jpg">
+<span>Hbo Signature</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNFSlBYMFY0ZEhKbGJXVT0mc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/s2WZ7FjS/20240825-142956.jpg">
+<span>Hbo Xtreme</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNHbHpkRzl5ZVVoRSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/8CkLKz7q/20221122-031357.jpg">
+<span>History Channel</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNHbHpkRzl5ZVY4eSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/PfcsdLhQ/20221122-031718.jpg">
+<span>History Channel 2</span></a></li>
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNHOXNZVjlVVmc9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/nrytdkS3/20241001-102023.jpg">
+<span>Hola tv</span></a></li>
+
+
+
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVEyRnVZV3hmWkdWZmJHRnpYMlZ6ZEhKbGJHeGhjdz09JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/NFkmk1M2/20240906-143052.jpg">
+<span>Las estrellas</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRFRmZWRVZNUlY5RE5BPT0mc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/76c6kSQ2/20241001-102610.jpg">
+<span>Latele c4</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRHbG1aWFJwYldVPSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/028Qc1Sw/20221122-014322.jpg">
+<span>Lifetime</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRXRnpYME5vYVdNPSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/VkRV5wPY/20241001-103045.jpg">
+<span>Mas Chicas</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRWUldYMGhFJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/x8Ky3DWC/20221122-014912.jpg">
+<span>Mtv</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRWUldNREE9JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/HkYMJMgb/20240825-160816.jpg">
+<span>Mtv00</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRWUldYMGhwZEhNPSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/WpYsFbP1/20240825-155928.jpg">
+<span>Mtv hits</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRtRjBSMlZ2U0VRPSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/FRnpHtbG/20230204-011654.jpg">
+<span>Natgeo</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRtbGphMlZzYjJSbGIyND0mc3RhcnQ9dHJ1ZQ" class="card">
+<img alt="imagen" src="https://i.postimg.cc/hGFrfRpf/20221122-021116.jpg">
+<span>Nick</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRtbGphMTlLY2c9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Y0ZvSMM9/20221122-021557.jpg">
+<span>Nick junior</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVRrOVVTVU5KUVZOZlVGbGZRelE9JnN0YXJ0PX" class="card">
+<img alt="imagen" src="https://i.postimg.cc/NFr2KQyL/20241001-104115.jpg">
+<span>Noticias Paraguay</span></a></li>
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVVHRnlZVzF2ZFc1MCZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/x17qbLcv/20221219-184343.jpg">
+<span>Paramount Network</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVVFRlNRVlpKVTBsUFRsOUROQT09JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/TwcfQSZQ/20241001-104855.jpg">
+<span>Paravision</span></a></li>
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVVFRkxRVjlRUVV0QiZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/RZxpVF36/20241001-105144.jpg">
+<span>Paka paka</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVUyOXVlVWhFJnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/Kz8VS3DW/20221219-184843.jpg">
+<span>Sony Channel</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVUzQmhZMlU9JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/NMqbs9tD/20221219-182309.jpg">
+<span>Space</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVJrOVlTRVE9JnN0YXJ0PXRydWU=" class="card">
+<img alt="imagen" src="https://i.postimg.cc/MThZL5bt/20221219-175625.jpg">
+<span>Star channel</span></a></li>
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVUzUjFaR2x2WDFWdWFYWmxjbk5oYkE9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/SK3QJ41D/20221219-182813.jpg">
+<span>Studio Universal</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZFTk4mc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/HnDHYmbp/20241001-110008.jpg">
+<span>Tcm</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZHVnNaWE4xY2c9PSZzdGFydD10cnVl" class="card">
+<img alt="imagen" src="https://i.postimg.cc/FHsvsDkJ/20241001-110137.jpg">
+<span>Telesur</span></a></li>
+
+
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZHVnNaVzFoZUEmc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/mgtZBBnH/20241001-110531.jpg">
+<span>Telemax</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZFSlQmc3RhcnQ9dHJ1ZQ==" class="card">
+<img alt="imagen" src="https://i.postimg.cc/9MPGWGkz/20241001-111201.jpg">
+<span>Tnt novelas</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZFNVVVMlZ5YVdWeiZzdGFydD10" class="card">
+<img alt="imagen" src="https://i.postimg.cc/L55mX3KD/20221122-004043.jpg">
+<span>Tnt series</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVZXNXBkbVZ5YzJGc1gwTm9ZVzV1" class="card">
+<img alt="imagen" src="https://i.postimg.cc/1zJbsRm2/20230204-003132.jpg">
+<span>Universal Channel</span></a></li>
+
+<li><a href="/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9mbG93Lmh0bWw/Z2V0PVNGUlcmc3RhcnQ9dHJ1ZQ==" class="card">
+  <img alt="imagen" src="https://i.postimg.cc/Rh5JwSK6/20221122-030928.jpg">
+<span>Htv</span></a></li>
+
+
+
+</ul></center><br>
+
+
+<style>
+@media screen and (max-width:480px){.tiktok{font-size:24px;letter-spacing:2px}}
+</style>
+
+
+    
+
+
+    <style>
+        /* Estilos para el modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff, #f0f4f8);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.3s ease-in-out;
+            position: relative;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-content h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .vpn-button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .vpn-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .close-button {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .close-button:hover {
+            background-color: #cc0000;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .checkbox-container input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-container label {
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 600px) {
+            .modal-content {
+                padding: 20px;
+                width: 95%;
+            }
+
+            .modal-content h2 {
+                font-size: 20px;
+            }
+
+            .modal-content p {
+                font-size: 14px;
+            }
+        }
+    </style>
+    
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Información Importante</h2>
+            <p>Los canales están disponibles únicamente en Uruguay, Paraguay y Argentina. Si te encuentras fuera de estos países, te recomendamos utilizar una VPN para acceder al contenido.</p>
+            <div class="modal-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.vpn.lat" class="vpn-button" target="_blank">Descargar VPN Recomendada</a>
+                <button class="close-button" onclick="closeModal()">Cerrar</button>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" id="noShowAgain" onclick="handleNoShowAgain()">
+                <label for="noShowAgain">No mostrar este mensaje nuevamente</label>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+
+
+    <nav class="bottom-nav">
+        <a href="/home.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
+        <a href="/agenda.html" class="nav-item"><i class="fas fa-calendar-alt"></i> Agenda</a>
+        <a href="/television.html" class="nav-item active"><i class="fas fa-tv"></i> TV</a>
+    </nav>
+
+
+    
+    
+</body></html>
