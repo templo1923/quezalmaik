@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canales de Deportes - Home</title>
-    <!-- Font Awesome para los íconos -->
+    <title>Canales de Deportes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
     <style>
-        /* --- ESTILOS GENERALES --- */
         * {
             margin: 0;
             padding: 0;
@@ -20,10 +17,10 @@
             background: linear-gradient(135deg, #0d1b2a, #1b263b);
             color: #e0e0e0;
             overflow-x: hidden;
-            padding-bottom: 100px; /* Espacio para la barra de navegación inferior */
+            padding-bottom: 100px; /* Space for bottom nav */
         }
 
-        /* --- HEADER --- */
+        /* Header */
         header {
             background: linear-gradient(90deg, #1e3a8a, #60a5fa);
             padding: 20px;
@@ -64,7 +61,6 @@
             transform-origin: center;
         }
 
-        /* Animaciones para el ícono de la pelota */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -86,7 +82,6 @@
             gap: 15px;
         }
 
-        /* --- MENÚ DESPLEGABLE --- */
         .menu-container {
             position: relative;
         }
@@ -115,7 +110,7 @@
         .menu-dropdown {
             position: absolute;
             top: 60px;
-            right: 0; /* Alineado a la derecha */
+            right: 0;
             background: #2a2a2a;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
@@ -163,7 +158,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- BÚSQUEDA --- */
+        /* Search */
         .search-container {
             position: relative;
             width: 350px;
@@ -195,8 +190,8 @@
             color: #60a5fa;
             font-size: 20px;
         }
-
-        /* --- TARJETAS DE CANALES --- */
+        
+        /* Channels */
         .channels-container {
             max-width: 1200px;
             margin: 30px auto;
@@ -234,18 +229,15 @@
             opacity: 0;
             transition: opacity 0.3s;
         }
-
         .channel-card:hover::before {
             opacity: 1;
         }
-        
         .channel-card .channel-logo {
-             width: 100%;
+            width: 100%;
             height: 70px;
             object-fit: contain;
             margin-bottom: 15px;
         }
-
         .channel-card h3 {
             margin: 0 0 15px;
             font-size: 22px;
@@ -253,10 +245,9 @@
             text-align: center;
             color: #ffffff;
             letter-spacing: 0.8px;
-            flex-grow: 1; /* Empuja el botón hacia abajo */
+            flex-grow: 1;
         }
-
-        .channel-card button.watch-btn {
+        .channel-card .watch-btn {
             display: flex;
             width: 100%;
             padding: 14px;
@@ -272,15 +263,14 @@
             text-decoration: none;
             transition: background 0.3s, transform 0.2s;
             font-weight: 800;
-            margin-top: auto; /* Se alinea al fondo */
+            margin-top: auto;
         }
-
-        .channel-card button.watch-btn:hover {
+        .channel-card .watch-btn:hover {
             background: #3b82f6;
             transform: scale(1.05);
         }
-        
-        /* --- INDICADOR DE "EN VIVO" --- */
+
+        /* Live Indicator */
         .live-indicator {
             position: absolute;
             top: 20px;
@@ -291,12 +281,10 @@
             align-items: center;
             justify-content: center;
         }
-
         .live-indicator svg {
             width: 100%;
             height: 100%;
         }
-
         .live-indicator .pulse {
             fill: none;
             stroke: #ef4444;
@@ -304,18 +292,16 @@
             transform-origin: center;
             animation: pulse 2s infinite ease-in-out;
         }
-
         @keyframes pulse {
             0% { transform: scale(0.8); opacity: 0.3; }
             50% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(0.8); opacity: 0.3; }
         }
-
         .live-indicator .dot {
             fill: #ef4444;
         }
-        
-        /* --- MODAL DEL REPRODUCTOR --- */
+
+        /* Player Modal */
         .modal {
             display: none; 
             position: fixed;
@@ -328,7 +314,6 @@
             background-color: rgba(0,0,0,0.85);
             animation: fadeIn 0.3s;
         }
-
         .modal-content {
             position: relative;
             margin: 5% auto;
@@ -337,15 +322,13 @@
             max-width: 900px;
             border-radius: 12px;
         }
-
         .iframe-container {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* Aspect Ratio 16:9 */
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
             background-color: #000;
             border-radius: 8px;
         }
-
         .iframe-container iframe {
             position: absolute;
             top: 0;
@@ -355,7 +338,6 @@
             border: 0;
             border-radius: 8px;
         }
-
         .close-btn {
             color: #aaa;
             position: absolute;
@@ -366,20 +348,17 @@
             transition: color 0.3s;
             z-index: 2001;
         }
-
-        .close-btn:hover,
-        .close-btn:focus {
+        .close-btn:hover, .close-btn:focus {
             color: #fff;
             text-decoration: none;
             cursor: pointer;
         }
-
         @keyframes fadeIn {
             from {opacity: 0;}
             to {opacity: 1;}
         }
 
-        /* --- NAVEGACIÓN INFERIOR --- */
+        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 15px;
@@ -394,118 +373,69 @@
             display: flex;
             gap: 8px;
             border: 1px solid rgba(96, 165, 250, 0.2);
-            width: auto;
-            max-width: calc(100% - 15px);
-            justify-content: center;
         }
-
         .bottom-nav a {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 4px;
-            padding: 8px 10px;
+            padding: 8px 20px;
             color: #ffffff;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
             border-radius: 8px;
-            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            transition: background 0.3s, transform 0.2s;
             white-space: nowrap;
-            flex: 1;
         }
-
         .bottom-nav a i {
             font-size: 20px;
         }
-
-        .bottom-nav a:hover {
+        .bottom-nav a.active, .bottom-nav a:hover {
             background: rgba(96, 165, 250, 0.3);
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .bottom-nav a.active {
-            background: rgba(96, 165, 250, 0.3);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            color: #60a5fa;
         }
         
-        /* --- ESTILOS RESPONSIVOS --- */
+        /* Responsive */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 gap: 20px;
             }
-
             .search-menu-container {
                 width: 100%;
                 flex-direction: row-reverse;
                 justify-content: space-between;
             }
-
             .search-container {
                 width: calc(100% - 65px);
             }
-
             .channels-container {
                 grid-template-columns: 1fr;
             }
-
-            .header-title h1 {
-                font-size: 24px;
-            }
-
-            .menu-button {
-                width: 45px;
-                height: 45px;
-                font-size: 20px;
-            }
-
-            .menu-dropdown {
-                left: auto;
-                right: 0;
-            }
-            
-            .bottom-nav {
-                padding: 6px 4px;
-                gap: 6px;
-                max-width: calc(100% - 10px);
-            }
-
-            .bottom-nav a {
-                padding: 6px 25px; /* Ajuste para mejor visibilidad en móviles */
-                font-size: 14px;
-                gap: 3px;
-            }
-            
-            .modal-content {
-                width: 95%;
-                margin: 15% auto;
-                padding: 10px;
-            }
+            .header-title h1 { font-size: 24px; }
+            .menu-button { width: 45px; height: 45px; font-size: 20px; }
+            .bottom-nav a { padding: 6px 25px; }
+            .modal-content { width: 95%; margin: 20% auto; }
         }
     </style>
 </head>
-<body>
+<body ondragstart="return false;">
 
     <header>
         <div class="header-content">
             <div class="header-title">
                 <span class="soccer-ball">⚽</span>
-                <!-- Puedes cambiar "MiDeporte TV" por el nombre de tu web -->
-                <h1>MiDeporte TV</h1>
+                <h1>Maik Sport</h1>
             </div>
             <div class="search-menu-container">
                 <div class="menu-container">
                     <button class="menu-button" id="menuButton"><i class="fas fa-bars"></i></button>
                     <div class="menu-dropdown" id="menuDropdown">
-                        <!-- Reemplaza '#' con los enlaces a tus redes sociales -->
-                        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-                        <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                        <a href="#" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
-                        <a href="#" target="_blank"><i class="fa-brands fa-google-play"></i> Descargar App</a>
+                        <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                        <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.vpn.lat" target="_blank"><i class="fa-brands fa-google-play"></i> Descargar VPN</a>
                     </div>
                 </div>
                 <div class="search-container">
@@ -518,7 +448,7 @@
 
     <main>
         <div class="channels-container" id="channels">
-            <!-- Las tarjetas de canales se generan dinámicamente con JavaScript -->
+            <!-- Los canales se cargarán aquí dinámicamente -->
         </div>
     </main>
 
@@ -532,42 +462,49 @@
         </div>
     </div>
 
-    <!-- Barra de navegación inferior -->
     <nav class="bottom-nav">
         <a href="home.html" class="nav-item active"><i class="fas fa-home"></i> Home</a>
         <a href="agenda.html" class="nav-item"><i class="fas fa-calendar-alt"></i> Agenda</a>
-        <a href="tv.html" class="nav-item"><i class="fas fa-tv"></i> TV</a>
+        <a href="television.html" class="nav-item"><i class="fas fa-tv"></i> TV</a>
     </nav>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- DATOS DE LOS CANALES ---
+            // --- DATOS DE LOS CANALES (INTEGRADOS PARA EVITAR ERROR DE FETCH) ---
             const channelsData = [
-                { name: 'ESPN', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/60/ESPN_logos.png', stream_b64: 'aHR0cHM6Ly90aW9nb2wuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3Bu' },
-                { name: 'ESPN 2', logo: 'https://i.postimg.cc/CLtVj2Dd/espn2.webp', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuMg==' },
-                { name: 'ESPN 3', logo: 'https://i.postimg.cc/L4BTL9tX/espn3.webp', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuMw==' },
-                { name: 'ESPN Premium', logo: 'https://i.postimg.cc/LX8v37gN/espnpr.webp', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWxlcy5waHA/c3RyZWFtPWVzcG5wcmVtaXVt' },
-                { name: 'TNT Sports', logo: 'https://i.postimg.cc/mk02gVDw/TNT-Sports-Logo-Vertical-2017.png', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT10bnRzcG9ydHM=' },
-                { name: 'TyC Sports', logo: 'https://i.postimg.cc/L5WL28Yk/tyc.webp', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT10eWNzcG9ydHM=' },
-                { name: 'DSports', logo: 'https://i.postimg.cc/fR9jL3Dk/dsports.webp', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRz' },
-                { name: 'DSports 2', logo: 'https://i.postimg.cc/BbPtgKhK/dsports2.webp', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRzMg==' },
-                { name: 'DSports +', logo: 'https://i.postimg.cc/cHqPsnWn/DSports-Plus.png', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRzcGx1cw==' },
-                { name: 'Win Sports +', logo: 'https://i.postimg.cc/13qP5yfj/winsports.webp', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT13aW5zcG9ydHNwbHVz' },
-                { name: 'Fox Sports', logo: 'https://i.postimg.cc/FztH9D1x/foxsports.png', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHM=' },
-                { name: 'Fox Sports 2', logo: 'https://i.postimg.cc/hv3DYJzn/foxsports2.png', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHMy' },
-                { name: 'Fox Sports 3', logo: 'https://i.postimg.cc/05ZbY9cn/foxsports3.png', stream_b64: 'aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHMz' },
-                { name: 'Claro Sports', logo: 'https://i.postimg.cc/Hk37gYMk/image.jpg', stream_b64: 'aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC92aWRlby5odG1sP2dldD1hSFIwY0hNNkx5OWtZV2t1WjI5dloyeGxMbU52YlM5c2FXNWxZWEl2YUd4ekwyVjJaVzUwTDNsSlRrbFRWMEZRVVRCRFVHaFFhWGhsTFRRd2QxRXZiV0Z6ZEdWeUxtMHpkVGc9' },
-                { name: 'Fox Deportes', logo: 'https://i.postimg.cc/5NBs8ChK/image.png', stream_b64: 'aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC92aWRlby5odG1sP2dldD1hSFIwY0hNNkx5OXNhWFpsTFc1bGQzTXRiV0Z1YVdabGMzUXVkSFZpYVM1MmFXUmxieTlzYVhabExXNWxkM010YldGdWFXWmxjM1F2WTNOdEwyVjRkR3hwZG1VdmRIVmlhWEJ5WkRBeExFWnZlQzFUY0c5eWRITXRSWE53WVc1dmJESXViVE4xT0E9PQ==' }
+                { name: 'ESPN', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/60/ESPN_logos.png', url: '/embed/eventos.html?r=aHR0cHM6Ly90aW9nb2wuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3Bu' },
+                { name: 'ESPN 2', logo: 'https://i.postimg.cc/CLtVj2Dd/espn2.webp', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuMg==' },
+                { name: 'ESPN 3', logo: 'https://i.postimg.cc/L4BTL9tX/espn3.webp', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuMw==' },
+                { name: 'ESPN Premium', logo: 'https://i.postimg.cc/LX8v37gN/espnpr.webp', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWxlcy5waHA/c3RyZWFtPWVzcG5wcmVtaXVt' },
+                { name: 'TNT Sports', logo: 'https://i.postimg.cc/mk02gVDw/TNT-Sports-Logo-Vertical-2017.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT10bnRzcG9ydHM=' },
+                { name: 'TyC Sports', logo: 'https://i.postimg.cc/L5WL28Yk/tyc.webp', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT10eWNzcG9ydHM=' },
+                { name: 'DSports', logo: 'https://i.postimg.cc/fR9jL3Dk/dsports.webp', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRz' },
+                { name: 'DSports 2', logo: 'https://i.postimg.cc/BbPtgKhK/dsports2.webp', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRzMg==' },
+                { name: 'DSports +', logo: 'https://i.postimg.cc/cHqPsnWn/DSports-Plus.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRzcGx1cw==' },
+                { name: 'Win Sports +', logo: 'https://i.postimg.cc/13qP5yfj/winsports.webp', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT13aW5zcG9ydHNwbHVz' },
+                { name: 'Fox Sports', logo: 'https://i.postimg.cc/FztH9D1x/foxsports.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHM=' },
+                { name: 'Fox Sports 2', logo: 'https://i.postimg.cc/hv3DYJzn/foxsports2.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHMy' },
+                { name: 'Fox Sports 3', logo: 'https://i.postimg.cc/05ZbY9cn/foxsports3.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHMz' },
+                { name: 'Fox Sports MX', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/2560px-FOX_Sports_logo.svg.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9jbGFyb3ZpZGVvLXBsYXlndC5ibG9nc3BvdC5jb20vcC82NzQ2NzI3MjcyNzZndC5odG1sP2dldD1hSFIwY0hNNkx5OXZkSFJpTG14cGRtVXVZMll1ZDNjdVlXbDJMV05rYmk1dVpYUXZhV0ZrTFc1cGRISnZMMnhwZG1VdlkyeHBaVzUwY3k5a1lYTm9MMlZ1WXk5dlltOTRaVFV6ZDNsdkwyOTFkQzkyTVM5bU56ZzVNbUU1WkRjd05tUTBNVGxoT0RRMlpEY3pPR1poTWpKbFlUTXpaUzlqWlc1akxtMXdaQSZrZXk9TW1aaVpHRmhNMkpsWVRCa01ETXlNMkZsTURFeFlqTXhPR1F4WkdJM01UWSZrZXkyPU9EY3lObVZtTjJWaFpqVmlPV1JqWlRFMVptSTJZV0U1Wmpnd1ltUTFNMlk=' },
+                { name: 'Fox Sports 2 Mx', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Fox_sports_2_logo.svg/1200px-Fox_sports_2_logo.svg.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9jbGFyb3ZpZGVvLXBsYXlndC5ibG9nc3BvdC5jb20vcC82NzQ2NzI3MjcyNzZndC5odG1sP2dldD1hSFIwY0hNNkx5OXZkSFJpTG14cGRtVXVZMll1ZDNjdVlXbDJMV05rYmk1dVpYUXZhV0ZrTFc1cGRISnZMMnhwZG1VdlkyeHBaVzUwY3k5a1lYTm9MMlZ1WXk5MFpYQnFjV1ZxTVhsekwyOTFkQzkyTVM5ak9XTTVNVFU1WW1GbFpUYzBPV0V4T1RZeE1tSXhOVGs0TkRrMU9EVTVZUzlqWlc1akxtMXdaQSZrZXk9T0Rnek5tWmlNRFJrTmpKa1l6WTBZemxtT0dFek9XVm1PRFkwTUdRMVpXSSZrZXkyPVpEUm1NRFZqWlRVMll6VXlNekZpTjJOa1pqVXpORFUxWW1WaE5UZzJNakUmbT0=' },
+                { name: 'Sky Sports MX', logo: 'https://i.postimg.cc/wxP1hPqB/image.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9za3lzcG9ydHMuaHRtbA==' },
+                { name: 'Ziggo Sports', logo: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Ziggo_Sport_Logo.jpg', url: '/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC96aWdvc3BvcnQuaHRtbA==' },
+                { name: 'Claro Sports', logo: 'https://i.postimg.cc/Hk37gYMk/image.jpg', url: '/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC92aWRlby5odG1sP2dldD1hSFIwY0hNNkx5OWtZV2t1WjI5dloyeGxMbU52YlM5c2FXNWxZWEl2YUd4ekwyVjJaVzUwTDNsSlRrbFRWMEZRVVRCRFVHaFFhWGhsTFRRd2QxRXZiV0Z6ZEdWeUxtMHpkVGc9' },
+                { name: 'Fox Deportes', logo: 'https://i.postimg.cc/5NBs8ChK/image.png', url: '/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC92aWRlby5odG1sP2dldD1hSFIwY0hNNkx5OXNhWFpsTFc1bGQzTXRiV0Z1YVdabGMzUXVkSFZpYVM1MmFXUmxieTlzYVhabExXNWxkM010YldGdWFXWmxjM1F2WTNOdEwyVjRkR3hwZG1VdmRIVmlhWEJ5WkRBeExFWnZlQzFUY0c5eWRITXRSWE53WVc1dmJESXViVE4xT0E9PQ==' }
             ];
 
             const channelsContainer = document.getElementById('channels');
-
-            // --- FUNCIÓN PARA MOSTRAR LOS CANALES ---
-            const displayChannels = (channels) => {
-                channelsContainer.innerHTML = ''; // Limpiar contenedor
+            const searchInput = document.getElementById('searchInput');
+            const menuButton = document.getElementById('menuButton');
+            const menuDropdown = document.getElementById('menuDropdown');
+            
+            // --- FUNCIÓN PARA MOSTRAR LOS CANALES EN EL HTML ---
+            function displayChannels(channels) {
+                channelsContainer.innerHTML = '';
                 if (channels.length === 0) {
                     channelsContainer.innerHTML = '<p style="text-align: center; color: #e0e0e0; grid-column: 1 / -1;">No se encontraron canales.</p>';
+                    return;
                 }
                 channels.forEach(channel => {
                     const card = document.createElement('div');
@@ -581,69 +518,26 @@
                                 <circle cx="20" cy="20" r="5" class="dot"></circle>
                             </svg>
                         </div>
-                        <button class="watch-btn" data-stream="${channel.stream_b64}"><i class="fas fa-play"></i> Ver Canal</button>
+                        <a href="${channel.url}" class="watch-btn"><i class="fas fa-play"></i> Ver Canal</a>
                     `;
                     channelsContainer.appendChild(card);
                 });
-            };
-            
-            // Mostrar todos los canales al cargar la página
-            displayChannels(channelsData);
+            }
 
             // --- LÓGICA DEL MENÚ DESPLEGABLE ---
-            const menuButton = document.getElementById('menuButton');
-            const menuDropdown = document.getElementById('menuDropdown');
-
             menuButton.addEventListener('click', (e) => {
-                e.stopPropagation(); 
+                e.stopPropagation(); // Evita que el clic se propague al documento y cierre el menú inmediatamente
                 menuDropdown.classList.toggle('active');
             });
 
-            document.addEventListener('click', () => {
-                if (menuDropdown.classList.contains('active')) {
+            document.addEventListener('click', (e) => {
+                // Si el menú está activo y el clic fue fuera del menú, ciérralo
+                if (menuDropdown.classList.contains('active') && !menuButton.contains(e.target)) {
                     menuDropdown.classList.remove('active');
                 }
             });
-            
-            // --- LÓGICA DEL REPRODUCTOR MODAL ---
-            const playerModal = document.getElementById('playerModal');
-            const playerFrame = document.getElementById('playerFrame');
-            const closeModalBtn = document.getElementById('closeModalBtn');
 
-            const openPlayer = (base64Url) => {
-                // La URL base del reproductor de Quetzalito
-                const playerBaseUrl = 'https://quetzalito.fwh.is/embed/eventos.html?r=';
-                playerFrame.src = playerBaseUrl + base64Url;
-                playerModal.style.display = 'block';
-            };
-
-            const closePlayer = () => {
-                playerModal.style.display = 'none';
-                playerFrame.src = ''; // Detiene la reproducción para liberar recursos
-            };
-
-            // Event listener para abrir el modal (usando delegación de eventos)
-            channelsContainer.addEventListener('click', (event) => {
-                const watchButton = event.target.closest('.watch-btn');
-                if (watchButton) {
-                    const stream_b64 = watchButton.dataset.stream;
-                    if (stream_b64) {
-                        openPlayer(stream_b64);
-                    }
-                }
-            });
-
-            // Event listeners para cerrar el modal
-            closeModalBtn.addEventListener('click', closePlayer);
-            window.addEventListener('click', (event) => {
-                if (event.target === playerModal) {
-                    closePlayer();
-                }
-            });
-            
             // --- LÓGICA DE LA BÚSQUEDA ---
-            const searchInput = document.getElementById('searchInput');
-            
             searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.toLowerCase();
                 const filteredChannels = channelsData.filter(channel => 
@@ -652,6 +546,8 @@
                 displayChannels(filteredChannels);
             });
 
+            // --- Iniciar la carga de canales ---
+            displayChannels(channelsData);
         });
     </script>
 </body>
