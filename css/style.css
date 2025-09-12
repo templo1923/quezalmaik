@@ -1,0 +1,362 @@
+/* --- ESTILOS GENERALES Y DE BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Evita el destello azul en móviles al tocar */
+    user-select: none; /* Evita que el texto se pueda seleccionar */
+}
+
+body {
+    background: linear-gradient(135deg, #0d1b2a, #1b263b);
+    color: #e0e0ee;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 120px; /* Espacio para la barra de navegación inferior */
+}
+
+main {
+    margin: 40px auto;
+    width: 92%;
+    max-width: 1200px;
+}
+
+/* --- HEADER --- */
+header {
+    background: linear-gradient(90deg, #1e3a8a, #60a5fa);
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-title h1 {
+    color: #ffffff;
+    font-size: 30px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.back-button {
+    background: #2a2a2a;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.back-button:hover {
+    background: #60a5fa;
+    transform: scale(1.1);
+}
+
+/* --- ANIMACIÓN PARA EL LOGO DEL BALÓN --- */
+
+.soccer-ball {
+    font-size: 38px; /* Puedes ajustar el tamaño si lo necesitas */
+    display: inline-block; /* Importante para que la animación se aplique correctamente */
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes glow {
+    0%, 100% { filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6)); }
+    50% { filter: drop-shadow(0 3px 12px rgba(96, 165, 250, 0.9)); }
+}
+
+/* --- AGENDA --- */
+.agenda-header {
+    background: #1e3a8a;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#agenda-titulo {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.agenda-lista {
+    background-color: #1e293b;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.evento-contenedor {
+    border-bottom: 1px solid #2a3b4e;
+}
+.evento-contenedor:last-child {
+    border-bottom: none;
+}
+
+.evento {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.evento:hover {
+    background-color: rgba(96, 165, 250, 0.1);
+}
+
+.hora {
+    background-color: #3b82f6;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    margin-right: 15px;
+}
+
+.evento-icono {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info-evento {
+    flex-grow: 1;
+    text-align: left;
+    font-size: 16px;
+}
+
+.flecha {
+    font-size: 24px;
+    color: #6b7280;
+    margin-left: 15px;
+}
+
+.canales {
+    display: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    text-align: left;
+}
+
+.canal-link {
+    display: block;
+    color: #a7c5eb;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.canal-link:hover {
+    background-color: rgba(96, 165, 250, 0.2);
+    color: #ffffff;
+}
+
+/* --- BARRA DE NAVEGACIÓN INFERIOR --- */
+.bottom-nav {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 20px;
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 18px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-item i {
+    font-size: 20px;
+}
+
+.nav-item.active {
+    background-color: rgba(96, 165, 250, 0.3);
+    color: #ffffff;
+}
+
+.nav-item:not(.active):hover {
+    background-color: rgba(96, 165, 250, 0.15);
+}
+/* --- ESTILOS PARA LA PÁGINA DE INICIO (HOME) --- */
+
+/* Carrusel de Eventos Destacados */
+.carousel-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    position: relative;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    min-width: 100%;
+    height: 360px;
+    position: relative;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-item .caption {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 15px;
+}
+
+.carousel-controls button {
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: #ffffff;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.carousel-controls button:hover {
+    background: #60a5fa;
+}
+
+/* Parrilla de Canales */
+.channels-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 0 20px;
+}
+
+.channel-card {
+    background: #1e293b;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s;
+    text-align: center;
+}
+
+.channel-card:hover {
+    transform: translateY(-8px);
+}
+
+.channel-card img {
+    height: 70px;
+    max-width: 80%;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+.channel-card h3 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.channel-card a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    background: #60a5fa;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.3s;
+    font-weight: bold;
+}
+
+.channel-card a:hover {
+    background: #3b82f6;
+}

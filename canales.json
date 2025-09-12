@@ -1,0 +1,97 @@
+[
+  {
+    "nombre": "ESPN",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/6/60/ESPN_logos.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly90aW9nb2wuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3Bu"
+  },
+  {
+    "nombre": "ESPN 2",
+    "logo": "https://i.postimg.cc/CLtVj2Dd/espn2.webp",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuMg=="
+  },
+  {
+    "nombre": "ESPN 3",
+    "logo": "https://i.postimg.cc/L4BTL9tX/espn3.webp",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1lc3BuMw=="
+  },
+  {
+    "nombre": "ESPN Premium",
+    "logo": "https://i.postimg.cc/LX8v37gN/espnpr.webp",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWxlcy5waHA/c3RyZWFtPWVzcG5wcmVtaXVt"
+  },
+  {
+    "nombre": "TNT Sports",
+    "logo": "https://i.postimg.cc/mk02gVDw/TNT-Sports-Logo-Vertical-2017.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT10bnRzcG9ydHM="
+  },
+  {
+    "nombre": "TyC Sports",
+    "logo": "https://i.postimg.cc/L5WL28Yk/tyc.webp",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT10eWNzcG9ydHM="
+  },
+  {
+    "nombre": "DSports Sports",
+    "logo": "https://i.postimg.cc/fR9jL3Dk/dsports.webp",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRz"
+  },
+  {
+    "nombre": "DSports Sports 2",
+    "logo": "https://i.postimg.cc/BbPtgKhK/dsports2.webp",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRzMg=="
+  },
+  {
+    "nombre": "DSports Sports +",
+    "logo": "https://i.postimg.cc/cHqPsnWn/DSports-Plus.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1kc3BvcnRzcGx1cw=="
+  },
+  {
+    "nombre": "Win Sports +",
+    "logo": "https://i.postimg.cc/13qP5yfj/winsports.webp",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT13aW5zcG9ydHNwbHVz"
+  },
+  {
+    "nombre": "Fox Sports",
+    "logo": "https://i.postimg.cc/FztH9D1x/foxsports.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHM="
+  },
+  {
+    "nombre": "Fox Sports 2",
+    "logo": "https://i.postimg.cc/hv3DYJzn/foxsports2.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHMy"
+  },
+  {
+    "nombre": "Fox Sports 3",
+    "logo": "https://i.postimg.cc/05ZbY9cn/foxsports3.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9sYTEyaGQuY29tL3Zpdm8vY2FuYWwucGhwP3N0cmVhbT1mb3hzcG9ydHMz"
+  },
+  {
+    "nombre": "Fox Sports MX",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/2560px-FOX_Sports_logo.svg.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9jbGFyb3ZpZGVvLXBsYXlndC5ibG9nc3BvdC5jb20vcC82NzQ2NzI3MjcyNzZndC5odG1sP2dldD1hSFIwY0hNNkx5OXZkSFJpTG14cGRtVXVZMll1ZDNjdVlXbDJMV05rYmk1dVpYUXZhV0ZrTFc1cGRISnZMMnhwZG1VdlkyeHBaVzUwY3k5a1lYTm9MMlZ1WXk5dlltOTRaVFV6ZDNsdkwyOTFkQzkyTVM5bU56ZzVNbUU1WkRjd05tUTBNVGxoT0RRMlpEY3pPR1poTWpKbFlUTXpaUzlqWlc1akxtMXdaQSZrZXk9TW1aaVpHRmhNMkpsWVRCa01ETXlNMkZsTURFeFlqTXhPR1F4WkdJM01UWSZrZXkyPU9EY3lObVZtTjJWaFpqVmlPV1JqWlRFMVptSTJZV0U1Wmpnd1ltUTFNMlk="
+  },
+  {
+    "nombre": "Fox Sports 2 Mx",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Fox_sports_2_logo.svg/1200px-Fox_sports_2_logo.svg.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9jbGFyb3ZpZGVvLXBsYXlndC5ibG9nc3BvdC5jb20vcC82NzQ2NzI3MjcyNzZndC5odG1sP2dldD1hSFIwY0hNNkx5OXZkSFJpTG14cGRtVXVZMll1ZDNjdVlXbDJMV05rYmk1dVpYUXZhV0ZrTFc1cGRISnZMMnhwZG1VdlkyeHBaVzUwY3k5a1lYTm9MMlZ1WXk5MFpYQnFjV1ZxTVhsekwyOTFkQzkyTVM5ak9XTTVNVFU1WW1GbFpUYzBPV0V4T1RZeE1tSXhOVGs0TkRrMU9EVTVZUzlqWlc1akxtMXdaQSZrZXk9T0Rnek5tWmlNRFJrTmpKa1l6WTBZemxtT0dFek9XVm1PRFkwTUdRMVpXSSZrZXkyPVpEUm1NRFZqWlRVMll6VXlNekZpTjJOa1pqVXpORFUxWW1WaE5UZzJNakUmbT0="
+  },
+  {
+    "nombre": "Sky Sports MX",
+    "logo": "https://i.postimg.cc/wxP1hPqB/image.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC9za3lzcG9ydHMuaHRtbA=="
+  },
+  {
+    "nombre": "Ziggo Sports",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/7/70/Ziggo_Sport_Logo.jpg",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC96aWdvc3BvcnQuaHRtbA=="
+  },
+  {
+    "nombre": "Claro Sports",
+    "logo": "https://i.postimg.cc/Hk37gYMk/image.jpg",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC92aWRlby5odG1sP2dldD1hSFIwY0hNNkx5OWtZV2t1WjI5dloyeGxMbU52YlM5c2FXNWxZWEl2YUd4ekwyVjJaVzUwTDNsSlRrbFRWMEZRVVRCRFVHaFFhWGhsTFRRd2QxRXZiV0Z6ZEdWeUxtMHpkVGc9"
+  },
+  {
+    "nombre": "Fox Deportes",
+    "logo": "https://i.postimg.cc/5NBs8ChK/image.png",
+    "url": "https://quetzalito.fwh.is/embed/eventos.html?r=aHR0cHM6Ly9raW5nLW1ldGZsaXguZ2l0aHViLmlvL2FwcC92aWRlby5odG1sP2dldD1hSFIwY0hNNkx5OXNhWFpsTFc1bGQzTXRiV0Z1YVdabGMzUXVkSFZpYVM1MmFXUmxieTlzYVhabExXNWxkM010YldGdWFXWmxjM1F2WTNOdEwyVjRkR3hwZG1VdmRIVmlhWEJ5WkRBeExFWnZlQzFUY0c5eWRITXRSWE53WVc1dmJESXViVE4xT0E9PQ=="
+  }
+]
