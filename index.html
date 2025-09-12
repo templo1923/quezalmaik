@@ -1,0 +1,253 @@
+<html lang="es"><head>
+
+<meta charset="UTF-8">
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Fútbol Libre - Eventos en VIVO Gratis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="icon" href="https://i.postimg.cc/fyL6vn3H/unnamed-1.png" type="image/x-icon">
+
+  <meta name="description" content="Fútbol Libre sitio para ver canales de TV online en vivo y en directo gratis por internet. Canales de television de manera Gratuita y Online Canales libres por Futbol Libre.">
+  <meta name="keywords" content="Fútbol Libre, canales de TV online, eventos deportivos, streaming gratis">
+  <meta name="author" content="Fútbol Libre">
+  <meta property="og:site_name" content="FÚTBOL LIBRE | CANALES POR INTERNET">
+  <meta property="og:url" content="https://futbol-libretv.neocities.org">
+  <meta property="og:image" content="https://i.postimg.cc/fyL6vn3H/unnamed-1.png">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: hidden;
+    }
+
+    .background-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 100%;
+      background: url('https://i.postimg.cc/76HtY8hg/deportes15.jpg') no-repeat center center;
+      background-size: cover;
+      animation: slideBg 30s linear infinite;
+      filter: blur(5px);
+    }
+
+    .background-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 2;
+    }
+
+    @keyframes slideBg {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 10;
+      padding: 2rem;
+      max-width: 900px;
+      margin-top: 10vh;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      animation: fadeIn 1.5s ease-in-out;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    p {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      animation: fadeIn 2s ease-in-out;
+      color: #d7eee7;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 1.2rem 4rem;
+      font-size: 3rem;
+      font-weight: 800;
+      color: #fff;
+      background: #0c7557e4;
+      border-radius: 20px;
+      border: 4px solid rgb(19,213,88);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      background: #4e7af9;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      border: 4px solid rgb(0,78,247);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .background-animations {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .circle, .triangle, .square {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.15);
+      animation: float 12s infinite ease-in-out;
+      mix-blend-mode: overlay;
+    }
+
+    .circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      top: 15%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .triangle {
+      width: 0;
+      height: 0;
+      border-left: 50px solid transparent;
+      border-right: 50px solid transparent;
+      border-bottom: 80px solid rgba(255, 255, 255, 0.15);
+      top: 60%;
+      left: 70%;
+      animation-delay: 2s;
+    }
+
+    .square {
+      width: 80px;
+      height: 80px;
+      top: 40%;
+      left: 50%;
+      transform: rotate(45deg);
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(0.9); opacity: 0.3; }
+      50% { transform: translate(20px, 20px) scale(1.1); opacity: 0.5; }
+      100% { transform: translate(0, 0) scale(0.9); opacity: 0.3; }
+    }
+
+    footer {
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      margin: 0 0.8rem;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.8rem;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-icons .facebook { background: #3b5998; }
+    .social-icons .twitter { background: #1da1f2; }
+    .social-icons .instagram { background: #e1306c; }
+    .social-icons .tiktok { background: #000; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      p { font-size: 1.2rem; }
+      .btn { font-size: 1.5rem; padding: 1rem 3rem; }
+      .container { margin-top: 5vh; padding: 1rem; }
+      .social-icons a { width: 40px; height: 40px; font-size: 1.5rem; margin: 0 0.5rem; }
+    }
+  </style>
+</head>
+<body ondragstart="return false;">
+
+
+
+  <div class="background-wrapper">
+    <div class="background-image"></div>
+    <div class="background-overlay"></div>
+  </div>
+
+  <div class="container">
+    <h1>¡Disfruta los mejores eventos deportivos del día!</h1>
+    <p>Con Maik Sport, accede a todos los partidos y eventos deportivos en un solo lugar.</p>
+    <a href="/home.html" class="btn">INICIAR</a>
+  </div>
+
+  <div class="background-animations">
+    <div class="circle"></div>
+    <div class="triangle"></div>
+    <div class="square"></div>
+  </div>
+
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/" target="_blank" class="facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/" target="_blank" class="instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://tiktok.com/@" target="_blank" class="tiktok" aria-label="tiktok"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </footer>
+
+</body></html>
