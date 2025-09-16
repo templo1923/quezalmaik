@@ -1,9 +1,387 @@
 {
+  "📺 Entretenimiento": [
+    {
+      "nombre": "A&E",
+      "logo": "https://img.tvcluboficial.com/ae.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/5.m3u8"
+    },
+    {
+      "nombre": "A&E (Calidad Baja)",
+      "logo": "https://img.tvcluboficial.com/ae.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/4.m3u8"
+    },
+    {
+      "nombre": "A&E HD",
+      "logo": "https://img.tvcluboficial.com/ae.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/8.m3u8"
+    },
+    {
+      "nombre": "A+",
+      "logo": "https://img.tvcluboficial.com/aplus.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/9.m3u8"
+    },
+    {
+      "nombre": "AMC",
+      "logo": "https://img.tvcluboficial.com/amc.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/29.m3u8"
+    },
+    {
+      "nombre": "AMC (ES)",
+      "logo": "https://img.tvcluboficial.com/amc.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/32.m3u8"
+    },
+    {
+      "nombre": "AMC HD",
+      "logo": "https://img.tvcluboficial.com/amc.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/33.m3u8"
+    },
+    {
+      "nombre": "AXN",
+      "logo": "https://img.tvcluboficial.com/axn.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/54.m3u8"
+    },
+    {
+      "nombre": "AXN (Calidad Baja)",
+      "logo": "https://img.tvcluboficial.com/axn.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/57.m3u8"
+    },
+    {
+      "nombre": "AXN HD",
+      "logo": "https://img.tvcluboficial.com/axn.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/58.m3u8"
+    },
+    {
+      "nombre": "AXN HD (ES)",
+      "logo": "https://img.tvcluboficial.com/axn.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/59.m3u8"
+    },
+    {
+      "nombre": "AXN WHITE HD (ES)",
+      "logo": "https://img.tvcluboficial.com/axn.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/61.m3u8"
+    },
+    {
+      "nombre": "Comedy Central",
+      "logo": "https://img.tvcluboficial.com/comedycentral.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/216.m3u8"
+    },
+    {
+      "nombre": "Comedy Central (ES)",
+      "logo": "https://img.tvcluboficial.com/comedycentral.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/219.m3u8"
+    },
+    {
+      "nombre": "Comedy Central HD",
+      "logo": "https://img.tvcluboficial.com/comedycentral.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/220.m3u8"
+    },
+    {
+      "nombre": "E!",
+      "logo": "https://img.tvcluboficial.com/e.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/333.m3u8"
+    },
+    {
+      "nombre": "E! HD",
+      "logo": "https://img.tvcluboficial.com/e.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/336.m3u8"
+    },
+    {
+      "nombre": "FX",
+      "logo": "https://img.tvcluboficial.com/fx.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/474.m3u8"
+    },
+    {
+      "nombre": "FX HD",
+      "logo": "https://img.tvcluboficial.com/fx.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/477.m3u8"
+    },
+    {
+      "nombre": "FXM",
+      "logo": "https://img.tvcluboficial.com/fxm.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/478.m3u8"
+    },
+    {
+      "nombre": "FXM HD",
+      "logo": "https://img.tvcluboficial.com/fxm.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/480.m3u8"
+    },
+    {
+      "nombre": "Glitz",
+      "logo": "https://img.tvcluboficial.com/glitz.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/488.m3u8"
+    },
+    {
+      "nombre": "Golden",
+      "logo": "https://img.tvcluboficial.com/golden.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/494.m3u8"
+    },
+    {
+      "nombre": "Golden Edge",
+      "logo": "https://img.tvcluboficial.com/goldenedge.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/495.m3u8"
+    },
+    {
+      "nombre": "Golden HD",
+      "logo": "https://img.tvcluboficial.com/golden.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/497.m3u8"
+    },
+    {
+      "nombre": "H2",
+      "logo": "https://img.tvcluboficial.com/h2.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/509.m3u8"
+    },
+    {
+      "nombre": "I.Sat",
+      "logo": "https://img.tvcluboficial.com/isat.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/572.m3u8"
+    },
+    {
+      "nombre": "Lifetime",
+      "logo": "https://img.tvcluboficial.com/lifetime.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/615.m3u8"
+    },
+    {
+      "nombre": "MTV",
+      "logo": "https://img.tvcluboficial.com/mtv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/673.m3u8"
+    },
+    {
+      "nombre": "MTV (ES)",
+      "logo": "https://img.tvcluboficial.com/mtv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/674.m3u8"
+    },
+    {
+      "nombre": "MTV 00s",
+      "logo": "https://img.tvcluboficial.com/mtv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/675.m3u8"
+    },
+    {
+      "nombre": "MTV 90s",
+      "logo": "https://img.tvcluboficial.com/mtv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/679.m3u8"
+    },
+    {
+      "nombre": "MTV HD",
+      "logo": "https://img.tvcluboficial.com/mtv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/680.m3u8"
+    },
+    {
+      "nombre": "MTV Live",
+      "logo": "https://img.tvcluboficial.com/mtvlive.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/683.m3u8"
+    },
+    {
+      "nombre": "MTV Shore",
+      "logo": "https://img.tvcluboficial.com/mtv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1151.m3u8"
+    },
+    {
+      "nombre": "MTV WW",
+      "logo": "https://img.tvcluboficial.com/mtv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/685.m3u8"
+    },
+    {
+      "nombre": "Much Music",
+      "logo": "https://img.tvcluboficial.com/muchmusic.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/686.m3u8"
+    },
+    {
+      "nombre": "Music Top",
+      "logo": "https://img.tvcluboficial.com/musictop.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/699.m3u8"
+    },
+    {
+      "nombre": "Paramount",
+      "logo": "https://img.tvcluboficial.com/paramount.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/752.m3u8"
+    },
+    {
+      "nombre": "Paramount HD",
+      "logo": "https://img.tvcluboficial.com/paramount.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/753.m3u8"
+    },
+    {
+      "nombre": "Paramount HD (ES)",
+      "logo": "https://img.tvcluboficial.com/paramount.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/754.m3u8"
+    },
+    {
+      "nombre": "Sony",
+      "logo": "https://img.tvcluboficial.com/sony.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/815.m3u8"
+    },
+    {
+      "nombre": "Sony HD",
+      "logo": "https://img.tvcluboficial.com/sony.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/818.m3u8"
+    },
+    {
+      "nombre": "Space",
+      "logo": "https://img.tvcluboficial.com/space.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/823.m3u8"
+    },
+    {
+      "nombre": "Space (Calidad Baja)",
+      "logo": "https://img.tvcluboficial.com/space.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/825.m3u8"
+    },
+    {
+      "nombre": "Space HD",
+      "logo": "https://img.tvcluboficial.com/space.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/826.m3u8"
+    },
+    {
+      "nombre": "Star Channel",
+      "logo": "https://img.tvcluboficial.com/star.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/832.m3u8"
+    },
+    {
+      "nombre": "Star Channel HD",
+      "logo": "https://img.tvcluboficial.com/star.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/834.m3u8"
+    },
+    {
+      "nombre": "Star Channel HD",
+      "logo": "https://img.tvcluboficial.com/star.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/835.m3u8"
+    },
+    {
+      "nombre": "Star Fun",
+      "logo": "https://img.tvcluboficial.com/star_fun.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/836.m3u8"
+    },
+    {
+      "nombre": "Star Hits HD",
+      "logo": "https://img.tvcluboficial.com/star_hits.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/837.m3u8"
+    },
+    {
+      "nombre": "StarTVE",
+      "logo": "https://img.tvcluboficial.com/startve.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/838.m3u8"
+    },
+    {
+      "nombre": "SyFy",
+      "logo": "https://img.tvcluboficial.com/syfy.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/853.m3u8"
+    },
+    {
+      "nombre": "SyFy (ES) HD",
+      "logo": "https://img.tvcluboficial.com/syfy.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/856.m3u8"
+    },
+    {
+      "nombre": "SyFy HD",
+      "logo": "https://img.tvcluboficial.com/syfy.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/857.m3u8"
+    },
+    {
+      "nombre": "TBS Very Funny",
+      "logo": "https://img.tvcluboficial.com/tbs.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/859.m3u8"
+    },
+    {
+      "nombre": "TBS Very Funny HD",
+      "logo": "https://img.tvcluboficial.com/tbs.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/860.m3u8"
+    },
+    {
+      "nombre": "TLC",
+      "logo": "https://img.tvcluboficial.com/tlc.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/911.m3u8"
+    },
+    {
+      "nombre": "TNT",
+      "logo": "https://img.tvcluboficial.com/tnt.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/921.m3u8"
+    },
+    {
+      "nombre": "TNT HD",
+      "logo": "https://img.tvcluboficial.com/tnt.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/926.m3u8"
+    },
+    {
+      "nombre": "TNT HD (ES)",
+      "logo": "https://img.tvcluboficial.com/tnt.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/927.m3u8"
+    },
+    {
+      "nombre": "TNT Series",
+      "logo": "https://img.tvcluboficial.com/tntseries.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/929.m3u8"
+    },
+    {
+      "nombre": "TNT Series HD",
+      "logo": "https://img.tvcluboficial.com/tntseries.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/933.m3u8"
+    },
+    {
+      "nombre": "TruTV",
+      "logo": "https://img.tvcluboficial.com/trutv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/949.m3u8"
+    },
+    {
+      "nombre": "TruTv HD",
+      "logo": "https://img.tvcluboficial.com/trutv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/950.m3u8"
+    },
+    {
+      "nombre": "Universal Channel",
+      "logo": "https://img.tvcluboficial.com/universal.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/984.m3u8"
+    },
+    {
+      "nombre": "Universal Cinema HD",
+      "logo": "https://img.tvcluboficial.com/universal_cinema.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/988.m3u8"
+    },
+    {
+      "nombre": "Universal Comedy HD",
+      "logo": "https://img.tvcluboficial.com/universal_comedy.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/992.m3u8"
+    },
+    {
+      "nombre": "Universal Crime HD",
+      "logo": "https://img.tvcluboficial.com/universal_crime.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/996.m3u8"
+    },
+    {
+      "nombre": "Universal HD",
+      "logo": "https://img.tvcluboficial.com/universal.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/998.m3u8"
+    },
+    {
+      "nombre": "Universal Premiere HD",
+      "logo": "https://img.tvcluboficial.com/universal_premier.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1003.m3u8"
+    },
+    {
+      "nombre": "Universal Reality HD",
+      "logo": "https://img.tvcluboficial.com/universal_reality.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1006.m3u8"
+    },
+    {
+      "nombre": "Warner Channel",
+      "logo": "https://img.tvcluboficial.com/warnerchannel.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1032.m3u8"
+    },
+    {
+      "nombre": "Warner Channel HD",
+      "logo": "https://img.tvcluboficial.com/warnerchannel.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1034.m3u8"
+    }
+  ],
+
   "🏆 Deportes": [
     {
       "nombre": "Afizzionados HD",
       "logo": "https://img.tvcluboficial.com/afizzionados.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/24.m3u8"
+    },
+    {
+      "nombre": "Afizzionados HD",
+      "logo": "https://img.tvcluboficial.com/afizzionados.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/25.m3u8"
     },
     {
       "nombre": "AyM Sports",
@@ -341,11 +719,6 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1074.m3u8"
     },
     {
-      "nombre": "Garage TV HD",
-      "logo": "https://img.tvcluboficial.com/garagetv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/485.m3u8"
-    },
-    {
       "nombre": "Gol Peru",
       "logo": "https://img.tvcluboficial.com/golperu.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/490.m3u8"
@@ -611,21 +984,6 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1138.m3u8"
     },
     {
-      "nombre": "VTV Plus HD",
-      "logo": "https://img.tvcluboficial.com/ur_vtvplus.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1142.m3u8"
-    },
-    {
-      "nombre": "VTV Plus | Uruguay",
-      "logo": "https://img.tvcluboficial.com/ur_vtvplus.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1072.m3u8"
-    },
-    {
-      "nombre": "VTV | Uruaguay",
-      "logo": "https://img.tvcluboficial.com/vtv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1028.m3u8"
-    },
-    {
       "nombre": "Win Sports",
       "logo": "https://img.tvcluboficial.com/winsports.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1039.m3u8"
@@ -656,86 +1014,17 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1047.m3u8"
     }
   ],
-  "🎬 Cine y Series": [
-    {
-      "nombre": "ATV: Novelas Turcas",
-      "logo": "https://img.tvcluboficial.com/atv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1120.m3u8"
-    },
-    {
-      "nombre": "A&E",
-      "logo": "https://img.tvcluboficial.com/ae.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/5.m3u8"
-    },
-    {
-      "nombre": "A&E (Calidad Baja)",
-      "logo": "https://img.tvcluboficial.com/ae.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/4.m3u8"
-    },
-    {
-      "nombre": "A&E HD",
-      "logo": "https://img.tvcluboficial.com/ae.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/8.m3u8"
-    },
+
+  "🎬 Cine": [
     {
       "nombre": "A3Cine",
       "logo": "https://img.tvcluboficial.com/a3cine.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/14.m3u8"
     },
     {
-      "nombre": "A3Series",
-      "logo": "https://img.tvcluboficial.com/a3series.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/17.m3u8"
-    },
-    {
-      "nombre": "AMC",
-      "logo": "https://img.tvcluboficial.com/amc.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/29.m3u8"
-    },
-    {
-      "nombre": "AMC (ES)",
-      "logo": "https://img.tvcluboficial.com/amc.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/32.m3u8"
-    },
-    {
-      "nombre": "AMC HD",
-      "logo": "https://img.tvcluboficial.com/amc.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/33.m3u8"
-    },
-    {
-      "nombre": "AXN",
-      "logo": "https://img.tvcluboficial.com/axn.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/54.m3u8"
-    },
-    {
-      "nombre": "AXN (Calidad Baja)",
-      "logo": "https://img.tvcluboficial.com/axn.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/57.m3u8"
-    },
-    {
-      "nombre": "AXN HD",
-      "logo": "https://img.tvcluboficial.com/axn.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/58.m3u8"
-    },
-    {
-      "nombre": "AXN HD (ES)",
-      "logo": "https://img.tvcluboficial.com/axn.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/59.m3u8"
-    },
-    {
-      "nombre": "AXN WHITE HD (ES)",
-      "logo": "https://img.tvcluboficial.com/axn.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/61.m3u8"
-    },
-    {
       "nombre": "Az Cinema",
       "logo": "https://img.tvcluboficial.com/azcinema.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/63.m3u8"
-    },
-    {
-      "nombre": "BitMe",
-      "logo": "https://img.tvcluboficial.com/bitme.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/92.m3u8"
     },
     {
       "nombre": "Cine Latino",
@@ -808,59 +1097,9 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/239.m3u8"
     },
     {
-      "nombre": "DHE",
-      "logo": "https://img.tvcluboficial.com/dhe.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/242.m3u8"
-    },
-    {
-      "nombre": "Europa Europa",
-      "logo": "https://img.tvcluboficial.com/europa.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/413.m3u8"
-    },
-    {
       "nombre": "Film & Arts HD",
       "logo": "https://img.tvcluboficial.com/filmarts.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/419.m3u8"
-    },
-    {
-      "nombre": "Fox (ES) HD",
-      "logo": "https://img.tvcluboficial.com/fox.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/430.m3u8"
-    },
-    {
-      "nombre": "FX",
-      "logo": "https://img.tvcluboficial.com/fx.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/474.m3u8"
-    },
-    {
-      "nombre": "FX HD",
-      "logo": "https://img.tvcluboficial.com/fx.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/477.m3u8"
-    },
-    {
-      "nombre": "FXM",
-      "logo": "https://img.tvcluboficial.com/fxm.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/478.m3u8"
-    },
-    {
-      "nombre": "FXM HD",
-      "logo": "https://img.tvcluboficial.com/fxm.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/480.m3u8"
-    },
-    {
-      "nombre": "Golden",
-      "logo": "https://img.tvcluboficial.com/golden.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/494.m3u8"
-    },
-    {
-      "nombre": "Golden Edge",
-      "logo": "https://img.tvcluboficial.com/goldenedge.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/495.m3u8"
-    },
-    {
-      "nombre": "Golden HD",
-      "logo": "https://img.tvcluboficial.com/golden.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/497.m3u8"
     },
     {
       "nombre": "HBO",
@@ -943,11 +1182,6 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/544.m3u8"
     },
     {
-      "nombre": "I.Sat",
-      "logo": "https://img.tvcluboficial.com/isat.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/572.m3u8"
-    },
-    {
       "nombre": "Max Prime HD",
       "logo": "https://img.tvcluboficial.com/play.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/646.m3u8"
@@ -956,11 +1190,6 @@
       "nombre": "Max Up HD",
       "logo": "https://img.tvcluboficial.com/play.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/648.m3u8"
-    },
-    {
-      "nombre": "Morbido TV",
-      "logo": "https://img.tvcluboficial.com/morbidotv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/659.m3u8"
     },
     {
       "nombre": "Movie Max",
@@ -998,74 +1227,9 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/696.m3u8"
     },
     {
-      "nombre": "Paramount",
-      "logo": "https://img.tvcluboficial.com/paramount.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/752.m3u8"
-    },
-    {
-      "nombre": "Paramount HD",
-      "logo": "https://img.tvcluboficial.com/paramount.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/753.m3u8"
-    },
-    {
-      "nombre": "Paramount HD (ES)",
-      "logo": "https://img.tvcluboficial.com/paramount.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/754.m3u8"
-    },
-    {
       "nombre": "PopCornFlix HD",
       "logo": "https://img.tvcluboficial.com/popcornflix.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/775.m3u8"
-    },
-    {
-      "nombre": "Sony",
-      "logo": "https://img.tvcluboficial.com/sony.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/815.m3u8"
-    },
-    {
-      "nombre": "Sony HD",
-      "logo": "https://img.tvcluboficial.com/sony.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/818.m3u8"
-    },
-    {
-      "nombre": "Space",
-      "logo": "https://img.tvcluboficial.com/space.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/823.m3u8"
-    },
-    {
-      "nombre": "Space (Calidad Baja)",
-      "logo": "https://img.tvcluboficial.com/space.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/825.m3u8"
-    },
-    {
-      "nombre": "Space HD",
-      "logo": "https://img.tvcluboficial.com/space.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/826.m3u8"
-    },
-    {
-      "nombre": "Star Channel",
-      "logo": "https://img.tvcluboficial.com/star.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/832.m3u8"
-    },
-    {
-      "nombre": "Star Channel HD",
-      "logo": "https://img.tvcluboficial.com/star.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/834.m3u8"
-    },
-    {
-      "nombre": "Star Channel HD",
-      "logo": "https://img.tvcluboficial.com/star.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/835.m3u8"
-    },
-    {
-      "nombre": "Star Fun",
-      "logo": "https://img.tvcluboficial.com/star_fun.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/836.m3u8"
-    },
-    {
-      "nombre": "Star Hits HD",
-      "logo": "https://img.tvcluboficial.com/star_hits.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/837.m3u8"
     },
     {
       "nombre": "Starz Cinema",
@@ -1108,101 +1272,100 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/848.m3u8"
     },
     {
-      "nombre": "SyFy",
-      "logo": "https://img.tvcluboficial.com/syfy.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/853.m3u8"
-    },
-    {
-      "nombre": "SyFy (ES) HD",
-      "logo": "https://img.tvcluboficial.com/syfy.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/856.m3u8"
-    },
-    {
-      "nombre": "SyFy HD",
-      "logo": "https://img.tvcluboficial.com/syfy.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/857.m3u8"
-    },
-    {
       "nombre": "TCM",
       "logo": "https://img.tvcluboficial.com/tcm.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/862.m3u8"
-    },
-    {
-      "nombre": "TNT",
-      "logo": "https://img.tvcluboficial.com/tnt.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/921.m3u8"
-    },
-    {
-      "nombre": "TNT HD",
-      "logo": "https://img.tvcluboficial.com/tnt.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/926.m3u8"
-    },
-    {
-      "nombre": "TNT HD (ES)",
-      "logo": "https://img.tvcluboficial.com/tnt.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/927.m3u8"
-    },
-    {
-      "nombre": "TNT Series",
-      "logo": "https://img.tvcluboficial.com/tntseries.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/929.m3u8"
-    },
-    {
-      "nombre": "TNT Series HD",
-      "logo": "https://img.tvcluboficial.com/tntseries.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/933.m3u8"
-    },
-    {
-      "nombre": "Universal Channel",
-      "logo": "https://img.tvcluboficial.com/universal.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/984.m3u8"
-    },
-    {
-      "nombre": "Universal Cinema HD",
-      "logo": "https://img.tvcluboficial.com/universal_cinema.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/988.m3u8"
-    },
-    {
-      "nombre": "Universal Comedy HD",
-      "logo": "https://img.tvcluboficial.com/universal_comedy.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/992.m3u8"
-    },
-    {
-      "nombre": "Universal Crime HD",
-      "logo": "https://img.tvcluboficial.com/universal_crime.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/996.m3u8"
-    },
-    {
-      "nombre": "Universal HD",
-      "logo": "https://img.tvcluboficial.com/universal.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/998.m3u8"
-    },
-    {
-      "nombre": "Universal Premiere HD",
-      "logo": "https://img.tvcluboficial.com/universal_premier.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1003.m3u8"
-    },
-    {
-      "nombre": "Universal Reality HD",
-      "logo": "https://img.tvcluboficial.com/universal_reality.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1006.m3u8"
-    },
-    {
-      "nombre": "Warner Channel",
-      "logo": "https://img.tvcluboficial.com/warnerchannel.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1032.m3u8"
-    },
-    {
-      "nombre": "Warner Channel HD",
-      "logo": "https://img.tvcluboficial.com/warnerchannel.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1034.m3u8"
     }
   ],
-  "👶 Infantil": [
+
+  "📺 Series": [
+    {
+      "nombre": "A3Series",
+      "logo": "https://img.tvcluboficial.com/a3series.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/17.m3u8"
+    },
+    {
+      "nombre": "Breaking Bad 24/7",
+      "logo": "https://img.tvcluboficial.com/breakingbad.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/98.m3u8"
+    },
+    {
+      "nombre": "Caso Cerrado 24/7",
+      "logo": "https://img.tvcluboficial.com/casocerrado.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/138.m3u8"
+    },
+    {
+      "nombre": "CSI: Miami 24/7",
+      "logo": "https://img.tvcluboficial.com/csi_miami.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/228.m3u8"
+    },
+    {
+      "nombre": "Elementary 24/7",
+      "logo": "https://img.tvcluboficial.com/247.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/363.m3u8"
+    },
+    {
+      "nombre": "Friends 24/7",
+      "logo": "https://img.tvcluboficial.com/247.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/470.m3u8"
+    },
+    {
+      "nombre": "Game of Thrones 24/7",
+      "logo": "https://img.tvcluboficial.com/gameofthrones.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/484.m3u8"
+    },
+    {
+      "nombre": "Smallville 24/7",
+      "logo": "https://img.tvcluboficial.com/smallville.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/812.m3u8"
+    },
+    {
+      "nombre": "The Big Bang Theory 24/7",
+      "logo": "https://img.tvcluboficial.com/thebigbangtheory.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/899.m3u8"
+    },
+    {
+      "nombre": "The Walking Dead 24/7",
+      "logo": "https://img.tvcluboficial.com/thewalkingdead.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/901.m3u8"
+    },
+    {
+      "nombre": "The Walking Dead 24/7 Op. 2",
+      "logo": "https://img.tvcluboficial.com/thewalkingdead.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/902.m3u8"
+    },
+    {
+      "nombre": "Two And a Half Men 24/7",
+      "logo": "https://img.tvcluboficial.com/twoandhalfmen.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/973.m3u8"
+    }
+  ],
+
+  "👶 Infantiles": [
+    {
+      "nombre": "Animaniacs 24/7",
+      "logo": "https://img.tvcluboficial.com/animaniacs.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/43.m3u8"
+    },
     {
       "nombre": "Baby TV",
       "logo": "https://img.tvcluboficial.com/babytv.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/79.m3u8"
+    },
+    {
+      "nombre": "Bayblade 24/7",
+      "logo": "https://img.tvcluboficial.com/247.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/85.m3u8"
+    },
+    {
+      "nombre": "Bob Esponja 24/7",
+      "logo": "https://img.tvcluboficial.com/bobesponja.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/96.m3u8"
+    },
+    {
+      "nombre": "Calabozos y Dragones 24/7",
+      "logo": "https://img.tvcluboficial.com/247.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/103.m3u8"
     },
     {
       "nombre": "Cartoon Network",
@@ -1235,14 +1398,14 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/139.m3u8"
     },
     {
-      "nombre": "Discovery Kids",
-      "logo": "https://img.tvcluboficial.com/discoverykids.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/264.m3u8"
+      "nombre": "Coraje el Perro Cobarde 24/7",
+      "logo": "https://img.tvcluboficial.com/coraje.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/223.m3u8"
     },
     {
-      "nombre": "Discovery Kids HD",
-      "logo": "https://img.tvcluboficial.com/discoverykids.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/266.m3u8"
+      "nombre": "Dinosaurios 24/7",
+      "logo": "https://img.tvcluboficial.com/dinosaurios.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/244.m3u8"
     },
     {
       "nombre": "Disney Channel",
@@ -1268,898 +1431,6 @@
       "nombre": "Disney XD HD",
       "logo": "https://img.tvcluboficial.com/disneyxd.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/291.m3u8"
-    },
-    {
-      "nombre": "Nick",
-      "logo": "https://img.tvcluboficial.com/nick.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/724.m3u8"
-    },
-    {
-      "nombre": "Nick 2 HD",
-      "logo": "https://img.tvcluboficial.com/nick2.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/726.m3u8"
-    },
-    {
-      "nombre": "Nick HD",
-      "logo": "https://img.tvcluboficial.com/nick.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/728.m3u8"
-    },
-    {
-      "nombre": "Nick JR",
-      "logo": "https://img.tvcluboficial.com/nickjr.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/729.m3u8"
-    },
-    {
-      "nombre": "Nick JR HD",
-      "logo": "https://img.tvcluboficial.com/nickjr.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/732.m3u8"
-    },
-    {
-      "nombre": "Nick Toons",
-      "logo": "https://img.tvcluboficial.com/nicktoons.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/735.m3u8"
-    },
-    {
-      "nombre": "Nickelodeon",
-      "logo": "https://img.tvcluboficial.com/nickelodeon.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/736.m3u8"
-    },
-    {
-      "nombre": "PakaPaka",
-      "logo": "https://img.tvcluboficial.com/pakapaka.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/748.m3u8"
-    },
-    {
-      "nombre": "TeenNick",
-      "logo": "https://img.tvcluboficial.com/teennick.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/865.m3u8"
-    },
-    {
-      "nombre": "Tooncast",
-      "logo": "https://img.tvcluboficial.com/tooncast.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/941.m3u8"
-    }
-  ],
-  "🌎 Canales por País": [
-    {
-      "nombre": "America TV | Peru",
-      "logo": "https://img.tvcluboficial.com/americaperu.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/35.m3u8"
-    },
-    {
-      "nombre": "America TV | Peru op. 2",
-      "logo": "https://img.tvcluboficial.com/americaperu.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1115.m3u8"
-    },
-    {
-      "nombre": "America | Argentina",
-      "logo": "https://img.tvcluboficial.com/ar_america.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1068.m3u8"
-    },
-    {
-      "nombre": "ATV | Peru",
-      "logo": "https://img.tvcluboficial.com/pe_atv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1063.m3u8"
-    },
-    {
-      "nombre": "Canal 10 | Nicaragua",
-      "logo": "https://img.tvcluboficial.com/ni_canal10.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1076.m3u8"
-    },
-    {
-      "nombre": "Canal 12 | El Salvador",
-      "logo": "https://img.tvcluboficial.com/sa_canal12.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1083.m3u8"
-    },
-    {
-      "nombre": "Canal 2 | Nicaragua",
-      "logo": "https://img.tvcluboficial.com/ni_canal2.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1075.m3u8"
-    },
-    {
-      "nombre": "Canal 3 | El Salvador",
-      "logo": "https://img.tvcluboficial.com/sa_canal3.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1080.m3u8"
-    },
-    {
-      "nombre": "Canal 4 | El Salvador",
-      "logo": "https://img.tvcluboficial.com/sa_canal4.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1081.m3u8"
-    },
-    {
-      "nombre": "Canal 5 Honduras",
-      "logo": "https://img.tvcluboficial.com/ho_canal5.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/109.m3u8"
-    },
-    {
-      "nombre": "Canal 6 | Costa Rica",
-      "logo": "https://img.tvcluboficial.com/cr_canal6.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1084.m3u8"
-    },
-    {
-      "nombre": "Canal 6 | El Salvador",
-      "logo": "https://img.tvcluboficial.com/sa_canal6.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1082.m3u8"
-    },
-    {
-      "nombre": "Canal Uno (1) | Colombia",
-      "logo": "https://img.tvcluboficial.com/co_uno.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1014.m3u8"
-    },
-    {
-      "nombre": "Caracol | Colombia",
-      "logo": "https://img.tvcluboficial.com/caracol.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/126.m3u8"
-    },
-    {
-      "nombre": "Chilevision (CHV) | Chile",
-      "logo": "https://img.tvcluboficial.com/ch_chilevision.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/155.m3u8"
-    },
-    {
-      "nombre": "Ecuavisa | Ecuador",
-      "logo": "https://img.tvcluboficial.com/ecuavisa.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/338.m3u8"
-    },
-    {
-      "nombre": "El Nueve (9) | Argentina",
-      "logo": "https://img.tvcluboficial.com/elnueveargentina.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/353.m3u8"
-    },
-    {
-      "nombre": "El Trece (13) Argentina",
-      "logo": "https://img.tvcluboficial.com/el13argentina.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/362.m3u8"
-    },
-    {
-      "nombre": "El Trece (13) Chile",
-      "logo": "https://img.tvcluboficial.com/eltrecechile.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/360.m3u8"
-    },
-    {
-      "nombre": "Gamavision",
-      "logo": "https://img.tvcluboficial.com/gamavision.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/483.m3u8"
-    },
-    {
-      "nombre": "Globo | Brasil",
-      "logo": "https://img.tvcluboficial.com/tvglobo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1103.m3u8"
-    },
-    {
-      "nombre": "Latina | Peru",
-      "logo": "https://img.tvcluboficial.com/latinatv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/765.m3u8"
-    },
-    {
-      "nombre": "Latina | Uruguay",
-      "logo": "https://img.tvcluboficial.com/latinatv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/609.m3u8"
-    },
-    {
-      "nombre": "Mega | Chile",
-      "logo": "https://img.tvcluboficial.com/mega.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/651.m3u8"
-    },
-    {
-      "nombre": "Panamericana | Peru",
-      "logo": "https://img.tvcluboficial.com/pe_panamericana.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1064.m3u8"
-    },
-    {
-      "nombre": "RCN HD | Colombia",
-      "logo": "https://img.tvcluboficial.com/rcn.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1146.m3u8"
-    },
-    {
-      "nombre": "RCN | Colombia",
-      "logo": "https://img.tvcluboficial.com/rcn.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/785.m3u8"
-    },
-    {
-      "nombre": "RTS | Ecuador",
-      "logo": "https://img.tvcluboficial.com/ec_rts.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1090.m3u8"
-    },
-    {
-      "nombre": "TC | Ecuador",
-      "logo": "https://img.tvcluboficial.com/tc.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/861.m3u8"
-    },
-    {
-      "nombre": "TeleAmazonas | Ecuador",
-      "logo": "https://img.tvcluboficial.com/teleamazonas.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/867.m3u8"
-    },
-    {
-      "nombre": "Telecaribe | Colombia",
-      "logo": "https://img.tvcluboficial.com/co_telecaribe.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1066.m3u8"
-    },
-    {
-      "nombre": "Telefe | Argentina",
-      "logo": "https://img.tvcluboficial.com/telefe.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/874.m3u8"
-    },
-    {
-      "nombre": "Teletica (Canal 7) | Costa Rica",
-      "logo": "https://img.tvcluboficial.com/cr_teletica.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1073.m3u8"
-    },
-    {
-      "nombre": "Televicentro (TVC) | Ecuador",
-      "logo": "https://img.tvcluboficial.com/televicentro.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/966.m3u8"
-    },
-    {
-      "nombre": "TV Chile",
-      "logo": "https://img.tvcluboficial.com/tvchile.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/958.m3u8"
-    },
-    {
-      "nombre": "Wapa PR",
-      "logo": "https://img.tvcluboficial.com/wapa.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1030.m3u8"
-    }
-  ],
-  "📰 Noticias": [
-    {
-      "nombre": "ADN 40",
-      "logo": "https://img.tvcluboficial.com/adn40.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/20.m3u8"
-    },
-    {
-      "nombre": "Al Jazeera",
-      "logo": "https://img.tvcluboficial.com/aljazeera.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/27.m3u8"
-    },
-    {
-      "nombre": "Antena 3",
-      "logo": "https://img.tvcluboficial.com/antena3.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/45.m3u8"
-    },
-    {
-      "nombre": "BBC HD",
-      "logo": "https://img.tvcluboficial.com/bbc.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/86.m3u8"
-    },
-    {
-      "nombre": "CBS HD",
-      "logo": "https://img.tvcluboficial.com/cbs.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/140.m3u8"
-    },
-    {
-      "nombre": "DW",
-      "logo": "https://img.tvcluboficial.com/dw.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1091.m3u8"
-    },
-    {
-      "nombre": "Foro TV",
-      "logo": "https://img.tvcluboficial.com/forotv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/429.m3u8"
-    },
-    {
-      "nombre": "Fox News",
-      "logo": "https://img.tvcluboficial.com/foxnews.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/433.m3u8"
-    },
-    {
-      "nombre": "La 1 HD",
-      "logo": "https://img.tvcluboficial.com/la1.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/588.m3u8"
-    },
-    {
-      "nombre": "La 2 HD",
-      "logo": "https://img.tvcluboficial.com/la2hd.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/589.m3u8"
-    },
-    {
-      "nombre": "La Sexta HD",
-      "logo": "https://img.tvcluboficial.com/lasexta.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/603.m3u8"
-    },
-    {
-      "nombre": "Telecinco HD",
-      "logo": "https://img.tvcluboficial.com/telecinco.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/871.m3u8"
-    },
-    {
-      "nombre": "TVE",
-      "logo": "https://img.tvcluboficial.com/tve.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/968.m3u8"
-    },
-    {
-      "nombre": "TVE HD",
-      "logo": "https://img.tvcluboficial.com/tve.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/969.m3u8"
-    }
-  ],
-  "🎵 Música": [
-    {
-      "nombre": "Bandamax",
-      "logo": "https://img.tvcluboficial.com/bandamax.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/83.m3u8"
-    },
-    {
-      "nombre": "Bandamax HD",
-      "logo": "https://img.tvcluboficial.com/bandamax.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/84.m3u8"
-    },
-    {
-      "nombre": "Canal de la Musica",
-      "logo": "https://img.tvcluboficial.com/canaldelamusica.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/111.m3u8"
-    },
-    {
-      "nombre": "HTV",
-      "logo": "https://img.tvcluboficial.com/htv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/568.m3u8"
-    },
-    {
-      "nombre": "MTV",
-      "logo": "https://img.tvcluboficial.com/mtv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/673.m3u8"
-    },
-    {
-      "nombre": "MTV (ES)",
-      "logo": "https://img.tvcluboficial.com/mtv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/674.m3u8"
-    },
-    {
-      "nombre": "MTV 00s",
-      "logo": "https://img.tvcluboficial.com/mtv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/675.m3u8"
-    },
-    {
-      "nombre": "MTV 90s",
-      "logo": "https://img.tvcluboficial.com/mtv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/679.m3u8"
-    },
-    {
-      "nombre": "MTV HD",
-      "logo": "https://img.tvcluboficial.com/mtv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/680.m3u8"
-    },
-    {
-      "nombre": "MTV Live",
-      "logo": "https://img.tvcluboficial.com/mtvlive.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/683.m3u8"
-    },
-    {
-      "nombre": "MTV Shore",
-      "logo": "https://img.tvcluboficial.com/mtv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1151.m3u8"
-    },
-    {
-      "nombre": "MTV WW",
-      "logo": "https://img.tvcluboficial.com/mtv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/685.m3u8"
-    },
-    {
-      "nombre": "Much Music",
-      "logo": "https://img.tvcluboficial.com/muchmusic.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/686.m3u8"
-    },
-    {
-      "nombre": "Music Now",
-      "logo": "https://img.tvcluboficial.com/play.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/698.m3u8"
-    },
-    {
-      "nombre": "Music Top",
-      "logo": "https://img.tvcluboficial.com/musictop.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/699.m3u8"
-    },
-    {
-      "nombre": "Quiero Musica",
-      "logo": "https://img.tvcluboficial.com/quieromusica.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/779.m3u8"
-    },
-    {
-      "nombre": "Retro Music",
-      "logo": "https://img.tvcluboficial.com/retromusic.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/791.m3u8"
-    },
-    {
-      "nombre": "Ritmoson Latino",
-      "logo": "https://img.tvcluboficial.com/ritmoson.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/792.m3u8"
-    },
-    {
-      "nombre": "Telehit",
-      "logo": "https://img.tvcluboficial.com/telehitmusica.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/878.m3u8"
-    },
-    {
-      "nombre": "Telehit HD",
-      "logo": "https://img.tvcluboficial.com/telehitmusica.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/879.m3u8"
-    },
-    {
-      "nombre": "TLR (Teleritmo)",
-      "logo": "https://img.tvcluboficial.com/teleritmo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/916.m3u8"
-    },
-    {
-      "nombre": "TLR HD",
-      "logo": "https://img.tvcluboficial.com/teleritmo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/917.m3u8"
-    },
-    {
-      "nombre": "TLR HD",
-      "logo": "https://img.tvcluboficial.com/teleritmo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/918.m3u8"
-    },
-    {
-      "nombre": "Tu Musica HD",
-      "logo": "https://img.tvcluboficial.com/tumusicahd.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/951.m3u8"
-    },
-    {
-      "nombre": "VH1",
-      "logo": "https://img.tvcluboficial.com/vh1.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1016.m3u8"
-    },
-    {
-      "nombre": "VH1 HD",
-      "logo": "https://img.tvcluboficial.com/vh1.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1017.m3u8"
-    }
-  ],
-  "🏕️ Documentales y Cultura": [
-    {
-      "nombre": "Animal Planet",
-      "logo": "https://img.tvcluboficial.com/animalplanet.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/41.m3u8"
-    },
-    {
-      "nombre": "Animal Planet (Calidad Baja)",
-      "logo": "https://img.tvcluboficial.com/animalplanet.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/38.m3u8"
-    },
-    {
-      "nombre": "Animal Planet HD",
-      "logo": "https://img.tvcluboficial.com/animalplanet.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/42.m3u8"
-    },
-    {
-      "nombre": "Discovery Channel",
-      "logo": "https://img.tvcluboficial.com/discoverychannel.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/247.m3u8"
-    },
-    {
-      "nombre": "Discovery Channel (Calidad Baja)",
-      "logo": "https://img.tvcluboficial.com/discoverychannel.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/250.m3u8"
-    },
-    {
-      "nombre": "Discovery Channel HD",
-      "logo": "https://img.tvcluboficial.com/discoverychannel.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/251.m3u8"
-    },
-    {
-      "nombre": "Discovery Civilization",
-      "logo": "https://img.tvcluboficial.com/discoverycivilization.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/252.m3u8"
-    },
-    {
-      "nombre": "Discovery SCI",
-      "logo": "https://img.tvcluboficial.com/discoverysci.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/267.m3u8"
-    },
-    {
-      "nombre": "Discovery Theater HD",
-      "logo": "https://img.tvcluboficial.com/discoverytheater.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/271.m3u8"
-    },
-    {
-      "nombre": "Discovery World",
-      "logo": "https://img.tvcluboficial.com/discoveryworld.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/276.m3u8"
-    },
-    {
-      "nombre": "H2",
-      "logo": "https://img.tvcluboficial.com/h2.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/509.m3u8"
-    },
-    {
-      "nombre": "Historia (ES)",
-      "logo": "https://img.tvcluboficial.com/history.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/554.m3u8"
-    },
-    {
-      "nombre": "History Channel",
-      "logo": "https://img.tvcluboficial.com/history.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/558.m3u8"
-    },
-    {
-      "nombre": "History Channel (Calidad Baja)",
-      "logo": "https://img.tvcluboficial.com/history.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/557.m3u8"
-    },
-    {
-      "nombre": "History Channel HD",
-      "logo": "https://img.tvcluboficial.com/history.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/560.m3u8"
-    },
-    {
-      "nombre": "Investigation Discovery",
-      "logo": "https://img.tvcluboficial.com/investigationdiscovery.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/579.m3u8"
-    },
-    {
-      "nombre": "Investigation Discovery (Calidad Baja)",
-      "logo": "https://img.tvcluboficial.com/investigationdiscovery.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/580.m3u8"
-    },
-    {
-      "nombre": "Investigation Discovery HD",
-      "logo": "https://img.tvcluboficial.com/investigationdiscovery.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/581.m3u8"
-    },
-    {
-      "nombre": "Nat Geo",
-      "logo": "https://img.tvcluboficial.com/natgeo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/703.m3u8"
-    },
-    {
-      "nombre": "Nat Geo HD",
-      "logo": "https://img.tvcluboficial.com/natgeo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/706.m3u8"
-    },
-    {
-      "nombre": "Nat Geo Wild",
-      "logo": "https://img.tvcluboficial.com/natgeowild.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/709.m3u8"
-    },
-    {
-      "nombre": "TLC",
-      "logo": "https://img.tvcluboficial.com/tlc.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/911.m3u8"
-    }
-  ],
-  "🎭 Variedades y Entretenimiento": [
-    {
-      "nombre": "A+",
-      "logo": "https://img.tvcluboficial.com/aplus.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/9.m3u8"
-    },
-    {
-      "nombre": "Az Clic",
-      "logo": "https://img.tvcluboficial.com/azclic.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/64.m3u8"
-    },
-    {
-      "nombre": "AZ Corazon",
-      "logo": "https://img.tvcluboficial.com/azcorazon.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/66.m3u8"
-    },
-    {
-      "nombre": "Az Corazón HD",
-      "logo": "https://img.tvcluboficial.com/azcorazon.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/68.m3u8"
-    },
-    {
-      "nombre": "Azteca 7",
-      "logo": "https://img.tvcluboficial.com/azteca7.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/72.m3u8"
-    },
-    {
-      "nombre": "Azteca 7 HD",
-      "logo": "https://img.tvcluboficial.com/azteca7.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/74.m3u8"
-    },
-    {
-      "nombre": "Azteca Uno",
-      "logo": "https://img.tvcluboficial.com/azteca1.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/76.m3u8"
-    },
-    {
-      "nombre": "Azteca Uno (Calidad Baja)",
-      "logo": "https://img.tvcluboficial.com/azteca1.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/75.m3u8"
-    },
-    {
-      "nombre": "Azteca Uno HD",
-      "logo": "https://img.tvcluboficial.com/azteca1.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/78.m3u8"
-    },
-    {
-      "nombre": "Comedy Central",
-      "logo": "https://img.tvcluboficial.com/comedycentral.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/216.m3u8"
-    },
-    {
-      "nombre": "Comedy Central (ES)",
-      "logo": "https://img.tvcluboficial.com/comedycentral.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/219.m3u8"
-    },
-    {
-      "nombre": "Comedy Central HD",
-      "logo": "https://img.tvcluboficial.com/comedycentral.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/220.m3u8"
-    },
-    {
-      "nombre": "Discovery H&H",
-      "logo": "https://img.tvcluboficial.com/discoveryhh.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/254.m3u8"
-    },
-    {
-      "nombre": "Discovery H&H HD",
-      "logo": "https://img.tvcluboficial.com/discoveryhh.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/258.m3u8"
-    },
-    {
-      "nombre": "Discovery Turbo",
-      "logo": "https://img.tvcluboficial.com/discoveryturbo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/274.m3u8"
-    },
-    {
-      "nombre": "Discovery Turbo HD",
-      "logo": "https://img.tvcluboficial.com/discoveryturbo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/275.m3u8"
-    },
-    {
-      "nombre": "Distrito Comedia",
-      "logo": "https://img.tvcluboficial.com/distritocomedia.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/293.m3u8"
-    },
-    {
-      "nombre": "E!",
-      "logo": "https://img.tvcluboficial.com/e.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/333.m3u8"
-    },
-    {
-      "nombre": "E! HD",
-      "logo": "https://img.tvcluboficial.com/e.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/336.m3u8"
-    },
-    {
-      "nombre": "El Gourmet",
-      "logo": "https://img.tvcluboficial.com/elgourmet.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/349.m3u8"
-    },
-    {
-      "nombre": "Enlace",
-      "logo": "https://img.tvcluboficial.com/enlace.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1092.m3u8"
-    },
-    {
-      "nombre": "Food Network",
-      "logo": "https://img.tvcluboficial.com/foodnetwork.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/424.m3u8"
-    },
-    {
-      "nombre": "Gala TV",
-      "logo": "https://img.tvcluboficial.com/galatv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/481.m3u8"
-    },
-    {
-      "nombre": "Gala TV HD",
-      "logo": "https://img.tvcluboficial.com/galatv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/482.m3u8"
-    },
-    {
-      "nombre": "Glitz",
-      "logo": "https://img.tvcluboficial.com/glitz.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/488.m3u8"
-    },
-    {
-      "nombre": "Hola TV",
-      "logo": "https://img.tvcluboficial.com/hola.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/564.m3u8"
-    },
-    {
-      "nombre": "Imagen Television",
-      "logo": "https://img.tvcluboficial.com/imagentv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/576.m3u8"
-    },
-    {
-      "nombre": "Imagen Televisión HD",
-      "logo": "https://img.tvcluboficial.com/imagentv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/577.m3u8"
-    },
-    {
-      "nombre": "Más chic",
-      "logo": "https://img.tvcluboficial.com/maschic.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/643.m3u8"
-    },
-    {
-      "nombre": "Multimedios",
-      "logo": "https://img.tvcluboficial.com/multimedios.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/690.m3u8"
-    },
-    {
-      "nombre": "Multimedios (Monterrey)",
-      "logo": "https://img.tvcluboficial.com/multimedios.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/691.m3u8"
-    },
-    {
-      "nombre": "Multimedios (Monterrey) HD",
-      "logo": "https://img.tvcluboficial.com/multimedios.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/692.m3u8"
-    },
-    {
-      "nombre": "Multimedios HD",
-      "logo": "https://img.tvcluboficial.com/multimedios.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/693.m3u8"
-    },
-    {
-      "nombre": "Multimedios Plus",
-      "logo": "https://img.tvcluboficial.com/multimedios.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/694.m3u8"
-    },
-    {
-      "nombre": "Pasiones HD",
-      "logo": "https://img.tvcluboficial.com/pasiones.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/757.m3u8"
-    },
-    {
-      "nombre": "TBS Very Funny",
-      "logo": "https://img.tvcluboficial.com/tbs.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/859.m3u8"
-    },
-    {
-      "nombre": "TBS Very Funny HD",
-      "logo": "https://img.tvcluboficial.com/tbs.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/860.m3u8"
-    },
-    {
-      "nombre": "Tele",
-      "logo": "https://img.tvcluboficial.com/play.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/866.m3u8"
-    },
-    {
-      "nombre": "Telemax",
-      "logo": "https://img.tvcluboficial.com/telemax.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/883.m3u8"
-    },
-    {
-      "nombre": "Telemundo",
-      "logo": "https://img.tvcluboficial.com/telemundo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/888.m3u8"
-    },
-    {
-      "nombre": "Telemundo HD",
-      "logo": "https://img.tvcluboficial.com/telemundo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/889.m3u8"
-    },
-    {
-      "nombre": "Telemundo Internacional",
-      "logo": "https://img.tvcluboficial.com/telemundo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1108.m3u8"
-    },
-    {
-      "nombre": "Tlnovelas",
-      "logo": "https://img.tvcluboficial.com/tlnovelas.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/912.m3u8"
-    },
-    {
-      "nombre": "Tlnovelas HD",
-      "logo": "https://img.tvcluboficial.com/tlnovelas.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/915.m3u8"
-    },
-    {
-      "nombre": "Trece",
-      "logo": "https://img.tvcluboficial.com/trece_colombia.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/943.m3u8"
-    },
-    {
-      "nombre": "TruTV",
-      "logo": "https://img.tvcluboficial.com/trutv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/949.m3u8"
-    },
-    {
-      "nombre": "TruTv HD",
-      "logo": "https://img.tvcluboficial.com/trutv.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/950.m3u8"
-    },
-    {
-      "nombre": "Unicable",
-      "logo": "https://img.tvcluboficial.com/unicable.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/978.m3u8"
-    },
-    {
-      "nombre": "Unicable HD",
-      "logo": "https://img.tvcluboficial.com/unicable.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/980.m3u8"
-    },
-    {
-      "nombre": "Unicable HD",
-      "logo": "https://img.tvcluboficial.com/unicable.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/981.m3u8"
-    },
-    {
-      "nombre": "UniMas",
-      "logo": "https://img.tvcluboficial.com/unimas.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/982.m3u8"
-    },
-    {
-      "nombre": "Univision",
-      "logo": "https://img.tvcluboficial.com/univision.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1009.m3u8"
-    },
-    {
-      "nombre": "Univision Tlnovelas",
-      "logo": "https://img.tvcluboficial.com/tlnovelasunivision.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1013.m3u8"
-    }
-  ],
-  "🔄 Canales 24/7": [
-    {
-      "nombre": "Alf 24/7",
-      "logo": "https://img.tvcluboficial.com/alf.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/28.m3u8"
-    },
-    {
-      "nombre": "Animaniacs 24/7",
-      "logo": "https://img.tvcluboficial.com/animaniacs.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/43.m3u8"
-    },
-    {
-      "nombre": "Bayblade 24/7",
-      "logo": "https://img.tvcluboficial.com/247.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/85.m3u8"
-    },
-    {
-      "nombre": "Bob Esponja 24/7",
-      "logo": "https://img.tvcluboficial.com/bobesponja.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/96.m3u8"
-    },
-    {
-      "nombre": "Breaking Bad 24/7",
-      "logo": "https://img.tvcluboficial.com/breakingbad.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/98.m3u8"
-    },
-    {
-      "nombre": "Caballeros del Zodiaco 24/7",
-      "logo": "https://img.tvcluboficial.com/caballeroszodiaco.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/100.m3u8"
-    },
-    {
-      "nombre": "Calabozos y Dragones 24/7",
-      "logo": "https://img.tvcluboficial.com/247.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/103.m3u8"
-    },
-    {
-      "nombre": "Candy Candy 24/7",
-      "logo": "",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/122.m3u8"
-    },
-    {
-      "nombre": "Cantinflas 24/7",
-      "logo": "https://img.tvcluboficial.com/cantinflas.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/123.m3u8"
-    },
-    {
-      "nombre": "Caso Cerrado 24/7",
-      "logo": "https://img.tvcluboficial.com/casocerrado.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/138.m3u8"
-    },
-    {
-      "nombre": "Chapulin Colorado 24/7",
-      "logo": "https://img.tvcluboficial.com/chapulincolorado.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/152.m3u8"
-    },
-    {
-      "nombre": "Chespirito 24/7",
-      "logo": "https://img.tvcluboficial.com/chespirito.jpg",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/153.m3u8"
-    },
-    {
-      "nombre": "Coraje el Perro Cobarde 24/7",
-      "logo": "https://img.tvcluboficial.com/coraje.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/223.m3u8"
-    },
-    {
-      "nombre": "CSI: Miami 24/7",
-      "logo": "https://img.tvcluboficial.com/csi_miami.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/228.m3u8"
-    },
-    {
-      "nombre": "Dinosaurios 24/7",
-      "logo": "https://img.tvcluboficial.com/dinosaurios.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/244.m3u8"
     },
     {
       "nombre": "Doraemon 24/7",
@@ -2202,16 +1473,6 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/339.m3u8"
     },
     {
-      "nombre": "El Chavo del 8 24/7",
-      "logo": "https://img.tvcluboficial.com/elchavodel8.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/344.m3u8"
-    },
-    {
-      "nombre": "El Conde Patula 24/7",
-      "logo": "https://img.tvcluboficial.com/elcondepatula.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/345.m3u8"
-    },
-    {
       "nombre": "El Coyote y el Correcaminos 24/7",
       "logo": "https://img.tvcluboficial.com/elcoyote.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/346.m3u8"
@@ -2232,54 +1493,14 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/356.m3u8"
     },
     {
-      "nombre": "El Principe del Rap 24/7",
-      "logo": "https://img.tvcluboficial.com/elprincipedelrap.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/357.m3u8"
-    },
-    {
-      "nombre": "Elementary 24/7",
-      "logo": "https://img.tvcluboficial.com/247.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/363.m3u8"
-    },
-    {
-      "nombre": "Elfen Lied 24/7",
-      "logo": "https://img.tvcluboficial.com/247.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/364.m3u8"
-    },
-    {
-      "nombre": "Friends 24/7",
-      "logo": "https://img.tvcluboficial.com/247.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/470.m3u8"
-    },
-    {
-      "nombre": "Game of Thrones 24/7",
-      "logo": "https://img.tvcluboficial.com/gameofthrones.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/484.m3u8"
-    },
-    {
       "nombre": "Garfield 24/7",
       "logo": "",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/486.m3u8"
     },
     {
-      "nombre": "Hercules 24/7",
-      "logo": "https://img.tvcluboficial.com/247.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/550.m3u8"
-    },
-    {
       "nombre": "Hey Arnold 24/7",
       "logo": "https://img.tvcluboficial.com/heyarnold.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/551.m3u8"
-    },
-    {
-      "nombre": "Ironman 24/7",
-      "logo": "https://img.tvcluboficial.com/ironman.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/582.m3u8"
-    },
-    {
-      "nombre": "Johnny Bravo 24/7",
-      "logo": "https://img.tvcluboficial.com/johnnybravo.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/584.m3u8"
     },
     {
       "nombre": "Jorge el Curioso 24/7",
@@ -2295,11 +1516,6 @@
       "nombre": "La Familia Monster 24/7",
       "logo": "https://img.tvcluboficial.com/lafamiliamonster.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/591.m3u8"
-    },
-    {
-      "nombre": "La Hora Pico 24/7",
-      "logo": "https://img.tvcluboficial.com/lahorapico.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/593.m3u8"
     },
     {
       "nombre": "La Hormiga Atomica 24/7",
@@ -2322,11 +1538,6 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/598.m3u8"
     },
     {
-      "nombre": "La Rosa de Guadalupe 24/7",
-      "logo": "https://img.tvcluboficial.com/larosadeguadalupe.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/601.m3u8"
-    },
-    {
       "nombre": "La Vaca y ElPollito 24/7",
       "logo": "https://img.tvcluboficial.com/lavacayelpollito.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/606.m3u8"
@@ -2340,11 +1551,6 @@
       "nombre": "Las Chicas Super Poderosas 24/7",
       "logo": "https://img.tvcluboficial.com/247.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/608.m3u8"
-    },
-    {
-      "nombre": "Le Temes a la Oscuridad 24/7",
-      "logo": "https://img.tvcluboficial.com/letemesalaoscuridad.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/611.m3u8"
     },
     {
       "nombre": "Looney Tunes 24/7",
@@ -2437,16 +1643,6 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/638.m3u8"
     },
     {
-      "nombre": "Malcolm 24/7",
-      "logo": "https://img.tvcluboficial.com/malcolm.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/640.m3u8"
-    },
-    {
-      "nombre": "Malcolm HD 24/7",
-      "logo": "https://img.tvcluboficial.com/malcolm.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/641.m3u8"
-    },
-    {
       "nombre": "Max Steel 24/7",
       "logo": "https://img.tvcluboficial.com/maxsteel.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/647.m3u8"
@@ -2457,14 +1653,44 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/649.m3u8"
     },
     {
-      "nombre": "Mr. Bean 24/7",
-      "logo": "https://img.tvcluboficial.com/mrbean.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/670.m3u8"
-    },
-    {
       "nombre": "Naruto 24/7",
       "logo": "https://img.tvcluboficial.com/naruto.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/702.m3u8"
+    },
+    {
+      "nombre": "Nick",
+      "logo": "https://img.tvcluboficial.com/nick.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/724.m3u8"
+    },
+    {
+      "nombre": "Nick 2 HD",
+      "logo": "https://img.tvcluboficial.com/nick2.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/726.m3u8"
+    },
+    {
+      "nombre": "Nick HD",
+      "logo": "https://img.tvcluboficial.com/nick.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/728.m3u8"
+    },
+    {
+      "nombre": "Nick JR",
+      "logo": "https://img.tvcluboficial.com/nickjr.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/729.m3u8"
+    },
+    {
+      "nombre": "Nick JR HD",
+      "logo": "https://img.tvcluboficial.com/nickjr.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/732.m3u8"
+    },
+    {
+      "nombre": "Nick Toons",
+      "logo": "https://img.tvcluboficial.com/nicktoons.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/735.m3u8"
+    },
+    {
+      "nombre": "Nickelodeon",
+      "logo": "https://img.tvcluboficial.com/nickelodeon.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/736.m3u8"
     },
     {
       "nombre": "One Punch Man 24/7",
@@ -2472,9 +1698,9 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/744.m3u8"
     },
     {
-      "nombre": "Padre de Familia 24/7",
-      "logo": "https://img.tvcluboficial.com/padredefamilia.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/747.m3u8"
+      "nombre": "PakaPaka",
+      "logo": "https://img.tvcluboficial.com/pakapaka.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/748.m3u8"
     },
     {
       "nombre": "Patoaventuras 24/7",
@@ -2532,11 +1758,6 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/804.m3u8"
     },
     {
-      "nombre": "Smallville 24/7",
-      "logo": "https://img.tvcluboficial.com/smallville.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/812.m3u8"
-    },
-    {
       "nombre": "Spiderman 24/7",
       "logo": "https://img.tvcluboficial.com/spiderman.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/827.m3u8"
@@ -2547,19 +1768,14 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/850.m3u8"
     },
     {
-      "nombre": "The Big Bang Theory 24/7",
-      "logo": "https://img.tvcluboficial.com/thebigbangtheory.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/899.m3u8"
+      "nombre": "TeenNick",
+      "logo": "https://img.tvcluboficial.com/teennick.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/865.m3u8"
     },
     {
-      "nombre": "The Walking Dead 24/7",
-      "logo": "https://img.tvcluboficial.com/thewalkingdead.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/901.m3u8"
-    },
-    {
-      "nombre": "The Walking Dead 24/7 Op. 2",
-      "logo": "https://img.tvcluboficial.com/thewalkingdead.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/902.m3u8"
+      "nombre": "Tiin",
+      "logo": "https://img.tvcluboficial.com/tiin.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/907.m3u8"
     },
     {
       "nombre": "Tom y Jerry 24/7",
@@ -2567,14 +1783,14 @@
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/940.m3u8"
     },
     {
+      "nombre": "Tooncast",
+      "logo": "https://img.tvcluboficial.com/tooncast.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/941.m3u8"
+    },
+    {
       "nombre": "TrollHunters 24/7",
       "logo": "https://img.tvcluboficial.com/trollhunters.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/945.m3u8"
-    },
-    {
-      "nombre": "Two And a Half Men 24/7",
-      "logo": "https://img.tvcluboficial.com/twoandhalfmen.png",
-      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/973.m3u8"
     },
     {
       "nombre": "Yogui 24/7",
@@ -2586,6 +1802,917 @@
       "logo": "https://img.tvcluboficial.com/yugioh.png",
       "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1052.m3u8"
     }
+  ],
+
+  "📡 Noticias": [
+    {
+      "nombre": "ADN 40",
+      "logo": "https://img.tvcluboficial.com/adn40.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/20.m3u8"
+    },
+    {
+      "nombre": "Al Jazeera",
+      "logo": "https://img.tvcluboficial.com/aljazeera.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/27.m3u8"
+    },
+    {
+      "nombre": "BBC HD",
+      "logo": "https://img.tvcluboficial.com/bbc.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/86.m3u8"
+    },
+    {
+      "nombre": "CBS HD",
+      "logo": "https://img.tvcluboficial.com/cbs.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/140.m3u8"
+    },
+    {
+      "nombre": "DW",
+      "logo": "https://img.tvcluboficial.com/dw.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1091.m3u8"
+    },
+    {
+      "nombre": "Fox News",
+      "logo": "https://img.tvcluboficial.com/foxnews.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/433.m3u8"
+    },
+    {
+      "nombre": "NBC HD",
+      "logo": "https://img.tvcluboficial.com/nbc.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/713.m3u8"
+    }
+  ],
+
+  "🌍 Documentales": [
+    {
+      "nombre": "Animal Planet",
+      "logo": "https://img.tvcluboficial.com/animalplanet.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/41.m3u8"
+    },
+    {
+      "nombre": "Animal Planet (Calidad Baja)",
+      "logo": "https://img.tvcluboficial.com/animalplanet.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/38.m3u8"
+    },
+    {
+      "nombre": "Animal Planet HD",
+      "logo": "https://img.tvcluboficial.com/animalplanet.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/42.m3u8"
+    },
+    {
+      "nombre": "Discovery Channel",
+      "logo": "https://img.tvcluboficial.com/discoverychannel.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/247.m3u8"
+    },
+    {
+      "nombre": "Discovery Channel (Calidad Baja)",
+      "logo": "https://img.tvcluboficial.com/discoverychannel.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/250.m3u8"
+    },
+    {
+      "nombre": "Discovery Channel HD",
+      "logo": "https://img.tvcluboficial.com/discoverychannel.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/251.m3u8"
+    },
+    {
+      "nombre": "Discovery Civilization",
+      "logo": "https://img.tvcluboficial.com/discoverycivilization.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/252.m3u8"
+    },
+    {
+      "nombre": "Discovery H&H",
+      "logo": "https://img.tvcluboficial.com/discoveryhh.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/254.m3u8"
+    },
+    {
+      "nombre": "Discovery H&H HD",
+      "logo": "https://img.tvcluboficial.com/discoveryhh.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/258.m3u8"
+    },
+    {
+      "nombre": "Discovery Kids",
+      "logo": "https://img.tvcluboficial.com/discoverykids.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/264.m3u8"
+    },
+    {
+      "nombre": "Discovery Kids HD",
+      "logo": "https://img.tvcluboficial.com/discoverykids.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/266.m3u8"
+    },
+    {
+      "nombre": "Discovery SCI",
+      "logo": "https://img.tvcluboficial.com/discoverysci.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/267.m3u8"
+    },
+    {
+      "nombre": "Discovery Theater HD",
+      "logo": "https://img.tvcluboficial.com/discoverytheater.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/271.m3u8"
+    },
+    {
+      "nombre": "Discovery Turbo",
+      "logo": "https://img.tvcluboficial.com/discoveryturbo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/274.m3u8"
+    },
+    {
+      "nombre": "Discovery Turbo HD",
+      "logo": "https://img.tvcluboficial.com/discoveryturbo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/275.m3u8"
+    },
+    {
+      "nombre": "Discovery World",
+      "logo": "https://img.tvcluboficial.com/discoveryworld.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/276.m3u8"
+    },
+    {
+      "nombre": "DMax HD",
+      "logo": "https://img.tvcluboficial.com/dmax.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/296.m3u8"
+    },
+    {
+      "nombre": "Historia (ES)",
+      "logo": "https://img.tvcluboficial.com/history.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/554.m3u8"
+    },
+    {
+      "nombre": "History Channel",
+      "logo": "https://img.tvcluboficial.com/history.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/558.m3u8"
+    },
+    {
+      "nombre": "History Channel (Calidad Baja)",
+      "logo": "https://img.tvcluboficial.com/history.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/557.m3u8"
+    },
+    {
+      "nombre": "History Channel HD",
+      "logo": "https://img.tvcluboficial.com/history.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/560.m3u8"
+    },
+    {
+      "nombre": "Investigation Discovery",
+      "logo": "https://img.tvcluboficial.com/investigationdiscovery.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/579.m3u8"
+    },
+    {
+      "nombre": "Investigation Discovery (Calidad Baja)",
+      "logo": "https://img.tvcluboficial.com/investigationdiscovery.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/580.m3u8"
+    },
+    {
+      "nombre": "Investigation Discovery HD",
+      "logo": "https://img.tvcluboficial.com/investigationdiscovery.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/581.m3u8"
+    },
+    {
+      "nombre": "Nat Geo",
+      "logo": "https://img.tvcluboficial.com/natgeo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/703.m3u8"
+    },
+    {
+      "nombre": "Nat Geo HD",
+      "logo": "https://img.tvcluboficial.com/natgeo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/706.m3u8"
+    },
+    {
+      "nombre": "Nat Geo Wild",
+      "logo": "https://img.tvcluboficial.com/natgeowild.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/709.m3u8"
+    }
+  ],
+
+  "🎵 Música": [
+    {
+      "nombre": "Bandamax",
+      "logo": "https://img.tvcluboficial.com/bandamax.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/83.m3u8"
+    },
+    {
+      "nombre": "Bandamax HD",
+      "logo": "https://img.tvcluboficial.com/bandamax.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/84.m3u8"
+    },
+    {
+      "nombre": "Canal de la Musica",
+      "logo": "https://img.tvcluboficial.com/canaldelamusica.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/111.m3u8"
+    },
+    {
+      "nombre": "Music Now",
+      "logo": "https://img.tvcluboficial.com/play.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/698.m3u8"
+    },
+    {
+      "nombre": "Quiero Musica",
+      "logo": "https://img.tvcluboficial.com/quieromusica.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/779.m3u8"
+    },
+    {
+      "nombre": "Retro Music",
+      "logo": "https://img.tvcluboficial.com/retromusic.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/791.m3u8"
+    },
+    {
+      "nombre": "Ritmoson Latino",
+      "logo": "https://img.tvcluboficial.com/ritmoson.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/792.m3u8"
+    },
+    {
+      "nombre": "Telehit",
+      "logo": "https://img.tvcluboficial.com/telehitmusica.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/878.m3u8"
+    },
+    {
+      "nombre": "Telehit HD",
+      "logo": "https://img.tvcluboficial.com/telehitmusica.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/879.m3u8"
+    },
+    {
+      "nombre": "TLR (Teleritmo)",
+      "logo": "https://img.tvcluboficial.com/teleritmo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/916.m3u8"
+    },
+    {
+      "nombre": "TLR HD",
+      "logo": "https://img.tvcluboficial.com/teleritmo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/917.m3u8"
+    },
+    {
+      "nombre": "TLR HD",
+      "logo": "https://img.tvcluboficial.com/teleritmo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/918.m3u8"
+    },
+    {
+      "nombre": "Tu Musica HD",
+      "logo": "https://img.tvcluboficial.com/tumusicahd.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/951.m3u8"
+    },
+    {
+      "nombre": "VH1",
+      "logo": "https://img.tvcluboficial.com/vh1.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1016.m3u8"
+    },
+    {
+      "nombre": "VH1 HD",
+      "logo": "https://img.tvcluboficial.com/vh1.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1017.m3u8"
+    }
+  ],
+
+  "🍽️ Cocina y Lifestyle": [
+    {
+      "nombre": "El Gourmet",
+      "logo": "https://img.tvcluboficial.com/elgourmet.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/349.m3u8"
+    },
+    {
+      "nombre": "Food Network",
+      "logo": "https://img.tvcluboficial.com/foodnetwork.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/424.m3u8"
+    },
+    {
+      "nombre": "Hola TV",
+      "logo": "https://img.tvcluboficial.com/hola.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/564.m3u8"
+    },
+    {
+      "nombre": "Más chic",
+      "logo": "https://img.tvcluboficial.com/maschic.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/643.m3u8"
+    }
+  ],
+
+  "🗺️ Internacionales": [
+    {
+      "nombre": "America TV | Peru",
+      "logo": "https://img.tvcluboficial.com/americaperu.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/35.m3u8"
+    },
+    {
+      "nombre": "America TV | Peru op. 2",
+      "logo": "https://img.tvcluboficial.com/americaperu.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1115.m3u8"
+    },
+    {
+      "nombre": "America | Argentina",
+      "logo": "https://img.tvcluboficial.com/ar_america.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1068.m3u8"
+    },
+    {
+      "nombre": "Antena 3",
+      "logo": "https://img.tvcluboficial.com/antena3.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/45.m3u8"
+    },
+    {
+      "nombre": "ATV | Peru",
+      "logo": "https://img.tvcluboficial.com/pe_atv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1063.m3u8"
+    },
+    {
+      "nombre": "Canal 10 | Nicaragua",
+      "logo": "https://img.tvcluboficial.com/ni_canal10.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1076.m3u8"
+    },
+    {
+      "nombre": "Canal 12 | El Salvador",
+      "logo": "https://img.tvcluboficial.com/sa_canal12.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1083.m3u8"
+    },
+    {
+      "nombre": "Canal 2 | Nicaragua",
+      "logo": "https://img.tvcluboficial.com/ni_canal2.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1075.m3u8"
+    },
+    {
+      "nombre": "Canal 3 | El Salvador",
+      "logo": "https://img.tvcluboficial.com/sa_canal3.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1080.m3u8"
+    },
+    {
+      "nombre": "Canal 4 | El Salvador",
+      "logo": "https://img.tvcluboficial.com/sa_canal4.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1081.m3u8"
+    },
+    {
+      "nombre": "Canal 5 Honduras",
+      "logo": "https://img.tvcluboficial.com/ho_canal5.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/109.m3u8"
+    },
+    {
+      "nombre": "Canal 6 | Costa Rica",
+      "logo": "https://img.tvcluboficial.com/cr_canal6.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1084.m3u8"
+    },
+    {
+      "nombre": "Canal 6 | El Salvador",
+      "logo": "https://img.tvcluboficial.com/sa_canal6.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1082.m3u8"
+    },
+    {
+      "nombre": "Canal Uno (1) | Colombia",
+      "logo": "https://img.tvcluboficial.com/co_uno.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1014.m3u8"
+    },
+    {
+      "nombre": "Caracol | Colombia",
+      "logo": "https://img.tvcluboficial.com/caracol.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/126.m3u8"
+    },
+    {
+      "nombre": "Caracol Internacional",
+      "logo": "https://img.tvcluboficial.com/caracol.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/127.m3u8"
+    },
+    {
+      "nombre": "Chilevision (CHV) | Chile",
+      "logo": "https://img.tvcluboficial.com/ch_chilevision.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/155.m3u8"
+    },
+    {
+      "nombre": "Ecuavisa | Ecuador",
+      "logo": "https://img.tvcluboficial.com/ecuavisa.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/338.m3u8"
+    },
+    {
+      "nombre": "El Nueve (9) | Argentina",
+      "logo": "https://img.tvcluboficial.com/elnueveargentina.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/353.m3u8"
+    },
+    {
+      "nombre": "El Trece (13) Argentina",
+      "logo": "https://img.tvcluboficial.com/el13argentina.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/362.m3u8"
+    },
+    {
+      "nombre": "El Trece (13) Chile",
+      "logo": "https://img.tvcluboficial.com/eltrecechile.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/360.m3u8"
+    },
+    {
+      "nombre": "Globo | Brasil",
+      "logo": "https://img.tvcluboficial.com/tvglobo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1103.m3u8"
+    },
+    {
+      "nombre": "HCH",
+      "logo": "https://img.tvcluboficial.com/hchhonduras.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/547.m3u8"
+    },
+    {
+      "nombre": "La 1 HD",
+      "logo": "https://img.tvcluboficial.com/la1.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/588.m3u8"
+    },
+    {
+      "nombre": "La 2 HD",
+      "logo": "https://img.tvcluboficial.com/la2hd.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/589.m3u8"
+    },
+    {
+      "nombre": "La Sexta HD",
+      "logo": "https://img.tvcluboficial.com/lasexta.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/603.m3u8"
+    },
+    {
+      "nombre": "Latina | Peru",
+      "logo": "https://img.tvcluboficial.com/latinatv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/765.m3u8"
+    },
+    {
+      "nombre": "Latina | Uruguay",
+      "logo": "https://img.tvcluboficial.com/latinatv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/609.m3u8"
+    },
+    {
+      "nombre": "Mega | Chile",
+      "logo": "https://img.tvcluboficial.com/mega.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/651.m3u8"
+    },
+    {
+      "nombre": "Mega",
+      "logo": "https://img.tvcluboficial.com/mega.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/652.m3u8"
+    },
+    {
+      "nombre": "Mega ES HD",
+      "logo": "https://img.tvcluboficial.com/mega.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/653.m3u8"
+    },
+    {
+      "nombre": "Neox (ES)",
+      "logo": "https://img.tvcluboficial.com/neox.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/717.m3u8"
+    },
+    {
+      "nombre": "Nova (ES)",
+      "logo": "https://img.tvcluboficial.com/nova.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/740.m3u8"
+    },
+    {
+      "nombre": "Panamericana | Peru",
+      "logo": "https://img.tvcluboficial.com/pe_panamericana.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1064.m3u8"
+    },
+    {
+      "nombre": "RCN HD | Colombia",
+      "logo": "https://img.tvcluboficial.com/rcn.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1146.m3u8"
+    },
+    {
+      "nombre": "RCN | Colombia",
+      "logo": "https://img.tvcluboficial.com/rcn.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/785.m3u8"
+    },
+    {
+      "nombre": "RCN Novelas",
+      "logo": "https://img.tvcluboficial.com/rcnnovelas.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/788.m3u8"
+    },
+    {
+      "nombre": "RTS | Ecuador",
+      "logo": "https://img.tvcluboficial.com/ec_rts.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1090.m3u8"
+    },
+    {
+      "nombre": "TC | Ecuador",
+      "logo": "https://img.tvcluboficial.com/tc.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/861.m3u8"
+    },
+    {
+      "nombre": "TeleAmazonas | Ecuador",
+      "logo": "https://img.tvcluboficial.com/teleamazonas.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/867.m3u8"
+    },
+    {
+      "nombre": "Telecaribe | Colombia",
+      "logo": "https://img.tvcluboficial.com/co_telecaribe.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1066.m3u8"
+    },
+    {
+      "nombre": "Telecinco HD",
+      "logo": "https://img.tvcluboficial.com/telecinco.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/871.m3u8"
+    },
+    {
+      "nombre": "Telefe | Argentina",
+      "logo": "https://img.tvcluboficial.com/telefe.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/874.m3u8"
+    },
+    {
+      "nombre": "Telemax",
+      "logo": "https://img.tvcluboficial.com/telemax.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/883.m3u8"
+    },
+    {
+      "nombre": "Telemundo",
+      "logo": "https://img.tvcluboficial.com/telemundo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/888.m3u8"
+    },
+    {
+      "nombre": "Telemundo HD",
+      "logo": "https://img.tvcluboficial.com/telemundo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/889.m3u8"
+    },
+    {
+      "nombre": "Telemundo Internacional",
+      "logo": "https://img.tvcluboficial.com/telemuno.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1108.m3u8"
+    },
+    {
+      "nombre": "Teletica (Canal 7) | Costa Rica",
+      "logo": "https://img.tvcluboficial.com/cr_teletica.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1073.m3u8"
+    },
+    {
+      "nombre": "Televicentro (TVC) | Ecuador",
+      "logo": "https://img.tvcluboficial.com/televicentro.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/966.m3u8"
+    },
+    {
+      "nombre": "Trece",
+      "logo": "https://img.tvcluboficial.com/trece_colombia.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/943.m3u8"
+    },
+    {
+      "nombre": "TV Chile",
+      "logo": "https://img.tvcluboficial.com/tvchile.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/958.m3u8"
+    },
+    {
+      "nombre": "TVE",
+      "logo": "https://img.tvcluboficial.com/tve.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/968.m3u8"
+    },
+    {
+      "nombre": "TVE HD",
+      "logo": "https://img.tvcluboficial.com/tve.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/969.m3u8"
+    },
+    {
+      "nombre": "UniMas",
+      "logo": "https://img.tvcluboficial.com/unimas.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/982.m3u8"
+    },
+    {
+      "nombre": "Univision",
+      "logo": "https://img.tvcluboficial.com/univision.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1009.m3u8"
+    },
+    {
+      "nombre": "Univision Tlnovelas",
+      "logo": "https://img.tvcluboficial.com/tlnovelasunivision.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1013.m3u8"
+    },
+    {
+      "nombre": "VTV Plus HD",
+      "logo": "https://img.tvcluboficial.com/ur_vtvplus.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1142.m3u8"
+    },
+    {
+      "nombre": "VTV Plus | Uruguay",
+      "logo": "https://img.tvcluboficial.com/ur_vtvplus.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1072.m3u8"
+    },
+    {
+      "nombre": "VTV | Uruaguay",
+      "logo": "https://img.tvcluboficial.com/vtv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1028.m3u8"
+    },
+    {
+      "nombre": "Wapa PR",
+      "logo": "https://img.tvcluboficial.com/wapa.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1030.m3u8"
+    }
+  ],
+
+  "📻 Variedades": [
+    {
+      "nombre": "Az Clic",
+      "logo": "https://img.tvcluboficial.com/azclic.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/64.m3u8"
+    },
+    {
+      "nombre": "AZ Corazon",
+      "logo": "https://img.tvcluboficial.com/azcorazon.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/66.m3u8"
+    },
+    {
+      "nombre": "Az Corazón HD",
+      "logo": "https://img.tvcluboficial.com/azcorazon.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/68.m3u8"
+    },
+    {
+      "nombre": "Azteca 7",
+      "logo": "https://img.tvcluboficial.com/azteca7.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/72.m3u8"
+    },
+    {
+      "nombre": "Azteca 7 HD",
+      "logo": "https://img.tvcluboficial.com/azteca7.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/74.m3u8"
+    },
+    {
+      "nombre": "Azteca Uno",
+      "logo": "https://img.tvcluboficial.com/azteca1.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/76.m3u8"
+    },
+    {
+      "nombre": "Azteca Uno (Calidad Baja)",
+      "logo": "https://img.tvcluboficial.com/azteca1.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/75.m3u8"
+    },
+    {
+      "nombre": "Azteca Uno HD",
+      "logo": "https://img.tvcluboficial.com/azteca1.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/78.m3u8"
+    },
+    {
+      "nombre": "BitMe",
+      "logo": "https://img.tvcluboficial.com/bitme.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/92.m3u8"
+    },
+    {
+      "nombre": "Canal 5",
+      "logo": "https://img.tvcluboficial.com/canal5.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/106.m3u8"
+    },
+    {
+      "nombre": "Canal 5 HD",
+      "logo": "https://img.tvcluboficial.com/canal5.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/108.m3u8"
+    },
+    {
+      "nombre": "Canal de las Estrellas",
+      "logo": "https://img.tvcluboficial.com/mx_lasestrellas.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/114.m3u8"
+    },
+    {
+      "nombre": "Canal de las Estrellas HD",
+      "logo": "https://img.tvcluboficial.com/mx_lasestrellas.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/118.m3u8"
+    },
+    {
+      "nombre": "Canal+ Toros",
+      "logo": "https://img.tvcluboficial.com/toros.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/121.m3u8"
+    },
+    {
+      "nombre": "Distrito Comedia",
+      "logo": "https://img.tvcluboficial.com/distritocomedia.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/293.m3u8"
+    },
+    {
+      "nombre": "DHE",
+      "logo": "https://img.tvcluboficial.com/dhe.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/242.m3u8"
+    },
+    {
+      "nombre": "Estrella TV",
+      "logo": "https://img.tvcluboficial.com/estrellatv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/409.m3u8"
+    },
+    {
+      "nombre": "Europa Europa",
+      "logo": "https://img.tvcluboficial.com/europa.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/413.m3u8"
+    },
+    {
+      "nombre": "Foro TV",
+      "logo": "https://img.tvcluboficial.com/forotv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/429.m3u8"
+    },
+    {
+      "nombre": "Fox (ES) HD",
+      "logo": "https://img.tvcluboficial.com/fox.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/430.m3u8"
+    },
+    {
+      "nombre": "Gala TV",
+      "logo": "https://img.tvcluboficial.com/galatv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/481.m3u8"
+    },
+    {
+      "nombre": "Gala TV HD",
+      "logo": "https://img.tvcluboficial.com/galatv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/482.m3u8"
+    },
+    {
+      "nombre": "Gamavision",
+      "logo": "https://img.tvcluboficial.com/gamavision.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/483.m3u8"
+    },
+    {
+      "nombre": "Garage TV HD",
+      "logo": "https://img.tvcluboficial.com/garagetv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/485.m3u8"
+    },
+    {
+      "nombre": "HTV",
+      "logo": "https://img.tvcluboficial.com/htv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/568.m3u8"
+    },
+    {
+      "nombre": "Imagen Television",
+      "logo": "https://img.tvcluboficial.com/imagentv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/576.m3u8"
+    },
+    {
+      "nombre": "Imagen Televisión HD",
+      "logo": "https://img.tvcluboficial.com/imagentv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/577.m3u8"
+    },
+    {
+      "nombre": "Multimedios",
+      "logo": "https://img.tvcluboficial.com/multimedios.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/690.m3u8"
+    },
+    {
+      "nombre": "Multimedios (Monterrey)",
+      "logo": "https://img.tvcluboficial.com/multimedios.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/691.m3u8"
+    },
+    {
+      "nombre": "Multimedios (Monterrey) HD",
+      "logo": "https://img.tvcluboficial.com/multimedios.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/692.m3u8"
+    },
+    {
+      "nombre": "Multimedios HD",
+      "logo": "https://img.tvcluboficial.com/multimedios.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/693.m3u8"
+    },
+    {
+      "nombre": "Multimedios Plus",
+      "logo": "https://img.tvcluboficial.com/multimedios.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/694.m3u8"
+    },
+    {
+      "nombre": "NBC Universo",
+      "logo": "https://img.tvcluboficial.com/nbcuniverso.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/714.m3u8"
+    },
+    {
+      "nombre": "Pasiones HD",
+      "logo": "https://img.tvcluboficial.com/pasiones.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/757.m3u8"
+    },
+    {
+      "nombre": "Tele",
+      "logo": "https://img.tvcluboficial.com/play.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/866.m3u8"
+    },
+    {
+      "nombre": "Tlnovelas",
+      "logo": "https://img.tvcluboficial.com/tlnovelas.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/912.m3u8"
+    },
+    {
+      "nombre": "Tlnovelas HD",
+      "logo": "https://img.tvcluboficial.com/tlnovelas.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/915.m3u8"
+    },
+    {
+      "nombre": "Unicable",
+      "logo": "https://img.tvcluboficial.com/unicable.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/978.m3u8"
+    },
+    {
+      "nombre": "Unicable HD",
+      "logo": "https://img.tvcluboficial.com/unicable.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/980.m3u8"
+    },
+    {
+      "nombre": "Unicable HD",
+      "logo": "https://img.tvcluboficial.com/unicable.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/981.m3u8"
+    }
+  ],
+
+  "⛪ Religión": [
+    {
+      "nombre": "Enlace",
+      "logo": "https://img.tvcluboficial.com/enlace.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1092.m3u8"
+    },
+    {
+      "nombre": "EWTN",
+      "logo": "https://img.tvcluboficial.com/ewtn.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1093.m3u8"
+    },
+    {
+      "nombre": "Maria Vision",
+      "logo": "https://img.tvcluboficial.com/mariavision.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1097.m3u8"
+    }
+  ],
+
+  "🎭 Novelas": [
+    {
+      "nombre": "ATV: Novelas Turcas",
+      "logo": "https://img.tvcluboficial.com/atv.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1120.m3u8"
+    },
+    {
+      "nombre": "Novelisima",
+      "logo": "https://img.tvcluboficial.com/novelisima.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1149.m3u8"
+    },
+    {
+      "nombre": "Novelisima HD",
+      "logo": "https://img.tvcluboficial.com/novelisima.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/1150.m3u8"
+    }
+  ],
+
+  "🎭 Comedia Clásica": [
+    {
+      "nombre": "Alf 24/7",
+      "logo": "https://img.tvcluboficial.com/alf.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/28.m3u8"
+    },
+    {
+      "nombre": "Cantinflas 24/7",
+      "logo": "https://img.tvcluboficial.com/cantinflas.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/123.m3u8"
+    },
+    {
+      "nombre": "Candy Candy 24/7",
+      "logo": "",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/122.m3u8"
+    },
+    {
+      "nombre": "Chapulin Colorado 24/7",
+      "logo": "https://img.tvcluboficial.com/chapulincolorado.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/152.m3u8"
+    },
+    {
+      "nombre": "Chespirito 24/7",
+      "logo": "https://img.tvcluboficial.com/chespirito.jpg",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/153.m3u8"
+    },
+    {
+      "nombre": "El Chavo del 8 24/7",
+      "logo": "https://img.tvcluboficial.com/elchavodel8.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/344.m3u8"
+    },
+    {
+      "nombre": "El Conde Patula 24/7",
+      "logo": "https://img.tvcluboficial.com/elcondepatula.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/345.m3u8"
+    },
+    {
+      "nombre": "El Principe del Rap 24/7",
+      "logo": "https://img.tvcluboficial.com/elprincipedelrap.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/357.m3u8"
+    },
+    {
+      "nombre": "Hercules 24/7",
+      "logo": "https://img.tvcluboficial.com/247.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/550.m3u8"
+    },
+    {
+      "nombre": "Ironman 24/7",
+      "logo": "https://img.tvcluboficial.com/ironman.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/582.m3u8"
+    },
+    {
+      "nombre": "Johnny Bravo 24/7",
+      "logo": "https://img.tvcluboficial.com/johnnybravo.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/584.m3u8"
+    },
+    {
+      "nombre": "La Hora Pico 24/7",
+      "logo": "https://img.tvcluboficial.com/lahorapico.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/593.m3u8"
+    },
+    {
+      "nombre": "La Rosa de Guadalupe 24/7",
+      "logo": "https://img.tvcluboficial.com/larosadeguadalupe.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/601.m3u8"
+    },
+    {
+      "nombre": "Le Temes a la Oscuridad 24/7",
+      "logo": "https://img.tvcluboficial.com/letemesalaoscuridad.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/611.m3u8"
+    },
+    {
+      "nombre": "Malcolm 24/7",
+      "logo": "https://img.tvcluboficial.com/malcolm.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/640.m3u8"
+    },
+    {
+      "nombre": "Malcolm HD 24/7",
+      "logo": "https://img.tvcluboficial.com/malcolm.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/641.m3u8"
+    },
+    {
+      "nombre": "Mr. Bean 24/7",
+      "logo": "https://img.tvcluboficial.com/mrbean.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/670.m3u8"
+    },
+    {
+      "nombre": "Padre de Familia 24/7",
+      "logo": "https://img.tvcluboficial.com/padredefamilia.png",
+      "url": "https://m3u.tvcluboficial.com/free/Isroir/IYh/747.m3u8"
+    }
   ]
 }
-
