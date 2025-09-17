@@ -1927,56 +1927,246 @@ body.pwa-installed header {
             return videoElement && (videoElement.duration === Infinity || isNaN(videoElement.duration));
         }
 
-        // Gestos táctiles
-        function setupTouchGestures() {
-            const videoPlayer = document.getElementById('video-player');
-            let startX = 0;
-            let startY = 0;
-            let distX = 0;
-            let distY = 0;
-            let startTime = 0;
-            const minSwipeDist = 50;
-            const maxSwipeTime = 500;
+// Gestos táctiles CORREGIDA
+function setupTouchGestures() {
+    const videoPlayer = document.getElementById('video-player');
+    let startX = 0;
+    let startY = 0;
+    let startTime = 0;
+    const minSwipeDist = 50;
+    const maxSwipeTime = 500;
+    let isDoubleTap = false;
+    
+    // Para detectar doble tap
+    let lastTap = 0;
+    let tapTimeout;
+    
+    videoPlayer.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            startTime = new Date().getTime();
             
-            videoPlayer.addEventListener('touchstart', function(e) {
-                const touch = e.touches[0];
-                startX = touch.clientX;
-                startY = touch.clientY;
-                startTime = new Date().getTime();
-            }, { passive: true });
+            // Detectar doble tap
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
             
-            videoPlayer.addEventListener('touchend', function(e) {
-                const touch = e.changedTouches[0];
-                distX = touch.clientX - startX;
-                distY = touch.clientY - startY;
-                const elapsedTime = new Date().getTime() - startTime;
+            if (tapLength < 300 && tapLength > 0) {
+                // Es un doble tap - toggle fullscreen
+                clearTimeout(tapTimeout);
+                isDoubleTap = true;
                 
-                if (elapsedTime <= maxSwipeTime) {
-                    if (Math.abs(distX) >= minSwipeDist && Math.abs(distY) <= 100) {
-                        // Deslizamiento horizontal - Cambiar canal
-                        if (distX > 0) {
-                            navigateToPreviousChannel();
-                        } else {
-                            navigateToNextChannel();
-                        }
-                    } else if (Math.abs(distY) >= minSwipeDist && Math.abs(distX) <= 100) {
-                        // Deslizamiento vertical - Control de volumen
-                        const video = document.getElementById('video');
-                        if (distY > 0) {
-                            // Deslizar hacia abajo - Disminuir volumen
-                            video.volume = Math.max(0, video.volume - 0.1);
-                            showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
-                        } else {
-                            // Deslizar hacia arriba - Aumentar volumen
-                            video.volume = Math.min(1, video.volume + 0.1);
-                            showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
-                        }
-                    }
+                if (!document.fullscreenElement) {
+                    videoPlayer.requestFullscreen().catch(err => {
+                        console.error(`Error al activar pantalla completa: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
                 }
-            }, { passive: true });
+            } else {
+                // Es un solo tap
+                isDoubleTap = false;
+                tapTimeout = setTimeout(() => {
+                    lastTap = 0;
+                }, 300);
+            }
+            lastTap = currentTime;
         }
+    }, { passive: true });
+    
+    videoPlayer.addEventListener('touchend', function(e) {
+        if (isDoubleTap || e.touches.length > 0) return;
+        
+        const touch = e.changedTouches[0];
+        const distX = touch.clientX - startX;
+        const distY = touch.clientY - startY;
+        const elapsedTime = new Date().getTime() - startTime;
+        
+        if (elapsedTime <= maxSwipeTime && !isDoubleTap) {
+            if (Math.abs(distX) >= minSwipeDist && Math.abs(distY) <= 100) {
+                // Deslizamiento horizontal - Cambiar canal
+                if (distX > 0) {
+                    navigateToPreviousChannel();
+                } else {
+                    navigateToNextChannel();
+                }
+            } else if (Math.abs(distY) >= minSwipeDist && Math.abs(distX) <= 100) {
+                // Deslizamiento vertical - Control de volumen
+                const video = document.getElementById('video');
+                if (distY > 0) {
+                    // Deslizar hacia abajo - Disminuir volumen
+                    video.volume = Math.max(0, video.volume - 0.1);
+                    showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
+                } else {
+                    // Deslizar hacia arriba - Aumentar volumen
+                    video.volume = Math.min(1, video.volume + 0.1);
+                    showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
+                }
+            }
+        }
+    }, { passive: true });
+    
+    // Prevenir zoom con doble tap
+    videoPlayer.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+    });
+    
+    videoPlayer.addEventListener('gesturechange', function(e) {
+        e.preventDefault();
+    });
+    
+    videoPlayer.addEventListener('gestureend', function(e) {
+        e.preventDefault();
+    });
+}
 
-        // Navegar al canal anterior
+// Función para mejorar controles de volumen en móviles
+function setupMobileVolumeControls() {
+    const video = document.getElementById('video');
+    if (!video) return;
+    
+    // Crear controles de volumen personalizados para móvil
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        // Es un dispositivo táctil
+        
+        // Añadir estilos para controles de volumen
+        const volumeStyle = document.createElement('style');
+        volumeStyle.innerHTML = `
+            .mobile-volume-controls {
+                position: absolute;
+                right: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                z-index: 10;
+                background: rgba(0, 0, 0, 0.6);
+                padding: 15px 10px;
+                border-radius: 25px;
+                backdrop-filter: blur(10px);
+            }
+            
+            .volume-btn {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                opacity: 0.8;
+                transition: opacity 0.3s;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .volume-btn:hover {
+                opacity: 1;
+            }
+            
+            .volume-slider-container {
+                position: absolute;
+                right: 70px;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(0, 0, 0, 0.7);
+                padding: 15px 10px;
+                border-radius: 20px;
+                display: none;
+            }
+            
+            .volume-slider {
+                width: 120px;
+                height: 5px;
+                -webkit-appearance: none;
+                appearance: none;
+                background: #555;
+                outline: none;
+                border-radius: 3px;
+            }
+            
+            .volume-slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #fff;
+                cursor: pointer;
+            }
+        `;
+        document.head.appendChild(volumeStyle);
+        
+        // Crear controles de volumen
+        const volumeControls = document.createElement('div');
+        volumeControls.className = 'mobile-volume-controls';
+        volumeControls.innerHTML = `
+            <button class="volume-btn" id="volume-up-btn">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="volume-btn" id="volume-down-btn">
+                <i class="fas fa-volume-down"></i>
+            </button>
+            <button class="volume-btn" id="volume-mute-btn">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+        `;
+        
+        document.getElementById('video-player').appendChild(volumeControls);
+        
+        // Controles para subir/bajar volumen
+        document.getElementById('volume-up-btn').addEventListener('click', () => {
+            video.volume = Math.min(1, video.volume + 0.1);
+            showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
+        });
+        
+        document.getElementById('volume-down-btn').addEventListener('click', () => {
+            video.volume = Math.max(0, video.volume - 0.1);
+            showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
+        });
+        
+        document.getElementById('volume-mute-btn').addEventListener('click', () => {
+            video.muted = !video.muted;
+            const icon = document.getElementById('volume-mute-btn').querySelector('i');
+            icon.className = video.muted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+            showToast(video.muted ? 'Silenciado' : 'Sonido activado');
+        });
+        
+        // Ocultar controles cuando no se usen
+        let hideVolumeTimeout;
+        function hideVolumeControls() {
+            hideVolumeTimeout = setTimeout(() => {
+                volumeControls.style.opacity = '0';
+                setTimeout(() => {
+                    volumeControls.style.display = 'none';
+                }, 300);
+            }, 3000);
+        }
+        
+        function showVolumeControls() {
+            clearTimeout(hideVolumeTimeout);
+            volumeControls.style.display = 'flex';
+            setTimeout(() => {
+                volumeControls.style.opacity = '1';
+            }, 10);
+            hideVolumeControls();
+        }
+        
+        // Mostrar controles al tocar la pantalla
+        video.addEventListener('touchstart', () => {
+            showVolumeControls();
+        });
+        
+        // Inicialmente ocultos
+        hideVolumeControls();
+    }
+}
+
+    
+    // Navegar al canal anterior
         function navigateToPreviousChannel() {
             if (!currentChannel) return;
             
@@ -2154,60 +2344,60 @@ body.pwa-installed header {
             const proxiedUrl = getProxiedUrl(videoUrl);
             console.log(`Reproduciendo: ${channelName} desde URL: ${proxiedUrl}`);
             
-            if (Hls.isSupported()) {
-                currentHls = new Hls({
-                    debug: false,
-                    enableWorker: true,
-                    lowLatencyMode: true,
-                    
-                    // Buffering configuration
-                    backBufferLength: 30,
-                    maxBufferLength: 30,
-                    maxMaxBufferLength: 60,
-                    maxBufferSize: 60 * 1000 * 1000, // 60MB
-                    maxBufferHole: 0.5,
-
-                    // Asegurar que todos los fragmentos usen proxy
-                    xhrSetup: function(xhr, url) {
-                        // Forzar todas las solicitudes a través del proxy
-                        const proxiedUrl = getProxiedUrl(url);
-                        xhr.open('GET', proxiedUrl, true);
-                    },
-                    
-                    // Live streaming configuration
-                    liveSyncDurationCount: 3,
-                    liveMaxLatencyDurationCount: 10,
-                    liveDurationInfinity: true,
-                    
-                    // ABR configuration
-                    abrEwmaDefaultEstimate: 500000,
-                    abrEwmaSlowLive: 3,
-                    abrEwmaFastLive: 2,
-                    abrEwmaDefaultLive: 1,
-                    
-                    // Performance
-                    stretchShortVideoTrack: true,
-                    maxFragLookUpTolerance: 0.2,
-                    emeEnabled: true,
-                    
-                    // Timeouts and retries
-                    manifestLoadingTimeOut: 10000,
-                    manifestLoadingMaxRetry: 3,
-                    manifestLoadingRetryDelay: 1000,
-                    levelLoadingTimeOut: 10000,
-                    levelLoadingMaxRetry: 3,
-                    levelLoadingRetryDelay: 1000,
-                    fragLoadingTimeOut: 20000,
-                    fragLoadingMaxRetry: 6,
-                    fragLoadingRetryDelay: 1000,
-                    
-                    // Additional optimizations
-                    enableDateRange: false,
-                    enableCEA708Captions: false,
-                    requestTimeout: 10000,
-                    levelLoadTimeout: 10000,
-                    fragLoadTimeout: 20000
-                });
+if (Hls.isSupported()) {
+    currentHls = new Hls({
+        debug: false,
+        enableWorker: true,
+        lowLatencyMode: true,
+        
+        // Buffering configuration OPTIMIZADA
+        backBufferLength: 90,  // Aumentado de 30 a 90 para más buffer
+        maxBufferLength: 90,   // Aumentado de 30 a 90
+        maxMaxBufferLength: 120, // Aumentado de 60 a 120
+        maxBufferSize: 90 * 1000 * 1000, // 90MB (aumentado de 60MB)
+        maxBufferHole: 0.1,    // Reducido de 0.5 a 0.1 para menos saltos
+        
+        // Asegurar que todos los fragmentos usen proxy
+        xhrSetup: function(xhr, url) {
+            // Forzar todas las solicitudes a través del proxy
+            const proxiedUrl = getProxiedUrl(url);
+            xhr.open('GET', proxiedUrl, true);
+        },
+        
+        // Live streaming configuration OPTIMIZADA
+        liveSyncDurationCount: 5,    // Aumentado de 3 a 5
+        liveMaxLatencyDurationCount: 15, // Aumentado de 10 a 15
+        liveDurationInfinity: true,
+        
+        // ABR configuration OPTIMIZADA
+        abrEwmaDefaultEstimate: 1000000, // Aumentado de 500000
+        abrEwmaSlowLive: 5,     // Aumentado de 3
+        abrEwmaFastLive: 3,     // Aumentado de 2
+        abrEwmaDefaultLive: 2,  // Aumentado de 1
+        
+        // Performance
+        stretchShortVideoTrack: true,
+        maxFragLookUpTolerance: 0.1, // Reducido de 0.2 a 0.1
+        emeEnabled: true,
+        
+        // Timeouts and retries OPTIMIZADOS
+        manifestLoadingTimeOut: 15000, // Aumentado de 10000
+        manifestLoadingMaxRetry: 4,    // Aumentado de 3
+        manifestLoadingRetryDelay: 500, // Reducido de 1000
+        levelLoadingTimeOut: 15000,    // Aumentado de 10000
+        levelLoadingMaxRetry: 4,       // Aumentado de 3
+        levelLoadingRetryDelay: 500,   // Reducido de 1000
+        fragLoadingTimeOut: 30000,     // Aumentado de 20000
+        fragLoadingMaxRetry: 8,        // Aumentado de 6
+        fragLoadingRetryDelay: 500,    // Reducido de 1000
+        
+        // Additional optimizations
+        enableDateRange: false,
+        enableCEA708Captions: false,
+        requestTimeout: 15000,  // Aumentado de 10000
+        levelLoadTimeout: 15000, // Aumentado de 10000
+        fragLoadTimeout: 30000   // Aumentado de 20000
+    });
                 
                 currentHls.loadSource(proxiedUrl);
                 currentHls.attachMedia(video);
@@ -3194,12 +3384,14 @@ body.pwa-installed header {
             // Inicializar funcionalidades PWA
             initPWA();
 
-            // NUEVAS INICIALIZACIONES (añadir estas líneas)
-            disableSeekAndPauseControls(); // Oculta controles de pausa y seek
-            preventVideoPause();           // Previene la pausa mediante eventos
-            setupDoubleClickFullscreen();  // Habilita doble clic para fullscreen
-            setupTouchGestures();          // Habilita gestos táctiles (añadir esta línea)
-        });
+    // NUEVAS INICIALIZACIONES
+    disableSeekAndPauseControls(); // Oculta controles de pausa y seek
+    preventVideoPause();           // Previene la pausa mediante eventos
+    setupDoubleClickFullscreen();  // Habilita doble clic para fullscreen
+    setupTouchGestures();          // Habilita gestos táctiles
+    setupMobileVolumeControls();   // Añadir esta línea - Controles de volumen para móviles
+});
+    
     </script>
 </body>
 </html>
