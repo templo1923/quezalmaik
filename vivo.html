@@ -1905,6 +1905,108 @@ function preventVideoPause() {
 }
 
 
+
+        // Función para habilitar pantalla completa con doble clic/tap
+function setupDoubleClickFullscreen() {
+    const videoPlayer = document.getElementById('video-player');
+    if (!videoPlayer) return;
+
+    videoPlayer.addEventListener('dblclick', () => {
+        if (!document.fullscreenElement) {
+            videoPlayer.requestFullscreen().catch(err => {
+                console.error(`Error al activar pantalla completa: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    });
+}
+        // Función para detectar si es stream en vivo
+function isLiveStream(videoElement) {
+    return videoElement && (videoElement.duration === Infinity || isNaN(videoElement.duration));
+}
+
+        // Gestos táctiles
+function setupTouchGestures() {
+    const videoPlayer = document.getElementById('video-player');
+    let startX = 0;
+    let startY = 0;
+    let distX = 0;
+    let distY = 0;
+    let startTime = 0;
+    const minSwipeDist = 50;
+    const maxSwipeTime = 500;
+    
+    videoPlayer.addEventListener('touchstart', function(e) {
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        startTime = new Date().getTime();
+    }, { passive: true });
+    
+    videoPlayer.addEventListener('touchend', function(e) {
+        const touch = e.changedTouches[0];
+        distX = touch.clientX - startX;
+        distY = touch.clientY - startY;
+        const elapsedTime = new Date().getTime() - startTime;
+        
+        if (elapsedTime <= maxSwipeTime) {
+            if (Math.abs(distX) >= minSwipeDist && Math.abs(distY) <= 100) {
+                // Deslizamiento horizontal - Cambiar canal
+                if (distX > 0) {
+                    navigateToPreviousChannel();
+                } else {
+                    navigateToNextChannel();
+                }
+            } else if (Math.abs(distY) >= minSwipeDist && Math.abs(distX) <= 100) {
+                // Deslizamiento vertical - Control de volumen
+                const video = document.getElementById('video');
+                if (distY > 0) {
+                    // Deslizar hacia abajo - Disminuir volumen
+                    video.volume = Math.max(0, video.volume - 0.1);
+                    showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
+                } else {
+                    // Deslizar hacia arriba - Aumentar volumen
+                    video.volume = Math.min(1, video.volume + 0.1);
+                    showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
+                }
+            }
+        }
+    }, { passive: true });
+}
+
+// Navegar al canal anterior
+function navigateToPreviousChannel() {
+    if (!currentChannel) return;
+    
+    const currentCategory = currentChannel.description;
+    const currentChannels = todosCanales[currentCategory];
+    
+    if (!currentChannels) return;
+    
+    const currentIndex = currentChannels.findIndex(c => c.nombre === currentChannel.name);
+    if (currentIndex > 0) {
+        const previousChannel = currentChannels[currentIndex - 1];
+        cambiarCanal(previousChannel.url, previousChannel.nombre, currentCategory, previousChannel.logo);
+    }
+}
+
+// Navegar al siguiente canal
+function navigateToNextChannel() {
+    if (!currentChannel) return;
+    
+    const currentCategory = currentChannel.description;
+    const currentChannels = todosCanales[currentCategory];
+    
+    if (!currentChannels) return;
+    
+    const currentIndex = currentChannels.findIndex(c => c.nombre === currentChannel.name);
+    if (currentIndex < currentChannels.length - 1) {
+        const nextChannel = currentChannels[currentIndex + 1];
+        cambiarCanal(nextChannel.url, nextChannel.nombre, currentCategory, nextChannel.logo);
+    }
+}
+
         // Función para crear botones de categorías
         function crearBotonesCategorias() {
             const contenedor = document.getElementById('section-buttons');
@@ -2051,20 +2153,93 @@ function preventVideoPause() {
             const proxiedUrl = getProxiedUrl(videoUrl);
             console.log(`Reproduciendo: ${channelName} desde URL: ${proxiedUrl}`);
             
-            if (Hls.isSupported()) {
-                currentHls = new Hls({
-                    debug: false,
-                    enableWorker: true,
-                    lowLatencyMode: true,
-                    backBufferLength: 90,
-                    xhrSetup: function(xhr, url) {
-                        // Asegurar que todas las solicitudes sean a través de proxy si es necesario
-                        if (url.startsWith('http://')) {
-                            xhr.open('GET', getProxiedUrl(url), true);
-                        }
-                    }
-                });
-                
+if (Hls.isSupported()) {
+    currentHls = new Hls({
+        debug: false,
+        enableWorker: true,
+        lowLatencyMode: true,
+        
+        // Buffering configuration
+        backBufferLength: 30,
+        maxBufferLength: 30,
+        maxMaxBufferLength: 60,
+        maxBufferSize: 60 * 1000 * 1000, // 60MB
+        maxBufferHole: 0.5,
+        
+        // Live streaming configuration
+        liveSyncDurationCount: 3,
+        liveMaxLatencyDurationCount: 10,
+        liveDurationInfinity: true,
+        
+        // ABR configuration
+        abrEwmaDefaultEstimate: 500000,
+        abrEwmaSlowLive: 3,
+        abrEwmaFastLive: 2,
+        abrEwmaDefaultLive: 1,
+        
+        // Performance
+        stretchShortVideoTrack: true,
+        maxFragLookUpTolerance: 0.2,
+        emeEnabled: true,
+        
+        // Timeouts and retries
+        manifestLoadingTimeOut: 10000,
+        manifestLoadingMaxRetry: 3,
+        manifestLoadingRetryDelay: 1000,
+        levelLoadingTimeOut: 10000,
+        levelLoadingMaxRetry: 3,
+        levelLoadingRetryDelay: 1000,
+        fragLoadingTimeOut: 20000,
+        fragLoadingMaxRetry: 6,
+        fragLoadingRetryDelay: 1000,
+        
+        // Additional optimizations
+        enableDateRange: false,
+        enableCEA708Captions: false,
+        requestTimeout: 10000,
+        levelLoadTimeout: 10000,
+        fragLoadTimeout: 20000
+    });
+    
+    const proxiedUrl = getProxiedUrl(videoUrl);
+    currentHls.loadSource(proxiedUrl);
+    currentHls.attachMedia(video);
+    
+    currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
+        addToStreamCache(videoUrl, videoUrl);
+        document.getElementById('loading').style.display = 'none';
+        retryCount = 0;
+        
+        video.play().catch(e => {
+            mostrarError('Error al reproducir: ' + e.message);
+        });
+        
+        playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
+    });
+    
+    currentHls.on(Hls.Events.ERROR, function(event, data) {
+        if (data.fatal) {
+            console.error('Error fatal de HLS:', data.details);
+            switch(data.type) {
+                case Hls.ErrorTypes.NETWORK_ERROR:
+                    // Si hay un error de red, rotamos el proxy y reintentamos
+                    mostrarError(`Error de conexión. Reintentando con otro servidor...`);
+                    rotateProxy();
+                    setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 1000);
+                    break;
+                case Hls.ErrorTypes.MEDIA_ERROR:
+                    console.error('Error de media, intentando recuperar...');
+                    currentHls.recoverMediaError();
+                    break;
+                default:
+                    // Si es otro error fatal, lo destruimos y reintentamos
+                    currentHls.destroy();
+                    setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 1000);
+                    break;
+            }
+        }
+    });
+}                
                 currentHls.loadSource(proxiedUrl);
                 currentHls.attachMedia(video);
                 
@@ -3031,6 +3206,12 @@ function preventVideoPause() {
             
             // Inicializar funcionalidades PWA
             initPWA();
+
+            // NUEVAS INICIALIZACIONES (añadir estas líneas)
+            disableSeekAndPauseControls(); // Oculta controles de pausa y seek
+            preventVideoPause();           // Previene la pausa mediante eventos
+            setupDoubleClickFullscreen();  // Habilita doble clic para fullscreen
+            setupTouchGestures();          // Habilita gestos táctiles (añadir esta línea)
         });
     </script>
 </body>
