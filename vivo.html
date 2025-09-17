@@ -1740,12 +1740,26 @@ body.pwa-installed header {
         ];
         let currentProxyIndex = 0;
 
-        // Función para obtener URL a través de proxy
-        function getProxiedUrl(url) {
-            // Si ya es una URL local o relativa, no usar proxy
-            if (url.startsWith('/') || url.startsWith(window.location.origin) || url.startsWith('data:')) {
-                return url;
-            }
+// Función para obtener URL a través de proxy (CORREGIDA)
+function getProxiedUrl(url) {
+    // Si la URL ya está proxied o es local, no hacer nada
+    if (!url || url.includes('corsproxy.io') || url.includes('cors-anywhere') || 
+        url.includes('proxy.cors.sh') || url.includes('codetabs.com') ||
+        url.startsWith('/') || url.startsWith(window.location.origin) || 
+        url.startsWith('data:') || url.startsWith('blob:')) {
+        return url;
+    }
+    
+    // Para TODOS los recursos externos (imágenes, streams, etc.) usar proxy
+    // Esto fuerza HTTPS y evita mixed-content
+    try {
+        const encodedUrl = encodeURIComponent(url);
+        return PROXY_SERVERS[currentProxyIndex] + encodedUrl;
+    } catch (e) {
+        console.error('Error al procesar URL con proxy:', e);
+        return url;
+    }
+}
             
             // Para el archivo JSON de canales, usar proxy
             if (url.includes('canales_organizados.json')) {
@@ -2165,6 +2179,13 @@ function changeChannel(videoUrl, channelName, channelDescription) {
             maxMaxBufferLength: 60,
             maxBufferSize: 60 * 1000 * 1000, // 60MB
             maxBufferHole: 0.5,
+
+            // Asegurar que todos los fragmentos usen proxy (AÑADIR ESTO)
+            xhrSetup: function(xhr, url) {
+            // Forzar todas las solicitudes a través del proxy
+            const proxiedUrl = getProxiedUrl(url);
+            xhr.open('GET', proxiedUrl, true);
+        },
             
             // Live streaming configuration
             liveSyncDurationCount: 3,
@@ -2280,17 +2301,85 @@ function changeChannel(videoUrl, channelName, channelDescription) {
 
 
         // Función para manejar errores de carga de imágenes (MEJORADA)
-        function handleImageError(img) {
-            img.onerror = null;
+// Función para manejar errores de carga de imágenes (MEJORADA)
+function handleImageError(img) {
+    img.onerror = null;
+    
+    // Primero intentar con proxy para evitar mixed-content
+    const originalSrc = img.src;
+    
+    // Si ya es una URL de proxy o está vacía, no hacer nada más
+    if (!originalSrc || originalSrc.includes('corsproxy.io') || originalSrc.includes('cors-anywhere') || 
+        originalSrc.includes('proxy.cors.sh') || originalSrc.includes('codetabs.com')) {
+        return;
+    }
+    
+    // Intentar con proxy primero
+    const proxiedSrc = getProxiedUrl(originalSrc);
+    
+    const testImage = new Image();
+    testImage.onload = function() {
+        img.src = proxiedSrc;
+        img.style.display = 'block';
+        
+        // Eliminar cualquier ícono por defecto existente
+        const existingIcon = img.parentElement.querySelector('.default-icon');
+        if (existingIcon) {
+            existingIcon.remove();
+        }
+    };
+    testImage.onerror = function() {
+        // Si el proxy falla, usar servidores de imágenes alternativos
+        const imageServers = [
+            'https://images.weserv.nl/?url=',
+            'https://cdn.jsdelivr.net/gh/tu_usuario/tu_repo@main/',
+            'https://raw.githubusercontent.com/tu_usuario/tu_repo/main/'
+        ];
+        
+        let attempts = 0;
+        const maxAttempts = imageServers.length;
+        
+        function tryNextServer() {
+            if (attempts >= maxAttempts) {
+                // Si todos los servidores fallan, mostrar ícono por defecto
+                img.style.display = 'none';
+                const container = img.parentElement;
+                const defaultIcon = document.createElement('div');
+                defaultIcon.className = 'default-icon';
+                defaultIcon.innerHTML = '<i class="fas fa-tv"></i>';
+                container.appendChild(defaultIcon);
+                return;
+            }
             
-            // Intentar con diferentes servidores de imágenes
-            const originalSrc = img.src;
-            const imageServers = [
-                'https://images.weserv.nl/?url=',
-                'https://cdn.jsdelivr.net/gh/tu_usuario/tu_repo@main/',
-                'https://raw.githubusercontent.com/tu_usuario/tu_repo/main/'
-            ];
+            const server = imageServers[attempts];
+            attempts++;
             
+            // Extraer la URL real de la imagen
+            let cleanUrl = originalSrc.split('?')[0];
+            
+            // Crear nueva URL con el servidor de imágenes
+            const newSrc = server + encodeURIComponent(cleanUrl);
+            
+            // Crear una nueva imagen para probar
+            const testImage2 = new Image();
+            testImage2.onload = function() {
+                img.src = newSrc;
+                img.style.display = 'block';
+                
+                // Eliminar cualquier ícono por defecto existente
+                const existingIcon = img.parentElement.querySelector('.default-icon');
+                if (existingIcon) {
+                    existingIcon.remove();
+                }
+            };
+            testImage2.onerror = tryNextServer;
+            testImage2.src = newSrc;
+        }
+        
+        tryNextServer();
+    };
+    testImage.src = proxiedSrc;
+}            
             let attempts = 0;
             const maxAttempts = imageServers.length;
             
