@@ -2101,225 +2101,183 @@ function navigateToNextChannel() {
             seccion.style.display = 'block';
         }
 
-        // Función para cambiar de canal (MODIFICADA)
-        function changeChannel(videoUrl, channelName, channelDescription) {
-            // Verificar conexión antes de intentar cargar un canal
-            if (!navigator.onLine) {
-                mostrarError('No hay conexión a internet. No se puede cargar el canal.');
-                return;
+// Función para cambiar de canal (MODIFICADA)
+function changeChannel(videoUrl, channelName, channelDescription) {
+    // Verificar conexión antes de intentar cargar un canal
+    if (!navigator.onLine) {
+        mostrarError('No hay conexión a internet. No se puede cargar el canal.');
+        return;
+    }
+    
+    document.getElementById('loading').style.display = 'flex';
+    document.getElementById('error-message').style.display = 'none';
+    
+    document.querySelector('.player-placeholder').style.display = 'none';
+    document.getElementById('video').style.display = 'block';
+    
+    document.querySelector('.channel-details').innerHTML = `
+        <p><i class="fas fa-info-circle"></i> ${channelName}</p>
+        <p><i class="fas fa-film"></i> Calidad: HD</p>
+        <p><i class="fas fa-clock"></i> Estado: Conectando...</p>
+        <p><i class="fas fa-align-left"></i> ${channelDescription}</p>
+    `;
+    
+    document.getElementById('live-indicator-small').style.display = 'inline-flex';
+    
+    document.querySelectorAll('.channel-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    const items = document.querySelectorAll('.channel-item');
+    for (let item of items) {
+        if (item.querySelector('.channel-name').textContent === channelName) {
+            item.classList.add('active');
+            break;
+        }
+    }
+    
+    var video = document.getElementById('video');
+    
+    if (currentHls) {
+        currentHls.destroy();
+    }
+    
+    if (playbackPositionInterval) {
+        clearInterval(playbackPositionInterval);
+    }
+    
+    video.pause();
+    video.src = '';
+    
+    // Nuevo: Usar proxy para streams HTTP
+    const proxiedUrl = getProxiedUrl(videoUrl);
+    console.log(`Reproduciendo: ${channelName} desde URL: ${proxiedUrl}`);
+    
+    if (Hls.isSupported()) {
+        currentHls = new Hls({
+            debug: false,
+            enableWorker: true,
+            lowLatencyMode: true,
+            
+            // Buffering configuration
+            backBufferLength: 30,
+            maxBufferLength: 30,
+            maxMaxBufferLength: 60,
+            maxBufferSize: 60 * 1000 * 1000, // 60MB
+            maxBufferHole: 0.5,
+            
+            // Live streaming configuration
+            liveSyncDurationCount: 3,
+            liveMaxLatencyDurationCount: 10,
+            liveDurationInfinity: true,
+            
+            // ABR configuration
+            abrEwmaDefaultEstimate: 500000,
+            abrEwmaSlowLive: 3,
+            abrEwmaFastLive: 2,
+            abrEwmaDefaultLive: 1,
+            
+            // Performance
+            stretchShortVideoTrack: true,
+            maxFragLookUpTolerance: 0.2,
+            emeEnabled: true,
+            
+            // Timeouts and retries
+            manifestLoadingTimeOut: 10000,
+            manifestLoadingMaxRetry: 3,
+            manifestLoadingRetryDelay: 1000,
+            levelLoadingTimeOut: 10000,
+            levelLoadingMaxRetry: 3,
+            levelLoadingRetryDelay: 1000,
+            fragLoadingTimeOut: 20000,
+            fragLoadingMaxRetry: 6,
+            fragLoadingRetryDelay: 1000,
+            
+            // Additional optimizations
+            enableDateRange: false,
+            enableCEA708Captions: false,
+            requestTimeout: 10000,
+            levelLoadTimeout: 10000,
+            fragLoadTimeout: 20000
+        });
+        
+        currentHls.loadSource(proxiedUrl);
+        currentHls.attachMedia(video);
+        
+        currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
+            addToStreamCache(videoUrl, videoUrl);
+            document.getElementById('loading').style.display = 'none';
+            retryCount = 0;
+            
+            video.play().catch(e => {
+                mostrarError('Error al reproducir: ' + e.message);
+            });
+            
+            playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
+        });
+        
+        currentHls.on(Hls.Events.ERROR, function(event, data) {
+            if (data.fatal) {
+                console.error('Error fatal de HLS:', data.details);
+                switch(data.type) {
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+                        // Si hay un error de red, rotamos el proxy y reintentamos
+                        mostrarError(`Error de conexión. Reintentando con otro servidor...`);
+                        rotateProxy();
+                        setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 1000);
+                        break;
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+                        console.error('Error de media, intentando recuperar...');
+                        currentHls.recoverMediaError();
+                        break;
+                    default:
+                        // Si es otro error fatal, lo destruimos y reintentamos
+                        currentHls.destroy();
+                        setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 1000);
+                        break;
+                }
             }
-            
-            document.getElementById('loading').style.display = 'flex';
-            document.getElementById('error-message').style.display = 'none';
-            
-            document.querySelector('.player-placeholder').style.display = 'none';
-            document.getElementById('video').style.display = 'block';
+        });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        // Para Safari y otros navegadores que soportan HLS nativamente
+        video.src = proxiedUrl;
+        video.addEventListener('loadedmetadata', function() {
+            addToStreamCache(videoUrl, proxiedUrl);
+            document.getElementById('loading').style.display = 'none';
+            retryCount = 0;
             
             document.querySelector('.channel-details').innerHTML = `
                 <p><i class="fas fa-info-circle"></i> ${channelName}</p>
                 <p><i class="fas fa-film"></i> Calidad: HD</p>
-                <p><i class="fas fa-clock"></i> Estado: Conectando...</p>
+                <p><i class="fas fa-clock"></i> Estado: Transmitiendo</p>
                 <p><i class="fas fa-align-left"></i> ${channelDescription}</p>
             `;
             
-            document.getElementById('live-indicator-small').style.display = 'inline-flex';
-            
-            document.querySelectorAll('.channel-item').forEach(item => {
-                item.classList.remove('active');
+            video.play().catch(e => {
+                mostrarError('Error al reproducir: ' + e.message);
             });
             
-            const items = document.querySelectorAll('.channel-item');
-            for (let item of items) {
-                if (item.querySelector('.channel-name').textContent === channelName) {
-                    item.classList.add('active');
-                    break;
-                }
-            }
-            
-            var video = document.getElementById('video');
-            
-            if (currentHls) {
-                currentHls.destroy();
-            }
-            
-            if (playbackPositionInterval) {
-                clearInterval(playbackPositionInterval);
-            }
-            
-            video.pause();
-            video.src = '';
-            
-            // Nuevo: Usar proxy para streams HTTP
-            const proxiedUrl = getProxiedUrl(videoUrl);
-            console.log(`Reproduciendo: ${channelName} desde URL: ${proxiedUrl}`);
-            
-if (Hls.isSupported()) {
-    currentHls = new Hls({
-        debug: false,
-        enableWorker: true,
-        lowLatencyMode: true,
-        
-        // Buffering configuration
-        backBufferLength: 30,
-        maxBufferLength: 30,
-        maxMaxBufferLength: 60,
-        maxBufferSize: 60 * 1000 * 1000, // 60MB
-        maxBufferHole: 0.5,
-        
-        // Live streaming configuration
-        liveSyncDurationCount: 3,
-        liveMaxLatencyDurationCount: 10,
-        liveDurationInfinity: true,
-        
-        // ABR configuration
-        abrEwmaDefaultEstimate: 500000,
-        abrEwmaSlowLive: 3,
-        abrEwmaFastLive: 2,
-        abrEwmaDefaultLive: 1,
-        
-        // Performance
-        stretchShortVideoTrack: true,
-        maxFragLookUpTolerance: 0.2,
-        emeEnabled: true,
-        
-        // Timeouts and retries
-        manifestLoadingTimeOut: 10000,
-        manifestLoadingMaxRetry: 3,
-        manifestLoadingRetryDelay: 1000,
-        levelLoadingTimeOut: 10000,
-        levelLoadingMaxRetry: 3,
-        levelLoadingRetryDelay: 1000,
-        fragLoadingTimeOut: 20000,
-        fragLoadingMaxRetry: 6,
-        fragLoadingRetryDelay: 1000,
-        
-        // Additional optimizations
-        enableDateRange: false,
-        enableCEA708Captions: false,
-        requestTimeout: 10000,
-        levelLoadTimeout: 10000,
-        fragLoadTimeout: 20000
-    });
-    
-    const proxiedUrl = getProxiedUrl(videoUrl);
-    currentHls.loadSource(proxiedUrl);
-    currentHls.attachMedia(video);
-    
-    currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
-        addToStreamCache(videoUrl, videoUrl);
-        document.getElementById('loading').style.display = 'none';
-        retryCount = 0;
-        
-        video.play().catch(e => {
-            mostrarError('Error al reproducir: ' + e.message);
+            playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
         });
         
-        playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
-    });
+        video.addEventListener('error', function() {
+            mostrarError('Error al cargar el video. Reintentando...');
+            rotateProxy();
+            setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 2000);
+        });
+    } else {
+        mostrarError("Tu navegador no soporta la reproducción de este formato.");
+    }
     
-    currentHls.on(Hls.Events.ERROR, function(event, data) {
-        if (data.fatal) {
-            console.error('Error fatal de HLS:', data.details);
-            switch(data.type) {
-                case Hls.ErrorTypes.NETWORK_ERROR:
-                    // Si hay un error de red, rotamos el proxy y reintentamos
-                    mostrarError(`Error de conexión. Reintentando con otro servidor...`);
-                    rotateProxy();
-                    setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 1000);
-                    break;
-                case Hls.ErrorTypes.MEDIA_ERROR:
-                    console.error('Error de media, intentando recuperar...');
-                    currentHls.recoverMediaError();
-                    break;
-                default:
-                    // Si es otro error fatal, lo destruimos y reintentamos
-                    currentHls.destroy();
-                    setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 1000);
-                    break;
-            }
-        }
-    });
-}                
-                currentHls.loadSource(proxiedUrl);
-                currentHls.attachMedia(video);
-                
-                currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    addToStreamCache(videoUrl, proxiedUrl);
-                    document.getElementById('loading').style.display = 'none';
-                    retryCount = 0;
-                    
-                    document.querySelector('.channel-details').innerHTML = `
-                        <p><i class="fas fa-info-circle"></i> ${channelName}</p>
-                        <p><i class="fas fa-film"></i> Calidad: HD</p>
-                        <p><i class="fas fa-clock"></i> Estado: Transmitiendo</p>
-                        <p><i class="fas fa-align-left"></i> ${channelDescription}</p>
-                    `;
-                    
-                    video.play().catch(e => {
-                        mostrarError('Error al reproducir: ' + e.message);
-                    });
-                    
-                    playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
-                });
-                
-                currentHls.on(Hls.Events.ERROR, function(event, data) {
-                    console.error('Error HLS:', data);
-                    if (data.fatal) {
-                        switch(data.type) {
-                            case Hls.ErrorTypes.NETWORK_ERROR:
-                                mostrarError('Error de red. Reintentando...');
-                                rotateProxy();
-                                setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 2000);
-                                break;
-                            case Hls.ErrorTypes.MEDIA_ERROR:
-                                mostrarError('Error de medio. Recargando...');
-                                currentHls.recoverMediaError();
-                                break;
-                            default:
-                                mostrarError('Error desconocido. Reintentando...');
-                                rotateProxy();
-                                setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 2000);
-                                break;
-                        }
-                    }
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                // Para Safari y otros navegadores que soportan HLS nativamente
-                video.src = proxiedUrl;
-                video.addEventListener('loadedmetadata', function() {
-                    addToStreamCache(videoUrl, proxiedUrl);
-                    document.getElementById('loading').style.display = 'none';
-                    retryCount = 0;
-                    
-                    document.querySelector('.channel-details').innerHTML = `
-                        <p><i class="fas fa-info-circle"></i> ${channelName}</p>
-                        <p><i class="fas fa-film"></i> Calidad: HD</p>
-                        <p><i class="fas fa-clock"></i> Estado: Transmitiendo</p>
-                        <p><i class="fas fa-align-left"></i> ${channelDescription}</p>
-                    `;
-                    
-                    video.play().catch(e => {
-                        mostrarError('Error al reproducir: ' + e.message);
-                    });
-                    
-                    playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
-                });
-                
-                video.addEventListener('error', function() {
-                    mostrarError('Error al cargar el video. Reintentando...');
-                    rotateProxy();
-                    setTimeout(() => changeChannel(videoUrl, channelName, channelDescription), 2000);
-                });
-            } else {
-                mostrarError("Tu navegador no soporta la reproducción de este formato.");
-            }
-            
-            currentChannel = {
-                url: videoUrl,
-                name: channelName,
-                description: channelDescription
-            };
-        }
+    currentChannel = {
+        url: videoUrl,
+        name: channelName,
+        description: channelDescription
+    };
+}
+
+
+
 
         // Función para manejar errores de carga de imágenes (MEJORADA)
         function handleImageError(img) {
