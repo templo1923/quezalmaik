@@ -1625,8 +1625,9 @@ video::-webkit-media-controls-overlay-play-button {
                     <div class="search-suggestions" id="search-suggestions"></div>
                 </div>
                 
-                <button class="voice-search-btn" id="voice-search-btn">
-                    <i class="fas fa-microphone"></i>
+                <!-- BOTÓN DE FAVORITOS (REEMPLAZA AL DE MICRÓFONO) -->
+                <button class="favorites-toggle" id="favorites-toggle">
+                    <i class="fas fa-heart"></i>
                 </button>
                 
                 <button class="theme-toggle" id="theme-toggle">
@@ -1676,9 +1677,7 @@ video::-webkit-media-controls-overlay-play-button {
             <button class="control-button" id="toggle-channels-btn">
                 <i class="fas fa-list"></i> Mostrar Canales
             </button>
-            <button class="control-button favorites" id="toggle-favorites-btn">
-                <i class="fas fa-heart"></i> Ver Favoritos
-            </button>
+            <!-- ELIMINADO: Botón de favoritos que estaba aquí -->
             <button class="control-button share-button" id="share-channel-btn">
                 <i class="fas fa-share-alt"></i> Compartir Canal
             </button>
@@ -1816,6 +1815,7 @@ video::-webkit-media-controls-overlay-play-button {
 
     <!-- Toast para notificaciones -->
     <div id="share-toast" class="share-toast"></div>
+</body>
 
 <script>
     // Variables globales
