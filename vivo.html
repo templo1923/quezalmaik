@@ -2017,19 +2017,7 @@ function setupTouchGestures() {
                 } else {
                     navigateToNextChannel();
                 }
-            } else if (Math.abs(distY) >= minSwipeDist && Math.abs(distX) <= 100) {
-                // Deslizamiento vertical - Control de volumen
-                const video = document.getElementById('video');
-                if (distY > 0) {
-                    // Deslizar hacia abajo - Disminuir volumen
-                    video.volume = Math.max(0, video.volume - 0.1);
-                    showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
-                } else {
-                    // Deslizar hacia arriba - Aumentar volumen
-                    video.volume = Math.min(1, video.volume + 0.1);
-                    showToast(`Volumen: ${Math.round(video.volume * 100)}%`);
-                }
-            }
+            } else if (Math.abs(distY) >= minSwipeDist && Math.abs(distX) <= 100) 
         }
     }, { passive: true });
     
