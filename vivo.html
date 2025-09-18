@@ -1538,6 +1538,68 @@ video::-webkit-media-controls-overlay-play-button {
     width: 0 !important;
     height: 0 !important;
 }
+
+    /* Estilos para reorganizar botones en móvil */
+@media (max-width: 768px) {
+    .control-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+    }
+    
+    /* Mover el botón de favoritos al principio visualmente */
+    #toggle-favorites-btn {
+        order: -1; /* Esto coloca el botón de favoritos primero */
+        background: linear-gradient(45deg, #ff1500, #ff5252) !important;
+        border: 2px solid #ff1500 !important;
+    }
+    
+    #toggle-favorites-btn.active {
+        background: linear-gradient(45deg, #d32f2f, #ff1500) !important;
+        box-shadow: 0 2px 8px rgba(255, 21, 0, 0.4);
+    }
+    
+    /* Opcional: Ajustar el tamaño de los botones en móvil */
+    .control-button {
+        flex: 1;
+        min-width: 120px;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+    
+    /* Ajustar iconos */
+    .control-button i {
+        margin-right: 4px;
+    }
+}
+
+/* Para escritorio, mantener el orden normal */
+@media (min-width: 769px) {
+    .control-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+    
+    #toggle-favorites-btn {
+        order: 0; /* Orden normal */
+    }
+}
+
+/* Estilos para botones activos */
+.control-button.active {
+    background: linear-gradient(45deg, #1e88e5, #1565c0) !important;
+    border-color: #0d47a1 !important;
+    box-shadow: 0 2px 8px rgba(13, 71, 161, 0.3);
+}
+
+/* Estilo específico para botón de favoritos activo */
+#toggle-favorites-btn.active {
+    background: linear-gradient(45deg, #d32f2f, #ff1500) !important;
+    border-color: #b71c1c !important;
+    box-shadow: 0 2px 8px rgba(255, 21, 0, 0.4);
+}
     
 }
 </style>
@@ -1893,7 +1955,22 @@ window.addEventListener('resize', debounce(adjustCategoryScroll, 250));
                 inicializarBusqueda();
                 mostrarLoading(false);
                 
-                document.getElementById('toggle-favorites-btn').addEventListener('click', mostrarFavoritos);
+                // En la parte donde asignas el evento al botón de favoritos (busca en tu código)
+document.getElementById('toggle-favorites-btn').addEventListener('click', function() {
+    // Quitar activo de otros botones
+    document.querySelectorAll('.control-button').forEach(b => b.classList.remove('active'));
+    
+    // Marcar este botón como activo
+    this.classList.add('active');
+    
+    // Mostrar favoritos
+    mostrarFavoritos();
+    
+    // Scroll suave
+    setTimeout(() => {
+        smoothScrollTo('channels-container');
+    }, 100);
+});
                 
                 loadPlaybackPosition();
             } catch (error) {
@@ -2166,6 +2243,14 @@ function setupTouchGestures() {
 
         // Función para mostrar canales de una categoría
         function mostrarCategoria(categoria) {
+             showingFavorites = false;
+
+            // Quitar resaltado del botón de favoritos
+            const favoriteBtn = document.getElementById('toggle-favorites-btn');
+            if (favoriteBtn) {
+                favoriteBtn.classList.remove('active');
+             }    
+            
             const canales = todosCanales[categoria];
             if (!canales) return;
             
@@ -2568,6 +2653,14 @@ function handleImageError(img) {
         function mostrarFavoritos() {
             showingFavorites = true;
             
+            // Resaltar el botón de favoritos
+    document.querySelectorAll('.control-button').forEach(b => b.classList.remove('active'));
+    const favoriteBtn = document.getElementById('toggle-favorites-btn');
+    if (favoriteBtn) {
+        favoriteBtn.classList.add('active');
+    }
+
+           
             document.querySelectorAll('.channel-list').forEach(el => {
                 el.style.display = 'none';
             });
@@ -2682,12 +2775,16 @@ function handleImageError(img) {
                 viewToggle.style.display = 'flex';
                 toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Canales';
                 
-                if (showingFavorites) {
-                    mostrarFavoritos();
-                } else if (Object.keys(todosCanales).length > 0) {
-                    const primeraCategoria = Object.keys(todosCanales)[0];
-                    mostrarCategoria(primeraCategoria);
-                }
+                // Si estamos mostrando favoritos, asegurarse que el botón está resaltado
+        if (showingFavorites) {
+            document.querySelectorAll('.control-button').forEach(b => b.classList.remove('active'));
+            document.getElementById('toggle-favorites-btn').classList.add('active');
+        } else {
+            // Quitar resaltado de favoritos si no estamos mostrando favoritos
+            document.getElementById('toggle-favorites-btn').classList.remove('active');
+        }
+    }
+
                 
                 setTimeout(() => {
                     smoothScrollTo('channels-container');
