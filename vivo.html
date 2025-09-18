@@ -1954,6 +1954,10 @@ window.addEventListener('resize', debounce(adjustCategoryScroll, 250));
         }
 
 // Gestos táctiles CORREGIDA
+// Eliminar la función de controles de volumen personalizados
+// Buscar y eliminar cualquier función relacionada con controles de volumen personalizados
+
+// En la función setupTouchGestures(), eliminar la parte de control de volumen por gestos
 function setupTouchGestures() {
     const videoPlayer = document.getElementById('video-player');
     let startX = 0;
@@ -2017,7 +2021,8 @@ function setupTouchGestures() {
                 } else {
                     navigateToNextChannel();
                 }
-            } else if (Math.abs(distY) >= minSwipeDist && Math.abs(distX) <= 100) 
+            }
+            // ELIMINADO: Control de volumen por deslizamiento vertical
         }
     }, { passive: true });
     
