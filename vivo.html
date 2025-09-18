@@ -1966,23 +1966,6 @@ video::-webkit-media-controls-overlay-play-button {
             inicializarBusqueda();
             mostrarLoading(false);
             
-            // Configurar evento para el botón de favoritos
-            document.getElementById('toggle-favorites-btn').addEventListener('click', function() {
-                // Quitar activo de otros botones
-                document.querySelectorAll('.control-button').forEach(b => b.classList.remove('active'));
-                
-                // Marcar este botón como activo
-                this.classList.add('active');
-                
-                // Mostrar favoritos
-                mostrarFavoritos();
-                
-                // Scroll suave
-                setTimeout(() => {
-                    smoothScrollTo('channels-container');
-                }, 100);
-            });
-            
             loadPlaybackPosition();
         } catch (error) {
             console.error('Error cargando canales:', error);
@@ -2226,6 +2209,9 @@ video::-webkit-media-controls-overlay-play-button {
                     boton.classList.add('active');
                     mostrarCategoria(categoria);
                     
+                    // Quitar resaltado del botón de favoritos
+                    document.getElementById('favorites-toggle').classList.remove('active');
+                    
                     setTimeout(() => {
                         smoothScrollTo('channels-container');
                     }, 100);
@@ -2246,10 +2232,7 @@ video::-webkit-media-controls-overlay-play-button {
         showingFavorites = false;
 
         // Quitar resaltado del botón de favoritos
-        const favoriteBtn = document.getElementById('toggle-favorites-btn');
-        if (favoriteBtn) {
-            favoriteBtn.classList.remove('active');
-        }
+        document.getElementById('favorites-toggle').classList.remove('active');
         
         const canales = todosCanales[categoria];
         if (!canales) return;
@@ -2371,10 +2354,10 @@ video::-webkit-media-controls-overlay-play-button {
                 lowLatencyMode: true,
                 
                 // Buffering configuration OPTIMIZADA
-                backBufferLength: 15,
-                maxBufferLength: 15,
-                maxMaxBufferLength: 30,
-                maxBufferSize: 30 * 1000 * 1000, // 60MB
+                backBufferLength: 30,
+                maxBufferLength: 30,
+                maxMaxBufferLength: 60,
+                maxBufferSize: 60 * 1000 * 1000, // 60MB
                 maxBufferHole: 0.1,
                 
                 // Asegurar que todos los fragmentos usen proxy
@@ -2668,11 +2651,7 @@ video::-webkit-media-controls-overlay-play-button {
         showingFavorites = true;
         
         // Resaltar el botón de favoritos
-        document.querySelectorAll('.control-button').forEach(b => b.classList.remove('active'));
-        const favoriteBtn = document.getElementById('toggle-favorites-btn');
-        if (favoriteBtn) {
-            favoriteBtn.classList.add('active');
-        }
+        document.getElementById('favorites-toggle').classList.add('active');
         
         document.querySelectorAll('.channel-list').forEach(el => {
             el.style.display = 'none';
@@ -2773,15 +2752,6 @@ video::-webkit-media-controls-overlay-play-button {
             viewToggle.style.display = 'flex';
             toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Canales';
             
-            // Si estamos mostrando favoritos, asegurarse que el botón está resaltado
-            if (showingFavorites) {
-                document.querySelectorAll('.control-button').forEach(b => b.classList.remove('active'));
-                document.getElementById('toggle-favorites-btn').classList.add('active');
-            } else {
-                // Quitar resaltado de favoritos si no estamos mostrando favoritos
-                document.getElementById('toggle-favorites-btn').classList.remove('active');
-            }
-            
             setTimeout(() => {
                 smoothScrollTo('channels-container');
             }, 100);
@@ -2797,41 +2767,32 @@ video::-webkit-media-controls-overlay-play-button {
         }
     }
 
+    // Configurar el botón de favoritos en el header
+    function setupFavoritesToggle() {
+        const favoritesToggle = document.getElementById('favorites-toggle');
+        
+        favoritesToggle.addEventListener('click', () => {
+            // Mostrar favoritos
+            mostrarFavoritos();
+            
+            // Si los canales están ocultos, mostrarlos primero
+            if (!channelsVisible) {
+                toggleChannels();
+            }
+            
+            // Scroll suave a la sección de canales
+            setTimeout(() => {
+                smoothScrollTo('channels-container');
+            }, 100);
+        });
+    }
+
     // Inicializar búsqueda
     function inicializarBusqueda() {
         const searchInput = document.getElementById('header-search-input');
         const searchSuggestions = document.getElementById('search-suggestions');
-        const voiceSearchBtn = document.getElementById('voice-search-btn');
         
         if (!searchInput) return;
-        
-        // Búsqueda por voz
-        let recognition = null;
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.continuous = false;
-            recognition.lang = 'es-ES';
-            
-            voiceSearchBtn.addEventListener('click', () => {
-                if (recognition) {
-                    voiceSearchBtn.classList.add('listening');
-                    recognition.start();
-                }
-            });
-            
-            recognition.onresult = function(event) {
-                const transcript = event.results[0][0].transcript;
-                searchInput.value = transcript;
-                searchInput.dispatchEvent(new Event('input'));
-                voiceSearchBtn.classList.remove('listening');
-            };
-            
-            recognition.onerror = function() {
-                voiceSearchBtn.classList.remove('listening');
-            };
-        } else {
-            voiceSearchBtn.style.display = 'none';
-        }
         
         // Sugerencias en tiempo real
         searchInput.addEventListener('input', function(e) {
@@ -3127,14 +3088,6 @@ video::-webkit-media-controls-overlay-play-button {
             try {
                 const registration = await navigator.serviceWorker.register('/service-worker.js');
                 console.log('Service Worker registrado con éxito:', registration);
-                
-                // Inicializar notificaciones push después de registrar el Service Worker
-                setTimeout(() => {
-                    if (window.pushManager) {
-                        window.pushManager.init();
-                    }
-                }, 2000);
-                
                 return registration;
             } catch (error) {
                 console.error('Error registrando Service Worker:', error);
@@ -3422,8 +3375,10 @@ video::-webkit-media-controls-overlay-play-button {
         preventVideoPause();
         setupDoubleClickFullscreen();
         setupTouchGestures();
+        
+        // Configurar el nuevo botón de favoritos
+        setupFavoritesToggle();
     });
-</script>
-    
+</script>    
 </body>
 </html>
