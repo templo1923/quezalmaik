@@ -1741,25 +1741,25 @@ body.pwa-installed header {
         ];
         let currentProxyIndex = 0;
 
-        // Función para obtener URL a través de proxy (CORREGIDA)
+        // Función para obtener URL a través de proxy
         function getProxiedUrl(url) {
-            // Si la URL ya está proxied o es local, no hacer nada
-            if (!url || url.includes('corsproxy.io') || url.includes('cors-anywhere') || 
-                url.includes('proxy.cors.sh') || url.includes('codetabs.com') ||
-                url.startsWith('/') || url.startsWith(window.location.origin) || 
-                url.startsWith('data:') || url.startsWith('blob:')) {
+            // Si ya es una URL local o relativa, no usar proxy
+            if (url.startsWith('/') || url.startsWith(window.location.origin) || url.startsWith('data:')) {
                 return url;
             }
             
-            // Para TODOS los recursos externos (imágenes, streams, etc.) usar proxy
-            // Esto fuerza HTTPS y evita mixed-content
-            try {
-                const encodedUrl = encodeURIComponent(url);
-                return PROXY_SERVERS[currentProxyIndex] + encodedUrl;
-            } catch (e) {
-                console.error('Error al procesar URL con proxy:', e);
-                return url;
+            // Para el archivo JSON de canales, usar proxy
+            if (url.includes('canales_organizados.json')) {
+                return PROXY_SERVERS[currentProxyIndex] + encodeURIComponent(url);
             }
+            
+            // Para streams HTTP, usar proxy para convertirlos a HTTPS
+            if (url.startsWith('http://')) {
+                return PROXY_SERVERS[currentProxyIndex] + encodeURIComponent(url);
+            }
+            
+            // Para otros casos, devolver la URL original
+            return url;
         }
 
         // Función para rotar proxy si falla
