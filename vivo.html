@@ -1599,7 +1599,8 @@ video::-webkit-media-controls-overlay-play-button {
     box-shadow: 0 2px 8px rgba(255, 21, 0, 0.4);
 }
 
-    /* Botón de favoritos en el header (reemplaza al de micrófono) */
+<style>
+/* Botón de favoritos en el header (reemplaza al de micrófono) */
 .favorites-toggle {
     background: #2a2a2a;
     border: none;
@@ -1627,6 +1628,13 @@ video::-webkit-media-controls-overlay-play-button {
     background: #ff1500;
     color: white;
     box-shadow: 0 0 10px rgba(255, 21, 0, 0.5);
+    animation: pulse-heart 1.5s infinite;
+}
+
+@keyframes pulse-heart {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 /* Ajustes responsive para el botón de favoritos */
@@ -1638,6 +1646,25 @@ video::-webkit-media-controls-overlay-play-button {
         margin-left: 5px;
     }
 }
+
+/* Ajustes para el header en PC - alinear correctamente los botones */
+.header-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Asegurar que los botones estén alineados correctamente en PC */
+@media (min-width: 769px) {
+    .header-search {
+        gap: 15px;
+    }
+    
+    .favorites-toggle {
+        margin-left: 15px;
+    }
+}
+</style>
     
 </style>
 
