@@ -1883,38 +1883,45 @@ window.addEventListener('resize', debounce(adjustCategoryScroll, 250));
         }
 
         // Función para deshabilitar controles de progreso y pausa
-        function disableSeekAndPauseControls() {
-            const video = document.getElementById('video');
-            if (!video) return;
+// En la función disableSeekAndPauseControls(), modificar para permitir controles nativos
+function disableSeekAndPauseControls() {
+    const video = document.getElementById('video');
+    if (!video) return;
 
-            // Prevenir interacción con la barra de progreso y pausa
-            const existingStyle = document.getElementById('hide-controls-style');
-            if (!existingStyle) {
-                const style = document.createElement('style');
-                style.id = 'hide-controls-style';
-                style.innerHTML = `
-                    /* Ocultar barra de progreso y botón de play/pause */
-                    #video::-webkit-media-controls-timeline,
-                    #video::-webkit-media-controls-play-button,
-                    #video::-webkit-media-controls-pause-button,
-                    #video::-webkit-media-controls-current-time-display,
-                    #video::-webkit-media-controls-time-remaining-display,
-                    #video::-webkit-media-controls-timeline-container {
-                        display: none !important;
-                    }
-                    
-                    /* Ocultar en pantalla completa también */
-                    video:fullscreen::-webkit-media-controls-timeline,
-                    video:fullscreen::-webkit-media-controls-play-button,
-                    video:fullscreen::-webkit-media-controls-pause-button,
-                    video:fullscreen::-webkit-media-controls-current-time-display,
-                    video:fullscreen::-webkit-media-controls-time-remaining-display {
-                        display: none !important;
-                    }
-                `;
-                document.head.appendChild(style);
+    // Prevenir interacción con la barra de progreso pero permitir controles de volumen
+    const existingStyle = document.getElementById('hide-controls-style');
+    if (!existingStyle) {
+        const style = document.createElement('style');
+        style.id = 'hide-controls-style';
+        style.innerHTML = `
+            /* Ocultar solo barra de progreso pero permitir controles de volumen */
+            #video::-webkit-media-controls-timeline,
+            #video::-webkit-media-controls-current-time-display,
+            #video::-webkit-media-controls-time-remaining-display,
+            #video::-webkit-media-controls-timeline-container {
+                display: none !important;
             }
-        }
+            
+            /* Ocultar en pantalla completa también */
+            video:fullscreen::-webkit-media-controls-timeline,
+            video:fullscreen::-webkit-media-controls-current-time-display,
+            video:fullscreen::-webkit-media-controls-time-remaining-display {
+                display: none !important;
+            }
+            
+            /* Asegurar que los controles nativos sean visibles en móviles */
+            #video::-webkit-media-controls {
+                display: flex !important;
+            }
+            
+            #video::-webkit-media-controls-volume-slider,
+            #video::-webkit-media-controls-mute-button {
+                display: flex !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
 
         // Función para forzar la reproducción si se intenta pausar
         function preventVideoPause() {
