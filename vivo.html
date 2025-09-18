@@ -1732,6 +1732,32 @@ body.pwa-installed header {
         let streamCache = JSON.parse(localStorage.getItem('streamCache')) || {};
         let currentView = localStorage.getItem('viewPreference') || 'grid';
 
+    // Añadir esta función de debounce al principio de tu script
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Aplicar debounce a eventos de scroll y resize
+window.addEventListener('scroll', debounce(function() {
+    // Tu código existente de scroll
+    if (window.scrollY > 300) {
+        document.getElementById('back-to-player').classList.add('visible');
+    } else {
+        document.getElementById('back-to-player').classList.remove('visible');
+    }
+}, 100));
+
+window.addEventListener('resize', debounce(adjustCategoryScroll, 250));
+    
+
         // Nuevo: Servidores proxy para evitar CORS y contenido mixto
         const PROXY_SERVERS = [
             'https://corsproxy.io/?',
