@@ -1918,6 +1918,14 @@ function disableSeekAndPauseControls() {
             #video::-webkit-media-controls-mute-button {
                 display: flex !important;
             }
+            
+            /* Para iOS específicamente */
+            #video::-webkit-media-controls-start-playback-button {
+                display: none !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+                width: 0 !important;
+                height: 0 !important;
         `;
         document.head.appendChild(style);
     }
