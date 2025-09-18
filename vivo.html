@@ -2474,85 +2474,40 @@ if (Hls.isSupported()) {
             };
         }
 
-        // Función para manejar errores de carga de imágenes (MEJORADA)
-        function handleImageError(img) {
-            img.onerror = null;
-            
-            // Primero intentar con proxy para evitar mixed-content
-            const originalSrc = img.src;
-            
-            // Si ya es una URL de proxy o está vacía, no hacer nada más
-            if (!originalSrc || originalSrc.includes('corsproxy.io') || originalSrc.includes('cors-anywhere') || 
-                originalSrc.includes('proxy.cors.sh') || originalSrc.includes('codetabs.com')) {
-                return;
-            }
-            
-            // Intentar con proxy primero
-            const proxiedSrc = getProxiedUrl(originalSrc);
-            
-            const testImage = new Image();
-            testImage.onload = function() {
-                img.src = proxiedSrc;
-                img.style.display = 'block';
-                
-                // Eliminar cualquier ícono por defecto existente
-                const existingIcon = img.parentElement.querySelector('.default-icon');
-                if (existingIcon) {
-                    existingIcon.remove();
-                }
-            };
-            testImage.onerror = function() {
-                // Si el proxy falla, usar servidores de imágenes alternativos
-                const imageServers = [
-                    'https://images.weserv.nl/?url=',
-                    'https://cdn.jsdelivr.net/gh/tu_usuario/tu_repo@main/',
-                    'https://raw.githubusercontent.com/tu_usuario/tu_repo/main/'
-                ];
-                
-                let attempts = 0;
-                const maxAttempts = imageServers.length;
-                
-                function tryNextServer() {
-                    if (attempts >= maxAttempts) {
-                        // Si todos los servidores fallan, mostrar ícono por defecto
-                        img.style.display = 'none';
-                        const container = img.parentElement;
-                        const defaultIcon = document.createElement('div');
-                        defaultIcon.className = 'default-icon';
-                        defaultIcon.innerHTML = '<i class="fas fa-tv"></i>';
-                        container.appendChild(defaultIcon);
-                        return;
-                    }
-                    
-                    const server = imageServers[attempts];
-                    attempts++;
-                    
-                    // Extraer la URL real de la imagen
-                    let cleanUrl = originalSrc.split('?')[0];
-                    
-                    // Crear nueva URL con el servidor de imágenes
-                    const newSrc = server + encodeURIComponent(cleanUrl);
-                    
-                    // Crear una nueva imagen para probar
-                    const testImage2 = new Image();
-                    testImage2.onload = function() {
-                        img.src = newSrc;
-                        img.style.display = 'block';
-                        
-                        // Eliminar cualquier ícono por defecto existente
-                        const existingIcon = img.parentElement.querySelector('.default-icon');
-                        if (existingIcon) {
-                            existingIcon.remove();
-                        }
-                    };
-                    testImage2.onerror = tryNextServer;
-                    testImage2.src = newSrc;
-                }
-                
-                tryNextServer();
-            };
-            testImage.src = proxiedSrc;
+// Función para manejar errores de carga de imágenes (MEJORADA)
+// Reemplazar la función handleImageError con esta versión optimizada
+function handleImageError(img) {
+    img.onerror = null;
+    
+    // Si ya es una URL de proxy o está vacía, no hacer nada más
+    if (!img.src || img.src.includes('corsproxy.io') || img.src.includes('cors-anywhere') || 
+        img.src.includes('proxy.cors.sh') || img.src.includes('codetabs.com')) {
+        return;
+    }
+    
+    // Intentar con proxy primero
+    const proxiedSrc = getProxiedUrl(img.src);
+    
+    // Crear una nueva imagen para probar
+    const testImage = new Image();
+    testImage.onload = function() {
+        img.src = proxiedSrc;
+    };
+    testImage.onerror = function() {
+        // Si falla, mostrar ícono por defecto directamente
+        img.style.display = 'none';
+        const container = img.parentElement;
+        
+        // Verificar si ya existe un ícono por defecto
+        if (!container.querySelector('.default-icon')) {
+            const defaultIcon = document.createElement('div');
+            defaultIcon.className = 'default-icon';
+            defaultIcon.innerHTML = '<i class="fas fa-tv"></i>';
+            container.appendChild(defaultIcon);
         }
+    };
+    testImage.src = proxiedSrc;
+}
 
         // Función para desplazar suavemente a un elemento
         function smoothScrollTo(elementId) {
