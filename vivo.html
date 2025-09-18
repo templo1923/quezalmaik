@@ -1496,6 +1496,49 @@ body.pwa-installed header {
 .channels-layout-container .channel-list.list-view .channel-description {
     display: none;
 }
+
+/* Eliminar el botón de play/pause grande del centro en móviles */
+video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+}
+
+/* Ocultar el overlay de play/pause en iOS */
+video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+}
+
+/* Asegurar que los controles nativos sean los mínimos necesarios */
+#video {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Para navegadores WebKit (Chrome, Safari, etc.) */
+#video::-webkit-media-controls {
+    display: flex !important;
+}
+
+#video::-webkit-media-controls-panel {
+    display: flex !important;
+    opacity: 1 !important;
+    background: transparent !important;
+}
+
+#video::-webkit-media-controls-play-button {
+    display: none !important;
+}
+
+/* Para iOS específicamente */
+#video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+    
 }
 </style>
 
