@@ -2153,38 +2153,6 @@ video::-webkit-media-controls-overlay-play-button {
         });
     }
 
-    // Navegar al canal anterior
-    function navigateToPreviousChannel() {
-        if (!currentChannel) return;
-        
-        const currentCategory = currentChannel.description;
-        const currentChannels = todosCanales[currentCategory];
-        
-        if (!currentChannels) return;
-        
-        const currentIndex = currentChannels.findIndex(c => c.nombre === currentChannel.name);
-        if (currentIndex > 0) {
-            const previousChannel = currentChannels[currentIndex - 1];
-            cambiarCanal(previousChannel.url, previousChannel.nombre, currentCategory, previousChannel.logo);
-        }
-    }
-
-    // Navegar al siguiente canal
-    function navigateToNextChannel() {
-        if (!currentChannel) return;
-        
-        const currentCategory = currentChannel.description;
-        const currentChannels = todosCanales[currentCategory];
-        
-        if (!currentChannels) return;
-        
-        const currentIndex = currentChannels.findIndex(c => c.nombre === currentChannel.name);
-        if (currentIndex < currentChannels.length - 1) {
-            const nextChannel = currentChannels[currentIndex + 1];
-            cambiarCanal(nextChannel.url, nextChannel.nombre, currentCategory, nextChannel.logo);
-        }
-    }
-
     // Función para crear botones de categorías
     function crearBotonesCategorias() {
         const contenedor = document.getElementById('section-buttons');
