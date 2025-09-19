@@ -2071,7 +2071,15 @@ video::-webkit-media-controls-overlay-play-button {
         });
     }
 
-
+    // Gestos táctiles
+    function setupTouchGestures() {
+        const videoPlayer = document.getElementById('video-player');
+        let startX = 0;
+        let startY = 0;
+        let startTime = 0;
+        const minSwipeDist = 50;
+        const maxSwipeTime = 500;
+        let isDoubleTap = false;
         
         // Para detectar doble tap
         let lastTap = 0;
