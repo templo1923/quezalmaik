@@ -2564,16 +2564,29 @@ video::-webkit-media-controls-overlay-play-button {
         testImage.src = proxiedSrc;
     }
 
-    // Función para desplazar suavemente a un elemento
     function smoothScrollTo(elementId) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+    // 1. Obtenemos el elemento al que queremos ir (el reproductor).
+    const elemento = document.getElementById(elementId);
+    // 2. Obtenemos el header para poder medir su altura.
+    const header = document.querySelector('header');
+
+    if (elemento && header) {
+        // 3. Calculamos la altura exacta del header.
+        const alturaHeader = header.offsetHeight;
+
+        // 4. Obtenemos la posición del reproductor en la página.
+        const posicionElemento = elemento.getBoundingClientRect().top + window.scrollY;
+
+        // 5. Calculamos la posición final, restando la altura del header y añadiendo un pequeño margen.
+        const posicionFinal = posicionElemento - alturaHeader - 15; // Dejamos 15px de margen extra.
+
+        // 6. Hacemos el scroll suave a esa posición perfectamente calculada.
+        window.scrollTo({
+            top: posicionFinal,
+            behavior: 'smooth'
+        });
     }
+}
 
     // Función para ajustar el scroll de categorías en móvil
     function adjustCategoryScroll() {
