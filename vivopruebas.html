@@ -71,7 +71,7 @@ header {
 .header-title {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 5px;
     flex-shrink: 0;
 }
 
@@ -79,7 +79,7 @@ header {
     color: #ffffff;
     font-size: 28px;
     font-weight: 800;
-    letter-spacing: 1.2px;
+    letter-spacing: 0.2px;
     text-transform: uppercase;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     white-space: nowrap;
@@ -258,7 +258,7 @@ header {
     }
     
     .soccer-ball {
-        font-size: 24px;
+        font-size: 20px;
     }
     
     .header-search {
@@ -506,8 +506,8 @@ header {
 .control-buttons {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
+    gap: 5px;
+    margin: 5px 0;
     flex-wrap: wrap;
 }
 
@@ -1696,7 +1696,7 @@ video::-webkit-media-controls-overlay-play-button {
 
     /* 4. Reducimos el tamaño del título y el ícono de pelota */
     .header-title h1 {
-        font-size: 16px;
+        font-size: 12px;
     }
     .soccer-ball {
         font-size: 22px;
@@ -1810,6 +1810,9 @@ video::-webkit-media-controls-overlay-play-button {
         <div class="control-buttons">
             <button class="control-button" id="toggle-channels-btn">
                 <i class="fas fa-list"></i> Mostrar Canales
+            </button>
+            <button class="control-button" id="reload-player-btn" title="Recargar reproductor">
+        <i class="fas fa-sync-alt"></i> Recargar
             </button>
             <!-- ELIMINADO: Botón de favoritos que estaba aquí -->
             <button class="control-button share-button" id="share-channel-btn">
@@ -2564,6 +2567,7 @@ video::-webkit-media-controls-overlay-play-button {
         testImage.src = proxiedSrc;
     }
 
+    // Función para desplazar suavemente a un elemento
     function smoothScrollTo(elementId) {
     // 1. Obtenemos el elemento al que queremos ir (el reproductor).
     const elemento = document.getElementById(elementId);
@@ -3427,6 +3431,25 @@ video::-webkit-media-controls-overlay-play-button {
         setupViewToggle();
         setupSportsInfoButton();
         window.addEventListener('resize', debounce(adjustCategoryScroll, 250));
+
+        // ▼▼ AÑADE ESTE CÓDIGO NUEVO AQUÍ DENTRO ▼▼
+      const reloadBtn = document.getElementById('reload-player-btn');
+      if (reloadBtn) {
+          reloadBtn.addEventListener('click', () => {
+              // 1. Verificamos si hay un canal activo guardado en la variable 'currentChannel'
+              if (currentChannel && currentChannel.url) {
+                  console.log(`Recargando el stream para: ${currentChannel.name}`);
+                  showToast(`Recargando ${currentChannel.name}...`);
+                  
+                  // 2. Reutilizamos tu función 'cambiarCanal' con la info del canal actual
+                  cambiarCanal(currentChannel.url, currentChannel.name, currentChannel.description);
+              } else {
+                  // 3. Si no hay nada reproduciéndose, informamos al usuario.
+                  showToast('No hay ningún canal activo para recargar.');
+              }
+          });
+      }
+
         
         // Nuevas inicializaciones
         setupShareFunctionality();
