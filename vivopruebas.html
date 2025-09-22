@@ -464,7 +464,7 @@ header {
 
 /* Indicador EN VIVO en la sección de información */
 .live-indicator-small {
-    background: #22c55e;
+    background: #ff0d0d;
     color: white;
     border-radius: 4px;
     padding: 4px 8px;
@@ -508,7 +508,7 @@ header {
     justify-content: center;
     gap: 5px;
     margin: 5px 0;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .control-button {
@@ -516,7 +516,7 @@ header {
     align-items: center;
     gap: 8px;
     padding: 12px 20px;
-    background: linear-gradient(90deg, #1c04f2, #3b82f6);
+    background: linear-gradient(90deg, #1e293b, #18376a);
     color: white;
     border: none;
     border-radius: 10px;
@@ -534,7 +534,7 @@ header {
 }
 
 .control-button.share-button {
-    background: linear-gradient(90deg, #10b981, #059669);
+    background: linear-gradient(90deg, #1e293b, #18376a);
 }
 
 .control-button.share-button:hover {
@@ -634,6 +634,32 @@ header {
     align-items: center;
     gap: 10px;
     font-size: 0.9rem;
+}
+/* === NUEVOS ESTILOS PARA EL BOTÓN DE VISTA EN LA CABECERA === */
+
+/* 1. Hacemos que la cabecera de la lista sea flexible */
+.channel-list h2 {
+    display: flex;
+    justify-content: left; /* Coloca el título a la izquierda y el botón a la derecha */
+    align-items: center;
+}
+
+/* 2. Estilo para el nuevo botón de cambio de vista */
+.view-toggle-button {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    width: 26px;
+    height: 27px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.view-toggle-button:hover {
+    background: rgb(66, 233, 1);
+    color: #1e293b;
 }
 
 .channel-grid {
@@ -1005,14 +1031,14 @@ footer {
 .view-toggle {
     display: flex;
     justify-content: center;
-    margin: 15px 0;
+    margin:      5px 0;
     gap: 10px;
 }
 
 .view-toggle-btn {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    padding: 8px 15px;
+    padding: 2px 15px;
     border-radius: 8px;
     cursor: pointer;
     color: var(--text-primary);
@@ -1020,7 +1046,7 @@ footer {
 }
 
 .view-toggle-btn.active {
-    background: #001939;
+    background: #004820;
     color: white;
 }
 
@@ -1544,8 +1570,8 @@ video::-webkit-media-controls-overlay-play-button {
 .control-button {
     flex: 1;
     min-width: 120px;
-    font-size: 14px;
-    padding: 8px 12px;
+    font-size: 11px;
+    padding: 5px 9px;
 }
 
 /* Ajustar iconos */
@@ -1704,8 +1730,6 @@ video::-webkit-media-controls-overlay-play-button {
     /*
   Este es el bloque que ya tienes de la respuesta anterior.
   Añade las nuevas reglas DENTRO de él.
-*/
-@media (max-width: 400px) {
     
     /* ... (Aquí están las reglas del header que ya agregaste) ... */
 
@@ -1732,8 +1756,7 @@ video::-webkit-media-controls-overlay-play-button {
     }
 }
 }
-</style>
-    
+  
 </style>
 
 
@@ -1812,7 +1835,7 @@ video::-webkit-media-controls-overlay-play-button {
                 <i class="fas fa-list"></i> Mostrar Canales
             </button>
             <button class="control-button" id="reload-player-btn" title="Recargar reproductor">
-        <i class="fas fa-sync-alt"></i> Recargar
+        <i class="fas fa-sync-alt"></i> Recargar Canal
             </button>
             <!-- ELIMINADO: Botón de favoritos que estaba aquí -->
             <button class="control-button share-button" id="share-channel-btn">
@@ -1829,15 +1852,6 @@ video::-webkit-media-controls-overlay-play-button {
             </button>
             <button id="push-unsubscribe" class="control-button" style="display: none;">
                 <i class="fas fa-bell-slash"></i> Desactivar Notificaciones
-            </button>
-        </div>
-
-        <div class="view-toggle" id="view-toggle">
-            <button class="view-toggle-btn active" data-view="grid">
-                <i class="fas fa-th"></i> Cuadrícula
-            </button>
-            <button class="view-toggle-btn" data-view="list">
-                <i class="fas fa-list"></i> Lista
             </button>
         </div>
 
@@ -1890,8 +1904,8 @@ video::-webkit-media-controls-overlay-play-button {
     <!-- Modal para continuar reproducción -->
     <div class="modal-overlay" id="continue-modal">
         <div class="modal-content">
-            <h3 class="modal-title">Continuar reproducción</h3>
-            <p>¿Deseas continuar viendo <span id="last-channel-name"></span> desde donde lo dejaste?</p>
+            <h3 class="modal-title">Recargar último canal</h3>
+            <p>¿Deseas volver a sintonizar el último canal que viste:? <span id="last-channel-name"></span>?</p>
             <div class="modal-buttons">
                 <button class="modal-button primary" id="continue-yes">Sí, continuar</button>
                 <button class="modal-button secondary" id="continue-no">No, empezar de nuevo</button>
@@ -2312,11 +2326,28 @@ video::-webkit-media-controls-overlay-play-button {
             document.getElementById('channels-container').appendChild(seccion);
         }
         
-        seccion.innerHTML = `
-            <h2><i class=""></i> ${categoria}</h2>
-            <div class="channel-grid"></div>
-        `;
-        
+        // REEMPLAZA la línea de seccion.innerHTML con ESTO:
+seccion.innerHTML = `
+    <h2>
+        <span><i class=""></i> ${categoria}</span>
+        <button class="view-toggle-button" id="view-toggle-btn-${seccion.id}">
+            <i></i>
+        </button>
+    </h2>
+    <div class="channel-grid"></div>
+`;
+
+// APLICA la clase de vista actual
+if (currentView === 'list') {
+    seccion.classList.add('list-view');
+}
+
+// AÑADE estas líneas justo después para activar el botón:
+const newToggleButton = document.getElementById(`view-toggle-btn-${seccion.id}`);
+if (newToggleButton) {
+    setupDynamicViewToggle(newToggleButton, seccion);
+}
+
         const grid = seccion.querySelector('.channel-grid');
         canales.forEach(canal => {
             const item = document.createElement('div');
@@ -2637,14 +2668,6 @@ video::-webkit-media-controls-overlay-play-button {
                     playbackInfo.channel.description
                 );
                 
-                const video = document.getElementById('video');
-                const checkVideoReady = setInterval(function() {
-                    if (video.readyState > 0) {
-                        video.currentTime = playbackInfo.position;
-                        clearInterval(checkVideoReady);
-                    }
-                }, 500);
-                
                 document.getElementById('continue-modal').classList.remove('active');
             };
             
@@ -2807,35 +2830,43 @@ video::-webkit-media-controls-overlay-play-button {
         seccion.style.display = 'block';
     }
 
+
+
+
+
+
+
+
+
+
+
     // Función para mostrar/ocultar canales
-    function toggleChannels() {
-        const channelsContainer = document.getElementById('channels-container');
-        const sectionButtons = document.getElementById('section-buttons');
-        const viewToggle = document.getElementById('view-toggle');
-        const toggleBtn = document.getElementById('toggle-channels-btn');
+// PEGA ESTA VERSIÓN CORREGIDA EN SU LUGAR
+function toggleChannels() {
+    const channelsContainer = document.getElementById('channels-container');
+    const sectionButtons = document.getElementById('section-buttons');
+    const toggleBtn = document.getElementById('toggle-channels-btn');
+    
+    channelsVisible = !channelsVisible;
+    
+    if (channelsVisible) {
+        channelsContainer.style.display = 'block';
+        sectionButtons.style.display = 'flex';
+        toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Canales';
         
-        channelsVisible = !channelsVisible;
+        setTimeout(() => {
+            smoothScrollTo('channels-container');
+        }, 100);
+    } else {
+        channelsContainer.style.display = 'none';
+        sectionButtons.style.display = 'none';
+        toggleBtn.innerHTML = '<i class="fas fa-list"></i> Mostrar Canales';
         
-        if (channelsVisible) {
-            channelsContainer.style.display = 'block';
-            sectionButtons.style.display = 'flex';
-            viewToggle.style.display = 'flex';
-            toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Canales';
-            
-            setTimeout(() => {
-                smoothScrollTo('channels-container');
-            }, 100);
-        } else {
-            channelsContainer.style.display = 'none';
-            sectionButtons.style.display = 'none';
-            viewToggle.style.display = 'none';
-            toggleBtn.innerHTML = '<i class="fas fa-list"></i> Mostrar Canales';
-            
-            setTimeout(() => {
-                smoothScrollTo('player-container');
-            }, 100);
-        }
+        setTimeout(() => {
+            smoothScrollTo('player-container');
+        }, 100);
     }
+}
 
     // Configurar el botón de favoritos en el header
     function setupFavoritesToggle() {
@@ -3142,6 +3173,31 @@ video::-webkit-media-controls-overlay-play-button {
         });
     }
 
+
+
+// NUEVA FUNCIÓN PARA MANEJAR EL BOTÓN DE VISTA
+function setupDynamicViewToggle(button, section) {
+    // 1. Determina qué ícono mostrar al inicio
+    const icon = button.querySelector('i');
+    icon.className = (currentView === 'grid') ? 'fas fa-list-ul' : 'fas fa-th';
+
+    // 2. Añade el evento de clic
+    button.addEventListener('click', () => {
+        // Invierte la vista actual
+        currentView = (currentView === 'grid') ? 'list' : 'grid';
+        localStorage.setItem('viewPreference', currentView);
+
+        // Cambia el ícono en el botón
+        icon.className = (currentView === 'grid') ? 'fas fa-list-ul' : 'fas fa-th';
+        
+        // Aplica o quita la clase a la lista de canales
+        if (currentView === 'list') {
+            section.classList.add('list-view');
+        } else {
+            section.classList.remove('list-view');
+        }
+    });
+}
     // Configurar botón de información deportiva
     function setupSportsInfoButton() {
         const sportsInfoBtn = document.getElementById('sports-info-btn');
