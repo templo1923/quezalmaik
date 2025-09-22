@@ -136,6 +136,11 @@ header {
     flex-shrink: 0;
 }
 
+/* ▼▼▼ AÑADE ESTA NUEVA REGLA ▼▼▼ */
+.search-toggle i {
+    pointer-events: none; /* Esto hace que el ícono ignore los clics */
+}
+
 .search-toggle:hover,
 .theme-toggle:hover,
 .back-button:hover {
@@ -484,7 +489,7 @@ header {
 
 .channel-details {
     margin-top: 10px;
-    min-height: 100px;
+    min-height: 50px;
     transition: all 0.3s;
 }
 
@@ -1754,9 +1759,44 @@ video::-webkit-media-controls-overlay-play-button {
     .channels-layout-container .channel-name {
         font-size: 0.75rem; /* Un poco más pequeño para que no se corte */
     }
+
+    .header-title h1 {
+        font-size: 16px;
+    }
+    
+    .soccer-ball {
+        font-size: 18px;
+    }
+    
+    .search-toggle,
+    .favorites-toggle,
+    .theme-toggle,
+    .back-button {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .channels-layout-container .channel-grid {
+        grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+        gap: 8px;
+    }
+    
+    .channels-layout-container .channel-item .image-container {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .channel-name {
+        font-size: 0.7rem;
+    }
+    
+    .control-button {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
 }
 }
-  
 </style>
 
 
@@ -1862,6 +1902,13 @@ video::-webkit-media-controls-overlay-play-button {
             </div>
 
             <div id="channels-container">
+                <div id="channels-container">
+    <div id="search-results-container" class="channel-list" style="display: none;">
+        <h2><i class="fas fa-search"></i> Resultados de la Búsqueda</h2>
+        <div class="channel-grid"></div>
+    </div>
+
+    </div>
                 <!-- Las listas de canales se generarán aquí dinámicamente -->
             </div>
         </div>
@@ -2849,15 +2896,6 @@ video.play().catch(e => {
     }
 
 
-
-
-
-
-
-
-
-
-
     // Función para mostrar/ocultar canales
 // PEGA ESTA VERSIÓN CORREGIDA EN SU LUGAR
 function toggleChannels() {
@@ -2906,143 +2944,156 @@ function toggleChannels() {
         });
     }
 
-    // Inicializar búsqueda
-    function inicializarBusqueda() {
-        const searchInput = document.getElementById('header-search-input');
-        const searchSuggestions = document.getElementById('search-suggestions');
+// ▼▼▼ PEGA ESTA FUNCIÓN COMPLETA EN SU LUGAR ▼▼▼
+// ▼▼▼ PEGA ESTA FUNCIÓN COMPLETA EN SU LUGAR ▼▼▼
+// ▼▼▼ ESTA ES LA FUNCIÓN FINAL Y CORREGIDA ▼▼▼
+function inicializarBusqueda() {
+    const searchInput = document.getElementById('header-search-input');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const searchResultsContainer = document.getElementById('search-results-container');
+    const noResults = document.getElementById('no-results');
+
+    if (!searchInput) return;
+
+    // --- Función para REINICIAR la búsqueda y NAVEGAR a la categoría del canal seleccionado ---
+    const finalizarBusquedaYNavegar = (categoriaDestino) => {
+        searchInput.value = ''; // Limpia el texto
+        searchSuggestions.innerHTML = '';
+        searchSuggestions.classList.remove('active');
+        searchResultsContainer.style.display = 'none';
+        noResults.style.display = 'none';
         
-        if (!searchInput) return;
-        
-        // Sugerencias en tiempo real
-        searchInput.addEventListener('input', function(e) {
-            const termino = e.target.value.toLowerCase().trim();
-            searchSuggestions.innerHTML = '';
-            
-            if (termino.length < 2) {
-                searchSuggestions.classList.remove('active');
-                if (showingFavorites) {
-                    mostrarFavoritos();
-                } else {
-                    Object.keys(todosCanales).forEach(categoria => {
-                        const seccion = document.getElementById(`categoria-${categoria.replace(/\W+/g, '-').toLowerCase()}`);
-                        if (seccion) seccion.style.display = 'block';
-                    });
-                }
-                document.getElementById('no-results').style.display = 'none';
-                return;
+        mostrarCategoria(categoriaDestino);
+
+        document.querySelectorAll('.section-button').forEach(btn => {
+            if (btn.textContent.trim().toLowerCase() === categoriaDestino.toLowerCase()) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
             }
-            
-            // Generar sugerencias
-            const sugerencias = [];
+        });
+    };
+
+    // --- Función para RESTAURAR la vista de categorías (cuando se borra el texto) ---
+    const restaurarVistaCategorias = () => {
+        searchSuggestions.classList.remove('active');
+        searchResultsContainer.style.display = 'none';
+        noResults.style.display = 'none';
+        
+        const categoriaActiva = document.querySelector('.section-button.active');
+        if (categoriaActiva) {
+            mostrarCategoria(categoriaActiva.textContent.trim());
+        } else if (Object.keys(todosCanales).length > 0) {
+            mostrarCategoria(Object.keys(todosCanales)[0]);
+        }
+    };
+
+    // --- Función para mostrar los resultados en la cuadrícula ---
+    const mostrarResultadosEnCuadricula = (resultados) => {
+        document.querySelectorAll('#channels-container > .channel-list:not(#search-results-container)').forEach(el => el.style.display = 'none');
+        searchResultsContainer.style.display = 'block';
+        const grid = searchResultsContainer.querySelector('.channel-grid');
+        grid.innerHTML = '';
+
+        if (resultados.length > 0) {
+            noResults.style.display = 'none';
+            resultados.forEach(canalInfo => {
+                const { canal, categoria } = canalInfo;
+                const item = document.createElement('div');
+                item.className = 'channel-item';
+                const logoSrc = canal.logo || canal['tvg-logo'] || '';
+                const streamUrl = canal.url || canal.link || '';
+                const isFavorite = favorites[`${categoria}-${canal.nombre}`] !== undefined;
+                item.innerHTML = `
+                    <div class="image-container">
+                        <img src="${logoSrc}" alt="${canal.nombre}" onerror="handleImageError(this)">
+                        <div class="favorite-icon ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${canal.nombre}', '${categoria}', event)">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <div class="channel-name">${canal.nombre}</div>
+                    <div class="channel-description">${categoria}</div>`;
+
+                item.onclick = () => {
+                    document.getElementById('header-search-form').classList.remove('active');
+                    cambiarCanal(streamUrl, canal.nombre, categoria, logoSrc);
+                    if (!channelsVisible) toggleChannels();
+                    setTimeout(() => {
+                        smoothScrollTo('player-container');
+                        finalizarBusquedaYNavegar(categoria); 
+                    }, 300);
+                };
+                grid.appendChild(item);
+            });
+        } else {
+            noResults.style.display = 'block';
+        }
+    };
+    
+    // --- Función para mostrar las sugerencias en el menú desplegable ---
+    const mostrarSugerencias = (resultados) => {
+        searchSuggestions.innerHTML = '';
+        if (resultados.length > 0) {
+            searchSuggestions.classList.add('active');
+            resultados.slice(0, 5).forEach(canalInfo => {
+                const { canal, categoria } = canalInfo;
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.innerHTML = `<i class="fas fa-tv"></i> ${canal.nombre} <small>(${categoria})</small>`;
+                
+                suggestionItem.onclick = () => {
+                    const streamUrl = canal.url || canal.link || '';
+                    cambiarCanal(streamUrl, canal.nombre, categoria);
+                    document.getElementById('header-search-form').classList.remove('active');
+                    if (!channelsVisible) toggleChannels();
+                    setTimeout(() => {
+                        smoothScrollTo('player-container');
+                        finalizarBusquedaYNavegar(categoria); 
+                    }, 300);
+                };
+                searchSuggestions.appendChild(suggestionItem);
+            });
+        } else {
+            searchSuggestions.classList.remove('active');
+        }
+    };
+
+    // --- Evento principal de búsqueda ---
+    searchInput.addEventListener('input', function(e) {
+        const termino = e.target.value.toLowerCase().trim();
+        if (termino.length >= 2) {
+            const resultados = [];
             Object.keys(todosCanales).forEach(categoria => {
                 todosCanales[categoria].forEach(canal => {
-                    if (canal.nombre.toLowerCase().includes(termino) || 
-                        categoria.toLowerCase().includes(termino)) {
-                        sugerencias.push({ canal, categoria });
+                    if (canal.nombre.toLowerCase().includes(termino)) {
+                        resultados.push({ canal, categoria });
                     }
                 });
             });
-            
-            // Mostrar sugerencias
-            if (sugerencias.length > 0) {
-                searchSuggestions.classList.add('active');
-                sugerencias.slice(0, 5).forEach(({ canal, categoria }) => {
-                    const suggestionItem = document.createElement('div');
-                    suggestionItem.className = 'suggestion-item';
-                    suggestionItem.innerHTML = `
-                        <i class="fas fa-tv"></i> ${canal.nombre} <small>(${categoria})</small>
-                    `;
-                    suggestionItem.onclick = () => {
-                        const streamUrl = canal.url || canal.link || '';
-                        cambiarCanal(streamUrl, canal.nombre, categoria);
-                        searchInput.value = '';
-                        searchSuggestions.classList.remove('active');
-                        toggleChannels();
-                        setTimeout(() => smoothScrollTo('player-container'), 300);
-                    };
-                    searchSuggestions.appendChild(suggestionItem);
-                });
-            } else {
-                searchSuggestions.classList.remove('active');
-            }
-            
-            // Resto de la función de búsqueda
-            document.querySelectorAll('.channel-list').forEach(el => {
-                el.style.display = 'none';
-            });
-            
-            let resultadosEncontrados = false;
-            
-            Object.keys(todosCanales).forEach(categoria => {
-                const canales = todosCanales[categoria];
-                const resultados = canales.filter(canal => 
-                    canal.nombre.toLowerCase().includes(termino) || 
-                    categoria.toLowerCase().includes(termino)
-                );
-                
-                if (resultados.length > 0) {
-                    resultadosEncontrados = true;
-                    const seccionId = `categoria-${categoria.replace(/\W+/g, '-').toLowerCase()}`;
-                    let seccion = document.getElementById(seccionId);
-                    
-                    if (seccion) {
-                        const grid = seccion.querySelector('.channel-grid');
-                        grid.innerHTML = '';
-                        
-                        resultados.forEach(canal => {
-                            const item = document.createElement('div');
-                            item.className = 'channel-item';
-                            
-                            const logoSrc = canal.logo || canal['tvg-logo'] || '';
-                            const channelId = `${categoria}-${canal.nombre}`;
-                            const isFavorite = favorites[channelId] !== undefined;
-                            
-                            item.innerHTML = `
-                                <div class="image-container">
-                                    <img src="${logoSrc}" 
-                                         alt="${canal.nombre}" 
-                                         onerror="handleImageError(this)">
-                                    <div class="favorite-icon ${isFavorite ? 'active' : ''}" onclick="toggleFavorite('${canal.nombre}', '${categoria}', event)">
-                                        <i class="fas fa-heart"></i>
-                                    </div>
-                                </div>
-                                <div class="channel-name">${canal.nombre}</div>
-                                <div class="channel-description">${categoria}</div>
-                            `;
-                            
-                            const streamUrl = canal.url || canal.link || '';
-                            item.onclick = () => {
-                                cambiarCanal(streamUrl, canal.nombre, categoria, logoSrc);
-                                toggleChannels();
-                                
-                                setTimeout(() => {
-                                    smoothScrollTo('player-container');
-                                }, 300);
-                            };
-                            grid.appendChild(item);
-                        });
-                        
-                        seccion.style.display = 'block';
-                    }
-                }
-            });
-            
-            document.getElementById('no-results').style.display = resultadosEncontrados ? 'none' : 'block';
-            
-            if (resultadosEncontrados) {
-                setTimeout(() => {
-                    smoothScrollTo('channels-container');
-                }, 100);
-            }
-        });
-        
-        // Cerrar sugerencias al hacer clic fuera
-        document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
-                searchSuggestions.classList.remove('active');
-            }
-        });
-    }
+            mostrarSugerencias(resultados);
+            mostrarResultadosEnCuadricula(resultados);
+        } else {
+            // BUG FIX: Esta sección causaba que el texto se borrara al escribir.
+            // Ahora, solo restaura la vista sin borrar el texto del input.
+            restaurarVistaCategorias();
+        }
+    });
+
+    // --- Lógica para el botón de cierre ---
+    document.getElementById('header-search-close').addEventListener('click', () => {
+        searchInput.value = ''; // Limpiamos el input aquí
+        restaurarVistaCategorias();
+    });
+
+    // --- Cerrar sugerencias al hacer clic fuera ---
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+            searchSuggestions.classList.remove('active');
+        }
+    });
+}
+
+
 
     function mostrarLoading(mostrar) {
         const loading = document.getElementById('loading');
