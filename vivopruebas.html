@@ -2494,17 +2494,25 @@ if (newToggleButton) {
             currentHls.loadSource(proxiedUrl);
             currentHls.attachMedia(video);
             
-            currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
-                addToStreamCache(url, url);
-                document.getElementById('loading').style.display = 'none';
-                retryCount = 0;
-                
-                video.play().catch(e => {
-                    mostrarError('Error al reproducir: ' + e.message);
-                });
-                
-                playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
-            });
+// CÓDIGO CORREGIDO (DESPUÉS) ✨
+currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
+    addToStreamCache(url, url);
+    document.getElementById('loading').style.display = 'none';
+    retryCount = 0;
+
+    video.play().catch(e => {
+        // Ignoramos el error "AbortError" que es común al cambiar de canal.
+        if (e.name === 'AbortError') {
+            console.warn('La reproducción fue interrumpida por una nueva carga (comportamiento esperado).');
+        } else {
+            // Para cualquier otro error real, sí lo mostramos.
+            mostrarError('Error al reproducir: ' + e.message);
+            console.error('Error de reproducción:', e);
+        }
+    });
+
+    playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
+});
             
             currentHls.on(Hls.Events.ERROR, function(event, data) {
                 if (data.fatal) {
@@ -2528,7 +2536,9 @@ if (newToggleButton) {
                     }
                 }
             });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        } 
+        
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
             // Para Safari y otros navegadores que soportan HLS nativamente
             video.src = proxiedUrl;
             video.addEventListener('loadedmetadata', function() {
@@ -2541,9 +2551,17 @@ if (newToggleButton) {
                     <p><i class="fas fa-align-left"></i> ${categoria}</p>
                 `;
                 
-                video.play().catch(e => {
-                    mostrarError('Error al reproducir: ' + e.message);
-                });
+  // Y REEMPLAZARLO POR ESTO ✨
+video.play().catch(e => {
+    // Ignoramos el error "AbortError" que es común al cambiar de canal.
+    if (e.name === 'AbortError') {
+        console.warn('La reproducción fue interrumpida por una nueva carga (comportamiento esperado).');
+    } else {
+        // Para cualquier otro error real, sí lo mostramos.
+        mostrarError('Error al reproducir: ' + e.message);
+        console.error('Error de reproducción:', e);
+    }
+});
                 
                 playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
             });
