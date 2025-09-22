@@ -645,7 +645,8 @@ header {
 /* 1. Hacemos que la cabecera de la lista sea flexible */
 .channel-list h2 {
     display: flex;
-    justify-content: left; /* Coloca el título a la izquierda y el botón a la derecha */
+    align-items: stretch;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -1796,6 +1797,33 @@ video::-webkit-media-controls-overlay-play-button {
         font-size: 0.8rem;
     }
 }
+/* ========================================================= */
+/* === SOLUCIÓN AGRESIVA PARA OCULTAR BOTÓN PLAY CENTRAL === */
+/* ========================================================= */
+
+/*
+  Esta regla se asegura de ocultar los diferentes tipos de botones
+  de reproducción que los navegadores WebKit (Chrome, Safari)
+  pueden mostrar sobre el video. Usamos múltiples propiedades
+  para garantizar que se oculte incluso si el navegador ignora una de ellas.
+*/
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    -webkit-appearance: none !important; /* Fuerza la anulación de estilos nativos */
+    opacity: 0 !important; /* Lo hace invisible como respaldo */
+    pointer-events: none !important; /* Evita que se pueda hacer clic en él */
+}
+
+/*
+  Regla adicional específica para el modo de pantalla completa,
+  que es donde ocurre tu problema.
+*/
+video:fullscreen::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+}
+
 }
 </style>
 
