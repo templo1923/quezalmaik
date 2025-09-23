@@ -13,12 +13,17 @@
     
 
 <style>
+/* ==========================================================================
+   1. ESTILOS GLOBALES Y THEMING
+   ========================================================================== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
 :root[data-theme="light"] {
     --bg-primary: #f5f5f5;
     --bg-secondary: #ffffff;
@@ -40,6 +45,7 @@
     --card-bg: linear-gradient(135deg, #1e293b, #0e141c);
     --border-color: #ffffff;
 }
+
 body {
     background: var(--bg-primary);
     color: var(--text-primary);
@@ -48,7 +54,11 @@ body {
     transition: background 0.3s, color 0.3s;
 }
 
-/* ========== HEADER CORREGIDO ========== */
+/* ==========================================================================
+   2. COMPONENTES PRINCIPALES DE LAYOUT
+   ========================================================================== */
+
+/* ---------- Header ---------- */
 header {
     background: var(--header-bg);
     padding: 5px 0;
@@ -93,22 +103,102 @@ header {
     transform-origin: center;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* ---------- Contenido Principal ---------- */
+.container {
+    max-width: 1200px;
+    margin: 15px auto;
+    padding: 0 10px;
+    text-align: center;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+/* ---------- Reproductor de Video ---------- */
+.player-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    position: relative;
 }
 
-@keyframes glow {
-    0%, 100% { filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6)); }
-    50% { filter: drop-shadow(0 3px 12px rgba(96, 165, 250, 0.9)); }
+#video-player {
+    flex: 2;
+    background-color: black;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    min-height: 280px;
 }
 
-/* Botones del header */
+#video {
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+}
+
+/* ---------- Navegación Inferior ---------- */
+.bottom-nav {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    padding: 10px 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    width: auto;
+    max-width: calc(100% - 20px);
+    justify-content: center;
+}
+
+.bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 15px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.bottom-nav a i {
+    font-size: 18px;
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active {
+    background: rgba(96, 165, 250, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- Footer ---------- */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   3. COMPONENTES DE UI Y WIDGETS
+   ========================================================================== */
+
+/* ---------- Botones del Header y Búsqueda ---------- */
 .header-search {
     display: flex;
     align-items: center;
@@ -136,9 +226,8 @@ header {
     flex-shrink: 0;
 }
 
-/* ▼▼▼ AÑADE ESTA NUEVA REGLA ▼▼▼ */
 .search-toggle i {
-    pointer-events: none; /* Esto hace que el ícono ignore los clics */
+    pointer-events: none;
 }
 
 .search-toggle:hover,
@@ -152,7 +241,6 @@ header {
     text-decoration: none;
 }
 
-/* Botón de favoritos específico */
 .favorites-toggle {
     color: #ff1500;
 }
@@ -170,13 +258,6 @@ header {
     animation: pulse-heart 1.5s infinite;
 }
 
-@keyframes pulse-heart {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-/* Formulario de búsqueda */
 .header-search-form {
     display: none;
     position: relative;
@@ -251,179 +332,7 @@ header {
     background: rgba(96, 165, 250, 0.2);
 }
 
-/* ========== RESPONSIVE HEADER ========== */
-@media (max-width: 768px) {
-    .header-content {
-        padding: 0 15px;
-        gap: 10px;
-    }
-    
-    .header-title h1 {
-        font-size: 18px;
-    }
-    
-    .soccer-ball {
-        font-size: 20px;
-    }
-    
-    .header-search {
-        gap: 8px;
-    }
-    
-    .search-toggle,
-    .favorites-toggle,
-    .theme-toggle,
-    .back-button {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
-    
-    .header-search-form {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 100%;
-        z-index: 1001;
-        background: rgba(30, 41, 59, 0.95);
-        padding: 10px;
-        border-radius: 0 0 10px 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    }
-    
-    .header-search-input {
-        font-size: 16px;
-    }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-    .header-title h1 {
-        font-size: 22px;
-    }
-    
-    .header-search-form {
-        width: 200px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .header-content {
-        padding: 0;
-    }
-}
-
-/* ========== ESTILOS EXISTENTES (TODO EL RESTO) ========== */
-/* Bottom Navigation */
-.bottom-nav {
-    position: fixed;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(30, 41, 59, 0.95);
-    backdrop-filter: blur(12px);
-    border-radius: 12px;
-    padding: 10px 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    display: flex;
-    gap: 10px;
-    border: 1px solid rgba(96, 165, 250, 0.3);
-    width: auto;
-    max-width: calc(100% - 20px);
-    justify-content: center;
-}
-
-.bottom-nav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 10px 15px;
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 8px;
-    transition: all 0.3s;
-    white-space: nowrap;
-    flex: 1;
-}
-
-.bottom-nav a i {
-    font-size: 18px;
-}
-
-.bottom-nav a:hover {
-    background: rgba(96, 165, 250, 0.3);
-    transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.bottom-nav a.active {
-    background: rgba(96, 165, 250, 0.3);
-    transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-@media (max-width: 768px) {
-    .bottom-nav {
-        padding: 8px 10px;
-        gap: 8px;
-        border-radius: 10px;
-        max-width: calc(100% - 15px);
-    }
-
-    .bottom-nav a {
-        padding: 8px 12px;
-        font-size: 12px;
-        gap: 3px;
-    }
-
-    .bottom-nav a i {
-        font-size: 16px;
-    }
-}
-
-/* Contenido principal */
-.container {
-    max-width: 1200px;
-    margin: 15px auto;
-    padding: 0 10px;
-    text-align: center;
-}
-
-/* Reproductor de video */
-.player-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
-    position: relative;
-}
-
-@media (min-width: 768px) {
-    .player-container {
-        flex-direction: row;
-    }
-}
-
-#video-player {
-    flex: 2;
-    background-color: black;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    position: relative;
-    min-height: 280px;
-}
-
-#video {
-    width: 100%;
-    height: 100%;
-    min-height: 280px;
-}
-
+/* ---------- Placeholders y Mensajes de Estado ---------- */
 .player-placeholder {
     position: absolute;
     top: 0;
@@ -446,6 +355,67 @@ header {
     color: #60a5fa;
 }
 
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    color: #e0e0e0;
+    z-index: 10;
+    border-radius: 10px;
+}
+
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid #60a5fa;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+.error-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(18, 0, 0);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0;
+    text-align: center;
+    font-size: 1rem;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+.no-results {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    display: none;
+}
+
+.no-results i {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #334155;
+}
+
+/* ---------- Info del Canal ---------- */
 .channel-info {
     flex: 1;
     background: var(--card-bg);
@@ -467,7 +437,6 @@ header {
     justify-content: space-between;
 }
 
-/* Indicador EN VIVO en la sección de información */
 .live-indicator-small {
     background: #ff0d0d;
     color: white;
@@ -479,12 +448,6 @@ header {
     align-items: center;
     gap: 4px;
     animation: pulse-live 2s infinite;
-}
-
-@keyframes pulse-live {
-    0% { opacity: 0.8; }
-    50% { opacity: 1; }
-    100% { opacity: 0.8; }
 }
 
 .channel-details {
@@ -507,7 +470,7 @@ header {
     font-size: 0.9rem;
 }
 
-/* Botones de control */
+/* ---------- Botones de Control y Sección ---------- */
 .control-buttons {
     display: flex;
     justify-content: center;
@@ -554,7 +517,6 @@ header {
     background: linear-gradient(90deg, #7c3aed, #6d28d9);
 }
 
-/* Botones de sección */
 .section-buttons {
     display: flex;
     overflow-x: auto;
@@ -567,19 +529,9 @@ header {
     scroll-behavior: smooth;
 }
 
-.section-buttons::-webkit-scrollbar {
-    height: 6px;
-}
-
-.section-buttons::-webkit-scrollbar-track {
-    background: #1e293b;
-    border-radius: 10px;
-}
-
-.section-buttons::-webkit-scrollbar-thumb {
-    background-color: #052bb6;
-    border-radius: 1px;
-}
+.section-buttons::-webkit-scrollbar { height: 6px; }
+.section-buttons::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
+.section-buttons::-webkit-scrollbar-thumb { background-color: #052bb6; border-radius: 1px; }
 
 .section-button {
     background: linear-gradient(90deg, #1b2931, #114b92);
@@ -615,7 +567,7 @@ header {
     font-size: 1rem;
 }
 
-/* Listas de canales */
+/* ---------- Lista y Grid de Canales ---------- */
 .channel-list {
     display: none;
     margin-top: 20px;
@@ -639,18 +591,10 @@ header {
     align-items: center;
     gap: 10px;
     font-size: 0.9rem;
-}
-/* === NUEVOS ESTILOS PARA EL BOTÓN DE VISTA EN LA CABECERA === */
-
-/* 1. Hacemos que la cabecera de la lista sea flexible */
-.channel-list h2 {
-    display: flex;
-    align-items: stretch;
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
 }
 
-/* 2. Estilo para el nuevo botón de cambio de vista */
 .view-toggle-button {
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid var(--border-color);
@@ -713,6 +657,11 @@ header {
     box-shadow: 0px 3px 15px 3px rgba(10, 255, 50, 0.4);
 }
 
+.channel-item.active .image-container img {
+    border: 4px solid #21ff00;
+    box-shadow: 0px 3px 15px 3px rgba(10, 255, 50, 0.4);
+}
+
 .channel-name {
     display: block;
     margin-top: 8px;
@@ -731,12 +680,19 @@ header {
     margin-top: 2px;
 }
 
-.channel-item.active .image-container img {
-    border: 4px solid   #21ff00;
-    box-shadow: 0px 3px 15px 3px rgba(10, 255, 50, 0.4);
+.default-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #1e293b;
+    border-radius: 10px;
+    border: 3px solid #0e2b9d;
+    color: #60a5fa;
+    font-size: 1.8rem;
 }
 
-/* Indicador de favoritos */
 .favorite-icon {
     position: absolute;
     top: -5px;
@@ -774,78 +730,7 @@ header {
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
 }
 
-/* ===== ESTILOS MODIFICADOS ===== */
-.loading {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.75);
-    color: #e0e0e0;
-    z-index: 10;
-    border-radius: 10px;
-}
-
-.loading-spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top: 4px solid #60a5fa;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 15px;
-}
-
-.error-message {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(18, 0, 0);
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 0;
-    text-align: center;
-    font-size: 1rem;
-    z-index: 10;
-    box-sizing: border-box;
-}
-/* ===== FIN DE ESTILOS MODIFICADOS ===== */
-
-.no-results {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-    display: none;
-}
-
-.no-results i {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    color: #334155;
-}
-
-footer {
-    text-align: center;
-    margin-top: 40px;
-    padding: 20px;
-    color: var(--text-secondary);
-    border-top: 1px solid var(--border-color);
-    font-size: 0.85rem;
-}
-
-/* Botón flotante para volver al reproductor */
+/* ---------- Botones Flotantes ---------- */
 .floating-button {
     position: fixed;
     bottom: 80px;
@@ -877,98 +762,31 @@ footer {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
-/* Responsive adjustments */
-@media screen and (max-width: 768px) {
-    .channel-grid {
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    }
-    
-    .section-button {
-        padding: 8px 15px;
-        font-size: 0.85rem;
-    }
-    
-    .channel-item .image-container {
-        width: 85px;
-        height: 85px;
-    }
-    
-    .channel-name {
-        font-size: 0.8rem;
-    }
-
-    .floating-button {
-        bottom: 70px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-        font-size: 18px;
-    }
-
-    .control-button {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
-
-    /* Mejoras para el scroll de categorías en móvil */
-    .section-buttons {
-        justify-content: flex-start;
-        overflow-x: auto;
-        scroll-behavior: smooth;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 5px;
-    }
-    
-    .section-button {
-        scroll-snap-align: start;
-    }
-    
-    .section-buttons:after {
-        content: '';
-        flex: 0 0 5px;
-    }
-
-    /* Ajustes para la información del canal en móvil */
-    .channel-info {
-        padding: 5px;
-    }
-    
-    .channel-info h3 {
-        font-size: 0.7rem;
-        margin-bottom: 1px;
-    }
-    
-    .channel-details {
-        min-height: 10px;
-    }
-    
-    .channel-details p {
-        font-size: 0.7rem;
-        margin-bottom: 5px;
-    }
-    
-    .live-indicator-small {
-        font-size: 0.7rem;
-        padding: 3px 6px;
-    }
-}
-
-/* Estilos para el ícono por defecto */
-.default-icon {
+.sports-info-btn {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    background: #1e293b;
-    border-radius: 10px;
-    border: 3px solid #0e2b9d;
-    color: #60a5fa;
-    font-size: 1.8rem;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    transition: all 0.3s;
 }
 
-/* Modal para continuar reproducción */
+.sports-info-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Modales ---------- */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1033,11 +851,11 @@ footer {
     color: #e0e0e0;
 }
 
-/* View toggle */
+/* ---------- Cambio de Vista (Grid/Lista) ---------- */
 .view-toggle {
     display: flex;
     justify-content: center;
-    margin:      5px 0;
+    margin: 5px 0;
     gap: 10px;
 }
 
@@ -1056,7 +874,7 @@ footer {
     color: white;
 }
 
-/* List view */
+/* Estilos para la Vista de Lista */
 .channel-list.list-view .channel-grid {
     display: block;
 }
@@ -1090,32 +908,43 @@ footer {
     font-size: 0.85rem;
 }
 
-/* Sports info button */
-.sports-info-btn {
-    position: fixed;
-    bottom: 80px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: linear-gradient(90deg, #22c55e, #16a34a);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    z-index: 999;
-    transition: all 0.3s;
+
+/* ==========================================================================
+   4. ANIMACIONES
+   ========================================================================== */
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.sports-info-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
 }
 
-/* Estilos para PWA */
+@keyframes glow {
+    0%, 100% { filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6)); }
+    50% { filter: drop-shadow(0 3px 12px rgba(96, 165, 250, 0.9)); }
+}
+
+@keyframes pulse-heart {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pulse-live {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+/* ==========================================================================
+   5. ESTILOS ESPECÍFICOS (PWA, COMPARTIR, PLAYLISTS, VIDEO)
+   ========================================================================== */
+
+/* ---------- Estilos para PWA ---------- */
 .install-button {
     position: fixed;
     top: 80px;
@@ -1160,6 +989,24 @@ footer {
     gap: 10px;
 }
 
+body.offline .player-placeholder {
+    background: linear-gradient(135deg, #4b5563, #374151);
+}
+
+body.offline .control-button:not([id="toggle-channels-btn"]) {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+body.pwa-installed .install-button {
+    display: none !important;
+}
+
+body.pwa-installed header {
+    padding-top: 5px;
+}
+
+/* ---------- Notificaciones ---------- */
 .notifications-panel {
     background: var(--card-bg);
     border-radius: 10px;
@@ -1178,49 +1025,7 @@ footer {
     color: var(--text-secondary);
 }
 
-/* Modo offline */
-body.offline .player-placeholder {
-    background: linear-gradient(135deg, #4b5563, #374151);
-}
-
-body.offline .control-button:not([id="toggle-channels-btn"]) {
-    opacity: 0.7;
-    pointer-events: none;
-}
-
-/* Estilos para PWA instalada */
-body.pwa-installed .install-button {
-    display: none !important;
-}
-
-body.pwa-installed header {
-    padding-top: 5px;
-}
-
-/* Mejoras para modo instalado */
-@media (display-mode: standalone) {
-    body {
-        padding-bottom: 80px;
-    }
-    
-    .bottom-nav {
-        bottom: 0;
-        border-radius: 0;
-        max-width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .sports-info-btn {
-        bottom: 70px;
-        left: 15px;
-        width: 45px;
-        height: 45px;
-        font-size: 18px;
-    }
-}
-
-/* Estilos para compartir */
+/* ---------- Estilos para Compartir ---------- */
 .share-options {
     margin: 20px 0;
     text-align: center;
@@ -1262,23 +1067,11 @@ body.pwa-installed header {
     transform: scale(1.1);
 }
 
-.social-share-btn.whatsapp {
-    background: #25D366;
-}
+.social-share-btn.whatsapp { background: #25D366; }
+.social-share-btn.facebook { background: #3b5998; }
+.social-share-btn.twitter { background: #1DA1F2; }
+.social-share-btn.telegram { background: #0088cc; }
 
-.social-share-btn.facebook {
-    background: #3b5998;
-}
-
-.social-share-btn.twitter {
-    background: #1DA1F2;
-}
-
-.social-share-btn.telegram {
-    background: #0088cc;
-}
-
-/* Toast de notificación */
 .share-toast {
     position: fixed;
     bottom: 100px;
@@ -1297,15 +1090,7 @@ body.pwa-installed header {
     opacity: 1;
 }
 
-/* Estilos para listas de reproducción */
-.playlist-button {
-    background: linear-gradient(90deg, #8b5cf6, #7c3aed);
-}
-
-.playlist-button:hover {
-    background: linear-gradient(90deg, #7c3aed, #6d28d9);
-}
-
+/* ---------- Estilos para Playlists ---------- */
 .playlist-container {
     margin: 20px 0;
 }
@@ -1373,79 +1158,288 @@ body.pwa-installed header {
     font-size: 0.9rem;
 }
 
-/* ============================================== */
-/* === ESTILOS PARA LAYOUT MÓVIL DE 2 COLUMNAS === */
-/* ============================================== */
+/* ---------- Controles Nativos de Video ---------- */
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    -webkit-appearance: none;
+}
 
-@media screen and (max-width: 768px) {  
-    /* 1. Contenedor principal de las dos columnas */
+#video {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+#video::-webkit-media-controls {
+    display: flex !important;
+}
+
+#video::-webkit-media-controls-panel {
+    display: flex !important;
+    opacity: 1 !important;
+    background: transparent !important;
+}
+
+#video::-webkit-media-controls-play-button {
+    display: none !important;
+}
+
+#video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+video:fullscreen::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   6. RESPONSIVE DESIGN (MEDIA QUERIES)
+   ========================================================================== */
+
+/* ---------- Tablets y Escritorios Pequeños (Hasta 1024px) ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header-title h1 {
+        font-size: 22px;
+    }
+    
+    .header-search-form {
+        width: 200px;
+    }
+}
+
+/* ---------- Escritorios Grandes (Desde 1200px) ---------- */
+@media (min-width: 1200px) {
+    .header-content {
+        padding: 0;
+    }
+}
+
+/* ---------- Modo PWA Instalado (Standalone) ---------- */
+@media (display-mode: standalone) {
+    body {
+        padding-bottom: 80px;
+    }
+    
+    .bottom-nav {
+        bottom: 0;
+        border-radius: 0;
+        max-width: 100%;
+    }
+}
+
+/* ---------- Móviles y Tablets (Hasta 768px) ---------- */
+@media screen and (max-width: 768px) {
+    /* ----- Header Responsive ----- */
+    .header-content {
+        padding: 0 15px;
+        gap: 10px;
+        overflow: hidden;
+    }
+    
+    .header-title {
+        min-width: 0;
+        overflow: hidden;
+    }
+    
+    .header-title h1 {
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .soccer-ball {
+        font-size: 20px;
+    }
+    
+    .header-search {
+        gap: 8px;
+    }
+    
+    .search-toggle,
+    .favorites-toggle,
+    .theme-toggle,
+    .back-button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .favorites-toggle {
+        margin-left: 5px;
+    }
+
+    .header-search-form {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 100%;
+        z-index: 1001;
+        background: rgba(30, 41, 59, 0.95);
+        padding: 10px;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+    
+    .header-search-input {
+        font-size: 16px;
+    }
+
+    /* ----- Navegación Inferior Responsive ----- */
+    .bottom-nav {
+        padding: 8px 10px;
+        gap: 8px;
+        border-radius: 10px;
+        max-width: calc(100% - 15px);
+    }
+
+    .bottom-nav a {
+        padding: 8px 12px;
+        font-size: 12px;
+        gap: 3px;
+    }
+
+    .bottom-nav a i {
+        font-size: 16px;
+    }
+
+    /* ----- Contenido Principal Responsive ----- */
+    .channel-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    }
+    
+    .section-button {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+        scroll-snap-align: start;
+    }
+    
+    .channel-item .image-container {
+        width: 85px;
+        height: 85px;
+    }
+    
+    .channel-name {
+        font-size: 0.8rem;
+    }
+
+    .floating-button {
+        bottom: 70px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .sports-info-btn {
+        bottom: 70px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .control-button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .section-buttons {
+        justify-content: flex-start;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 5px;
+    }
+    
+    .section-buttons:after {
+        content: '';
+        flex: 0 0 5px;
+    }
+
+    .channel-info {
+        padding: 5px;
+    }
+    
+    .channel-info h3 {
+        font-size: 0.7rem;
+        margin-bottom: 1px;
+    }
+    
+    .channel-details {
+        min-height: 10px;
+    }
+    
+    .channel-details p {
+        font-size: 0.7rem;
+        margin-bottom: 5px;
+    }
+    
+    .live-indicator-small {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+    }
+    
+    /* ----- Layout de 2 Columnas Móvil ----- */
     .channels-layout-container {
-        display: flex; /* Activa el layout de columnas */
-        gap: 5px;     /* Espacio entre las columnas */
-        
-        /* Altura calculada para permitir el scroll interno.
-           Ajusta el valor (280px) si es necesario para tu layout.
-           Esto resta la altura del header, reproductor, etc., del alto total de la pantalla. */
+        display: flex;
+        gap: 5px;
         height: calc(100vh - 280px); 
     }
 
-    /* 2. Columna Izquierda (Categorías) */
     .channels-layout-container .section-buttons {
-        flex: 0 0 140px; /* Ancho fijo de la columna (no crece, no se encoge) */
-        flex-direction: column; /* Apila los botones verticalmente */
-        overflow-y: auto;       /* Habilita el scroll vertical */
-        overflow-x: hidden;     /* Oculta el scroll horizontal que ya no se necesita */
-        padding-bottom: 0;      /* Elimina el padding inferior previo */
-        margin: 0;              /* Resetea márgenes */
+        flex: 0 0 140px;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-bottom: 0;
+        margin: 0;
     }
 
-    /* --- REGLA 2: CADA BOTÓN (CADA LIBRO) --- */
-/* Aquí damos estilo al texto y apariencia de CADA botón */
-.channels-layout-container .section-button {
-    width: 100%;
-    padding: 10px 0px;
-    font-size: 0.75rem;
-    justify-content: start; /* Alinea contenido del botón a la izquierda */
-    align-items: start;
-    text-align: start;
+    .channels-layout-container .section-button {
+        width: 100%;
+        padding: 10px 8px;
+        font-size: 0.75rem;
+        justify-content: flex-start;
+        align-items: start;
+        text-align: start;
+    }
 
-    /* LA LÍNEA MÁGICA PARA QUE EL TEXTO SE DIVIDA */
-   
-}
-
-    /* 3. Columna Derecha (Canales) */
     .channels-layout-container #channels-container {
-        flex-grow: 1;           /* Ocupa el espacio restante */
-        overflow-y: auto;       /* Habilita el scroll vertical */
+        flex-grow: 1;
+        overflow-y: auto;
     }
   
-    /* 4. Ajustes a los botones de categoría */
-    .channels-layout-container .section-button {
-        width: 100%;            /* Ocupa todo el ancho de su columna */
-        font-size: 0.75rem;      /* Letra un poco más pequeña */
-        padding: 10px 8px;      /* Ajusta el espaciado interno */
-        justify-content: flex-start; /* Alinea el texto a la izquierda */
-        align-items: start;
-    }
-
-    /* 5. Ajustes al contenedor de la cuadrícula de canales */
     .channels-layout-container .channel-list {
-        padding: 10px 5px; /* Reduce el padding para dar más espacio */
+        padding: 10px 5px;
         margin-top: 0;
     }
   
     .channels-layout-container .channel-grid {
-        /* Ajusta el tamaño mínimo de los logos para que quepan mejor */
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 10px; /* Reduce el espacio entre logos */
+        gap: 10px;
     }
   
-    /* 6. Oculta el #channels-container original para evitar duplicados si JS lo muestra */
     .container > #channels-container {
       display: none;
     }
 
-    /* 7. Estilos para las barras de scroll (opcional pero recomendado) */
     .channels-layout-container .section-buttons::-webkit-scrollbar,
     .channels-layout-container #channels-container::-webkit-scrollbar {
         width: 5px;
@@ -1461,312 +1455,74 @@ body.pwa-installed header {
         background-color: #ffffff;
         border-radius: 1px;
     }
-    /* ===================================================== */
-/* === AJUSTES PARA VISTA DE LISTA EN PANTALLAS PEQUEÑAS === */
-/* ===================================================== */
 
-/* ==================================================================== */
-/* === AJUSTES PARA VISTA DE LISTA EN PANTALLAS PEQUEÑAS (ACTUALIZADO) === */
-/* ==================================================================== */
-
-/* Ajustamos el item para que sea un poco más compacto */
-/* ============================================== */
-/* === ALINEACIÓN A LA IZQUIERDA (MÓVIL LISTA) === */
-/* ============================================== */
-
-/* 1. Eliminamos el padding lateral del contenedor principal de la lista */
-.channels-layout-container .channel-list.list-view {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* 2. Corregimos el item y le damos un padding interno para que no se pegue al borde */
-.channels-layout-container .channel-list.list-view .channel-item {
-    padding: 1px 1px;   /* 6px arriba/abajo, 8px a los lados (dentro del item) */
-    margin-bottom: 1px;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color); /* Añade una línea sutil de separación */
-}
-
-/* Hacemos la imagen del canal AÚN más pequeña para ganar espacio valioso */
-.channels-layout-container .channel-list.list-view .channel-item .image-container {
-    width: 40px;        /* Cambiado de 45px a 40px */
-    height: 40px;       /* Cambiado de 45px to 40px */
-    margin-right: 3px;  /* Cambiado de 10px a 8px */
-    flex-shrink: 0;
-}
-
-/* Ajustamos el nombre del canal con una fuente más pequeña y legible */
-.channels-layout-container .channel-list.list-view .channel-name {
-    font-size: 0.85rem; /* Cambiado de 0.9rem a 0.85rem, es un ajuste sutil pero efectivo */
-    font-weight: 500;   /* Un grosor de letra un poco más fino ayuda a la legibilidad en tamaños pequeños */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Ocultamos la descripción (esto se mantiene de la petición anterior) */
-.channels-layout-container .channel-list.list-view .channel-description {
-    display: none;
-}
-
-/* Eliminar el botón de play/pause grande del centro en móviles */
-video::-webkit-media-controls-start-playback-button {
-    display: none !important;
-    -webkit-appearance: none;
-}
-
-/* Ocultar el overlay de play/pause en iOS */
-video::-webkit-media-controls-overlay-play-button {
-    display: none !important;
-}
-
-/* Asegurar que los controles nativos sean los mínimos necesarios */
-#video {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-/* Para navegadores WebKit (Chrome, Safari, etc.) */
-#video::-webkit-media-controls {
-    display: flex !important;
-}
-
-#video::-webkit-media-controls-panel {
-    display: flex !important;
-    opacity: 1 !important;
-    background: transparent !important;
-}
-
-#video::-webkit-media-controls-play-button {
-    display: none !important;
-}
-
-/* Para iOS específicamente */
-#video::-webkit-media-controls-start-playback-button {
-    display: none !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    width: 0 !important;
-    height: 0 !important;
-}
-
-    /* Estilos para reorganizar botones en móvil */
-.control-buttons {
-    flex-grow: 1;           /* Permite que los botones crezcan para llenar el espacio */
-    flex-shrink: 1;         /* Permite que los botones se encojan si no hay espacio */
-    flex-basis: 0;          /* Asegura que se distribuya el espacio equitativamente */
-    justify-content: center;
-}
-
-/* Mover el botón de favoritos al principio visualmente */
-#toggle-favorites-btn {
-    order: -1; /* Esto coloca el botón de favoritos primero */
-    background: linear-gradient(45deg, #ff1500, #ff5252) !important;
-    border: 2px solid #ff1500 !important;
-}
-
-#toggle-favorites-btn.active {
-    background: linear-gradient(45deg, #d32f2f, #ff1500) !important;
-    box-shadow: 0 2px 8px rgba(255, 21, 0, 0.4);
-}
-
-/* Opcional: Ajustar el tamaño de los botones en móvil */
-.control-button {
-    flex: 1;
-    min-width: 120px;
-    font-size: 11px;
-    padding: 5px 9px;
-}
-
-/* Ajustar iconos */
-.control-button i {
-    margin-right: 4px;
-}
-
-/* Para escritorio, mantener el orden normal */
-@media (min-width: 769px) {
-    .control-buttons {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
+    /* ----- Ajustes Vista de Lista Móvil ----- */
+    .channels-layout-container .channel-list.list-view {
+        padding-left: 0;
+        padding-right: 0;
     }
-    
-    #toggle-favorites-btn {
-        order: 0; /* Orden normal */
+
+    .channels-layout-container .channel-list.list-view .channel-item {
+        padding: 1px 1px;
+        margin-bottom: 1px;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
     }
-}
 
-/* Estilos para botones activos */
-.control-button.active {
-    background: linear-gradient(45deg, #1e88e5, #1565c0) !important;
-    border-color: #0d47a1 !important;
-    box-shadow: 0 2px 8px rgba(13, 71, 161, 0.3);
-}
-
-/* Estilo específico para botón de favoritos activo */
-#toggle-favorites-btn.active {
-    background: linear-gradient(45deg, #d32f2f, #ff1500) !important;
-    border-color: #b71c1c !important;
-    box-shadow: 0 2px 8px rgba(255, 21, 0, 0.4);
-}
-
-/* Botón de favoritos en el header (reemplaza al de micrófono) */
-.favorites-toggle {
-    background: #2a2a2a;
-    border: none;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    color: #ff1500; /* Color rojo para el corazón */
-    font-size: 18px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s;
-    margin-left: 10px;
-}
-
-.favorites-toggle:hover {
-    background: #ff1500;
-    color: white;
-    transform: scale(1.1);
-}
-
-.favorites-toggle.active {
-    background: #ff1500;
-    color: white;
-    box-shadow: 0 0 10px rgba(255, 21, 0, 0.5);
-    animation: pulse-heart 1.5s infinite;
-}
-
-@keyframes pulse-heart {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-/* Ajustes responsive para el botón de favoritos */
-@media (max-width: 768px) {
-    .favorites-toggle {
+    .channels-layout-container .channel-list.list-view .channel-item .image-container {
         width: 40px;
         height: 40px;
-        font-size: 16px;
-        margin-left: 5px;
+        margin-right: 3px;
+        flex-shrink: 0;
+    }
+
+    .channels-layout-container .channel-list.list-view .channel-name {
+        font-size: 0.85rem;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .channels-layout-container .channel-list.list-view .channel-description {
+        display: none;
+    }
+
+    /* ----- Botones de Control Móvil ----- */
+    .control-buttons {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0;
+        justify-content: center;
+    }
+
+    #toggle-favorites-btn {
+        order: -1;
+        background: linear-gradient(45deg, #ff1500, #ff5252) !important;
+        border: 2px solid #ff1500 !important;
+    }
+
+    #toggle-favorites-btn.active {
+        background: linear-gradient(45deg, #d32f2f, #ff1500) !important;
+        box-shadow: 0 2px 8px rgba(255, 21, 0, 0.4);
+    }
+
+    .control-button {
+        flex: 1;
+        min-width: 120px;
+        font-size: 11px;
+        padding: 5px 9px;
+    }
+
+    .control-button i {
+        margin-right: 4px;
     }
 }
 
-/* Ajustes para el header en PC - alinear correctamente los botones */
-.header-search {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Asegurar que los botones estén alineados correctamente en PC */
-@media (min-width: 769px) {
-    .header-search {
-        gap: 15px;
-    }
-    
-    .favorites-toggle {
-        margin-left: 15px;
-    }
-}
-
-/* ===================================================== */
-/* === SOLUCIÓN PARA CORREGIR DESBORDAMIENTO EN MÓVIL === */
-/* ===================================================== */
-
-@media (max-width: 768px) {
-    /* 1. Permitir que el contenedor del título se encoja */
-    .header-title {
-        min-width: 0; /* Permite que el elemento flex se encoja por debajo de su tamaño de contenido */
-        overflow: hidden; /* Oculta cualquier desbordamiento interno */
-    }
-
-    /* 2. Hacer que el texto del título se corte si es muy largo */
-    .header-title h1 {
-        white-space: nowrap; /* Lo mantenemos en una línea */
-        overflow: hidden;    /* Ocultamos lo que no cabe */
-        text-overflow: ellipsis; /* Añadimos "..." al final del texto cortado */
-    }
-    
-    /* 3. Evitar que el contenido del header desborde su contenedor */
-    .header-content {
-        overflow: hidden; /* Corta cualquier contenido hijo que intente salirse */
-    }
-}
-
-/* ========================================================= */
-/* === AJUSTE FINO PARA PANTALLAS EXTRA ANGOSTAS (360px) === */
-/* ========================================================= */
-
+/* ---------- Móviles Extra Pequeños (Hasta 400px) ---------- */
 @media (max-width: 400px) {
-    /* 1. Reducimos el espacio entre el título y los botones */
     .header-content {
         gap: 8px;
-    }
-    
-    /* 2. Hacemos los botones del header un poco más pequeños */
-    .search-toggle,
-    .favorites-toggle,
-    .theme-toggle,
-    .back-button {
-        width: 38px;
-        height: 38px;
-        font-size: 15px;
-    }
-
-    /* 3. Reducimos el espacio ENTRE los botones para ganar más pixeles */
-    .header-search {
-        gap: 5px; 
-    }
-
-    /* 4. Reducimos el tamaño del título y el ícono de pelota */
-    .header-title h1 {
-        font-size: 12px;
-    }
-    .soccer-ball {
-        font-size: 22px;
-    }
-    /*
-  Este es el bloque que ya tienes de la respuesta anterior.
-  Añade las nuevas reglas DENTRO de él.
-    
-    /* ... (Aquí están las reglas del header que ya agregaste) ... */
-
-    /* ======================================================= */
-    /* === NUEVO: AJUSTE PARA CUADRÍCULA DE CANALES MÁS PEQUEÑA === */
-    /* ======================================================= */
-
-    /* 1. Cambiamos la cuadrícula para que acepte columnas más pequeñas */
-    .channels-layout-container .channel-grid {
-        /* Reducimos el tamaño mínimo de 80px a 70px para que quepan más canales */
-        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-        gap: 8px; /* Reducimos un poco el espacio entre ellos */
-    }
-
-    /* 2. Achicamos el contenedor de la imagen del logo */
-    .channels-layout-container .channel-item .image-container {
-        width: 65px;
-        height: 65px;
-    }
-
-    /* 3. Hacemos la letra del nombre del canal un poco más pequeña */
-    .channels-layout-container .channel-name {
-        font-size: 0.75rem; /* Un poco más pequeño para que no se corte */
-    }
-
-    .header-title h1 {
-        font-size: 16px;
-    }
-    
-    .soccer-ball {
-        font-size: 18px;
     }
     
     .search-toggle,
@@ -1776,6 +1532,17 @@ video::-webkit-media-controls-overlay-play-button {
         width: 35px;
         height: 35px;
         font-size: 14px;
+    }
+
+    .header-search {
+        gap: 5px; 
+    }
+
+    .header-title h1 {
+        font-size: 16px;
+    }
+    .soccer-ball {
+        font-size: 18px;
     }
     
     .channels-layout-container .channel-grid {
@@ -1796,34 +1563,6 @@ video::-webkit-media-controls-overlay-play-button {
         padding: 8px 12px;
         font-size: 0.8rem;
     }
-}
-/* ========================================================= */
-/* === SOLUCIÓN AGRESIVA PARA OCULTAR BOTÓN PLAY CENTRAL === */
-/* ========================================================= */
-
-/*
-  Esta regla se asegura de ocultar los diferentes tipos de botones
-  de reproducción que los navegadores WebKit (Chrome, Safari)
-  pueden mostrar sobre el video. Usamos múltiples propiedades
-  para garantizar que se oculte incluso si el navegador ignora una de ellas.
-*/
-video::-webkit-media-controls-play-button,
-video::-webkit-media-controls-start-playback-button,
-video::-webkit-media-controls-overlay-play-button {
-    display: none !important;
-    -webkit-appearance: none !important; /* Fuerza la anulación de estilos nativos */
-    opacity: 0 !important; /* Lo hace invisible como respaldo */
-    pointer-events: none !important; /* Evita que se pueda hacer clic en él */
-}
-
-/*
-  Regla adicional específica para el modo de pantalla completa,
-  que es donde ocurre tu problema.
-*/
-video:fullscreen::-webkit-media-controls-overlay-play-button {
-    display: none !important;
-}
-
 }
 </style>
 
@@ -2041,368 +1780,515 @@ video:fullscreen::-webkit-media-controls-overlay-play-button {
 </body>
 
 <script>
-    // Variables globales
-    let currentHls = null;
-    let currentChannel = null;
-    let todosCanales = {};
-    let canalesCargados = false;
-    let channelsVisible = true;
-    let favorites = JSON.parse(localStorage.getItem('favoriteChannels')) || {};
-    let showingFavorites = false;
-    let playbackPositionInterval = null;
-    let retryCount = 0;
-    const MAX_RETRIES = 3;
-    let streamCache = JSON.parse(localStorage.getItem('streamCache')) || {};
-    let currentView = localStorage.getItem('viewPreference') || 'grid';
-    let deferredPrompt = null;
+// =================================================================================
+// 1. VARIABLES GLOBALES Y CONFIGURACIÓN
+// =================================================================================
 
-    // Nuevo: Servidores proxy para evitar CORS y contenido mixto
-    const PROXY_SERVERS = [
-        'https://corsproxy.io/?',
-        'https://api.codetabs.com/v1/proxy?quest=',
-        'https://cors-anywhere.herokuapp.com/',
-        'https://proxy.cors.sh/'
-    ];
-    let currentProxyIndex = 0;
+let userManuallyChangedChannel = false;
+let currentHls = null;
+let currentChannel = null;
+let todosCanales = {};
+let canalesCargados = false;
+let channelsVisible = true;
+let favorites = JSON.parse(localStorage.getItem('favoriteChannels')) || {};
+let showingFavorites = false;
+let playbackPositionInterval = null;
+let retryCount = 0;
+const MAX_RETRIES = 3;
+let streamCache = JSON.parse(localStorage.getItem('streamCache')) || {};
+let currentView = localStorage.getItem('viewPreference') || 'grid';
+let deferredPrompt = null;
 
-    // Función para obtener URL a través de proxy
-    function getProxiedUrl(url) {
-        // Si ya es una URL local o relativa, no usar proxy
-        if (url.startsWith('/') || url.startsWith(window.location.origin) || url.startsWith('data:')) {
-            return url;
+// Servidores proxy para evitar CORS y contenido mixto
+const PROXY_SERVERS = [
+    '', // ← PROXY VACÍO para intentar directo primero
+    'https://cors.consumet.stream/?',
+    'https://api.allorigins.win/raw?url=',
+    'https://corsproxy.org/?',
+    'https://proxy.cors.sh/'
+];
+let currentProxyIndex = 0;
+
+
+// =================================================================================
+// 2. LÓGICA DEL REPRODUCTOR Y MANEJO DE CANALES
+// =================================================================================
+
+/**
+ * Carga la lista de canales desde el archivo JSON, con fallbacks.
+ */
+async function cargarCanales() {
+    if (canalesCargados) return;
+
+    try {
+        mostrarLoading(true);
+
+        const posiblesUbicaciones = [
+            'canales_organizados.json',
+            '/canales_organizados.json',
+            './canales_organizados.json',
+            'https://raw.githubusercontent.com/tu_usuario/tu_repo/main/canales_organizados.json'
+        ];
+
+        let response = null;
+        let lastError = null;
+
+        for (let i = 0; i < posiblesUbicaciones.length; i++) {
+            try {
+                const url = getProxiedUrl(posiblesUbicaciones[i]);
+                console.log(`Intentando cargar canales desde: ${url}`);
+
+                response = await fetch(url);
+                if (response.ok) {
+                    todosCanales = await response.json();
+                    console.log('Canales cargados exitosamente desde:', posiblesUbicaciones[i]);
+                    break;
+                }
+            } catch (error) {
+                lastError = error;
+                console.error(`Error cargando desde ${posiblesUbicaciones[i]}:`, error);
+                if (i < posiblesUbicaciones.length - 1) {
+                    rotateProxy();
+                }
+            }
         }
-        
-        // Para el archivo JSON de canales, usar proxy
-        if (url.includes('canales_organizados.json')) {
-            return PROXY_SERVERS[currentProxyIndex] + encodeURIComponent(url);
+
+        if (!response || !response.ok) {
+            throw lastError || new Error('No se pudo cargar el archivo de canales desde ninguna ubicación');
         }
-        
-        // Para streams HTTP, usar proxy para convertirlos a HTTPS
-        if (url.startsWith('http://')) {
-            return PROXY_SERVERS[currentProxyIndex] + encodeURIComponent(url);
+
+        canalesCargados = true;
+        crearBotonesCategorias();
+
+        if (Object.keys(todosCanales).length > 0) {
+            const primeraCategoria = Object.keys(todosCanales)[0];
+            mostrarCategoria(primeraCategoria);
         }
-        
-        // Para otros casos, devolver la URL original
+
+        inicializarBusqueda();
+        mostrarLoading(false);
+        loadPlaybackPosition();
+
+    } catch (error) {
+        console.error('Error cargando canales:', error);
+        try {
+            const backup = localStorage.getItem('canalesBackup');
+            if (backup) {
+                todosCanales = JSON.parse(backup);
+                canalesCargados = true;
+                crearBotonesCategorias();
+                if (Object.keys(todosCanales).length > 0) {
+                    const primeraCategoria = Object.keys(todosCanales)[0];
+                    mostrarCategoria(primeraCategoria);
+                }
+                mostrarLoading(false);
+                showToast('Usando datos de respaldo. Algunos canales pueden estar desactualizados.');
+                return;
+            }
+        } catch (backupError) {
+            console.error('Error cargando respaldo:', backupError);
+        }
+
+        mostrarError('Error al cargar la lista de canales. Verifica tu conexión e intenta recargar la página.');
+        mostrarLoading(false);
+    }
+}
+
+/**
+ * Función principal para cambiar de canal y manejar la reproducción.
+ */
+function cambiarCanal(url, nombre, categoria, logo) {
+    console.log('Reproduciendo:', nombre, 'URL:', url);
+
+    userManuallyChangedChannel = false;
+
+    if (!navigator.onLine) {
+        mostrarError('No hay conexión a internet. No se puede cargar el canal.');
+        return;
+    }
+
+    document.getElementById('loading').style.display = 'flex';
+    document.getElementById('error-message').style.display = 'none';
+    document.querySelector('.player-placeholder').style.display = 'none';
+    document.getElementById('video').style.display = 'block';
+
+    document.querySelector('.channel-details').innerHTML = `
+        <p><i class="fas fa-info-circle"></i> ${nombre}</p><p><i class="fas fa-align-left"></i> ${categoria}</p>
+    `;
+    document.getElementById('live-indicator-small').style.display = 'inline-flex';
+
+    document.querySelectorAll('.channel-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    const items = document.querySelectorAll('.channel-item');
+    for (let item of items) {
+        if (item.querySelector('.channel-name').textContent === nombre) {
+            item.classList.add('active');
+            break;
+        }
+    }
+
+    var video = document.getElementById('video');
+
+    if (currentHls) {
+        currentHls.destroy();
+    }
+    if (playbackPositionInterval) {
+        clearInterval(playbackPositionInterval);
+    }
+
+    video.pause();
+    video.src = '';
+
+    const proxiedUrl = getProxiedUrl(url);
+    console.log(`Reproduciendo: ${nombre} desde URL: ${proxiedUrl}`);
+
+    if (Hls.isSupported()) {
+        currentHls = new Hls({
+            debug: false,
+            enableWorker: true,
+            lowLatencyMode: true,
+            backBufferLength: 30,
+            maxBufferLength: 30,
+            maxMaxBufferLength: 60,
+            maxBufferSize: 60 * 1000 * 1000,
+            maxBufferHole: 0.1,
+            xhrSetup: function(xhr, url) {
+                const proxiedUrl = getProxiedUrl(url);
+                xhr.open('GET', proxiedUrl, true);
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.setRequestHeader('Accept', '*/*');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 2) {
+                        const location = xhr.getResponseHeader('Location');
+                        if (location && location.includes('cloudflare-terms-of-service')) {
+                            xhr.abort();
+                            console.log('Redirección de Cloudflare detectada, cancelando...');
+                        }
+                    }
+                };
+            },
+            liveSyncDurationCount: 5,
+            liveMaxLatencyDurationCount: 15,
+            liveDurationInfinity: true,
+            abrEwmaDefaultEstimate: 500000,
+            abrEwmaSlowLive: 3,
+            abrEwmaFastLive: 2,
+            abrEwmaDefaultLive: 1,
+            stretchShortVideoTrack: true,
+            maxFragLookUpTolerance: 0.1,
+            emeEnabled: true,
+            manifestLoadingTimeOut: 10000,
+            manifestLoadingMaxRetry: 3,
+            manifestLoadingRetryDelay: 1000,
+            levelLoadingTimeOut: 10000,
+            levelLoadingMaxRetry: 3,
+            levelLoadingRetryDelay: 1000,
+            fragLoadingTimeOut: 20000,
+            fragLoadingMaxRetry: 6,
+            fragLoadingRetryDelay: 1000,
+            enableDateRange: false,
+            enableCEA708Captions: false,
+            requestTimeout: 10000,
+            levelLoadTimeout: 10000,
+            fragLoadTimeout: 20000
+        });
+
+        currentHls.loadSource(proxiedUrl);
+        currentHls.attachMedia(video);
+
+        currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
+            addToStreamCache(url, url);
+            document.getElementById('loading').style.display = 'none';
+            retryCount = 0;
+            video.play().catch(e => {
+                if (e.name === 'AbortError') {
+                    console.warn('La reproducción fue interrumpida por una nueva carga (comportamiento esperado).');
+                } else {
+                    mostrarError('Error al reproducir: ' + e.message);
+                    console.error('Error de reproducción:', e);
+                }
+            });
+            playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
+        });
+
+        currentHls.on(Hls.Events.ERROR, function(event, data) {
+            if (data.fatal) {
+                console.error('Error fatal de HLS:', data.details);
+                const failedHls = currentHls;
+                if (currentHls) {
+                    currentHls.destroy();
+                    currentHls = null;
+                }
+                switch (data.type) {
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+                        retryCount++;
+                        const isCloudflareBlock = data.details.includes('cloudflare') ||
+                            data.details.includes('abuse') ||
+                            data.details.includes('302');
+                        if (retryCount <= MAX_RETRIES) {
+                            mostrarError(`Error de conexión (${retryCount}/${MAX_RETRIES}). Cambiando servidor...`);
+                            rotateProxy();
+                            setTimeout(() => {
+                                if (!userManuallyChangedChannel && currentChannel && currentChannel.name === nombre) {
+                                    cambiarCanal(url, nombre, categoria, logo);
+                                } else {
+                                    retryCount = 0;
+                                    userManuallyChangedChannel = false;
+                                    console.log('Reintento cancelado - usuario cambió de canal');
+                                }
+                            }, 2000);
+                        } else {
+                            if (isCloudflareBlock) {
+                                mostrarError(`Canal bloqueado por protección. Intenta con otro canal.`);
+                                showToast('Este canal no está disponible temporalmente');
+                            } else {
+                                mostrarError(`No se pudo conectar después de ${MAX_RETRIES} intentos`);
+                            }
+                            retryCount = 0;
+                            document.getElementById('loading').style.display = 'none';
+                            document.querySelector('.player-placeholder').style.display = 'flex';
+                            document.getElementById('video').style.display = 'none';
+                            showToast('Selecciona otro canal de la lista');
+                        }
+                        break;
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+                        console.error('Error de media, intentando recuperar...');
+                        if (failedHls === currentHls) {
+                            failedHls.recoverMediaError();
+                        }
+                        break;
+                    default:
+                        mostrarError(`Error técnico con ${nombre}. Intenta con otro canal.`);
+                        retryCount = 0;
+                        document.getElementById('loading').style.display = 'none';
+                        document.querySelector('.player-placeholder').style.display = 'flex';
+                        document.getElementById('video').style.display = 'none';
+                        userManuallyChangedChannel = true;
+                        break;
+                }
+            }
+        });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = proxiedUrl;
+        video.addEventListener('loadedmetadata', function() {
+            addToStreamCache(url, proxiedUrl);
+            document.getElementById('loading').style.display = 'none';
+            retryCount = 0;
+            document.querySelector('.channel-details').innerHTML = `
+                    <p><i class="fas fa-info-circle"></i> ${nombre}</p>
+                    <p><i class="fas fa-align-left"></i> ${categoria}</p>
+                `;
+            video.play().catch(e => {
+                if (e.name === 'AbortError') {
+                    console.warn('La reproducción fue interrumpida por una nueva carga (comportamiento esperado).');
+                } else {
+                    mostrarError('Error al reproducir: ' + e.message);
+                    console.error('Error de reproducción:', e);
+                }
+            });
+            playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
+        });
+        video.addEventListener('error', function() {
+            mostrarError('Error al cargar el video. Reintentando...');
+            rotateProxy();
+            setTimeout(() => cambiarCanal(url, nombre, categoria, logo), 2000);
+        });
+    } else {
+        mostrarError("Tu navegador no soporta la reproducción de este formato.");
+    }
+
+    currentChannel = {
+        url: url,
+        name: nombre,
+        description: categoria
+    };
+}
+
+
+// =================================================================================
+// 3. FUNCIONES AUXILIARES Y DE UTILIDAD
+// =================================================================================
+
+/**
+ * Obtiene la URL a través de un proxy si es necesario.
+ */
+function getProxiedUrl(url) {
+    if (url.startsWith('/') || url.startsWith(window.location.origin) || url.startsWith('data:')) {
         return url;
     }
-
-    // Función para rotar proxy si falla
-    function rotateProxy() {
-        currentProxyIndex = (currentProxyIndex + 1) % PROXY_SERVERS.length;
-        console.log(`Cambiando a proxy: ${PROXY_SERVERS[currentProxyIndex]}`);
+    if (PROXY_SERVERS[currentProxyIndex] === '') {
+        return url;
     }
+    if (url.includes('canales_organizados.json')) {
+        return PROXY_SERVERS[currentProxyIndex] + encodeURIComponent(url);
+    }
+    return PROXY_SERVERS[currentProxyIndex] + encodeURIComponent(url);
+}
 
-    // Función para cargar canales desde JSON
-    async function cargarCanales() {
-        if (canalesCargados) return;
-        
-        try {
-            mostrarLoading(true);
-            
-            // Intentar cargar desde múltiples ubicaciones
-            const posiblesUbicaciones = [
-                'canales_organizados.json',
-                '/canales_organizados.json',
-                './canales_organizados.json',
-                'https://raw.githubusercontent.com/tu_usuario/tu_repo/main/canales_organizados.json'
-            ];
-            
-            let response = null;
-            let lastError = null;
-            
-            for (let i = 0; i < posiblesUbicaciones.length; i++) {
-                try {
-                    const url = getProxiedUrl(posiblesUbicaciones[i]);
-                    console.log(`Intentando cargar canales desde: ${url}`);
-                    
-                    response = await fetch(url);
-                    if (response.ok) {
-                        todosCanales = await response.json();
-                        console.log('Canales cargados exitosamente desde:', posiblesUbicaciones[i]);
-                        break;
-                    }
-                } catch (error) {
-                    lastError = error;
-                    console.error(`Error cargando desde ${posiblesUbicaciones[i]}:`, error);
-                    
-                    // Rotar proxy para el próximo intento
-                    if (i < posiblesUbicaciones.length - 1) {
-                        rotateProxy();
-                    }
-                }
-            }
-            
-            if (!response || !response.ok) {
-                throw lastError || new Error('No se pudo cargar el archivo de canales desde ninguna ubicación');
-            }
-            
-            canalesCargados = true;
-            
-            crearBotonesCategorias();
-            
-            if (Object.keys(todosCanales).length > 0) {
-                const primeraCategoria = Object.keys(todosCanales)[0];
-                mostrarCategoria(primeraCategoria);
-            }
-            
-            inicializarBusqueda();
-            mostrarLoading(false);
-            
-            loadPlaybackPosition();
-        } catch (error) {
-            console.error('Error cargando canales:', error);
-            
-            // Intentar cargar una versión de respaldo desde localStorage
-            try {
-                const backup = localStorage.getItem('canalesBackup');
-                if (backup) {
-                    todosCanales = JSON.parse(backup);
-                    canalesCargados = true;
-                    crearBotonesCategorias();
-                    
-                    if (Object.keys(todosCanales).length > 0) {
-                        const primeraCategoria = Object.keys(todosCanales)[0];
-                        mostrarCategoria(primeraCategoria);
-                    }
-                    
-                    mostrarLoading(false);
-                    showToast('Usando datos de respaldo. Algunos canales pueden estar desactualizados.');
-                    return;
-                }
-            } catch (backupError) {
-                console.error('Error cargando respaldo:', backupError);
-            }
-            
-            mostrarError('Error al cargar la lista de canales. Verifica tu conexión e intenta recargar la página.');
-            mostrarLoading(false);
+/**
+ * Cambia al siguiente proxy de la lista.
+ */
+function rotateProxy() {
+    currentProxyIndex = (currentProxyIndex + 1) % PROXY_SERVERS.length;
+    console.log(`Cambiando a proxy: ${PROXY_SERVERS[currentProxyIndex]}`);
+}
+
+/**
+ * Maneja errores en la carga de imágenes de logos.
+ */
+function handleImageError(img) {
+    img.onerror = null;
+    if (!img.src || img.src.includes('corsproxy.io') || img.src.includes('cors-anywhere') ||
+        img.src.includes('proxy.cors.sh') || img.src.includes('codetabs.com')) {
+        return;
+    }
+    const proxiedSrc = getProxiedUrl(img.src);
+    const testImage = new Image();
+    testImage.onload = function() {
+        img.src = proxiedSrc;
+    };
+    testImage.onerror = function() {
+        img.style.display = 'none';
+        const container = img.parentElement;
+        if (!container.querySelector('.default-icon')) {
+            const defaultIcon = document.createElement('div');
+            defaultIcon.className = 'default-icon';
+            defaultIcon.innerHTML = '<i class="fas fa-tv"></i>';
+            container.appendChild(defaultIcon);
         }
+    };
+    testImage.src = proxiedSrc;
+}
+
+/**
+ * Reintenta la conexión a un canal si falla.
+ */
+function tryReconnect(videoUrl, channelName, channelDescription) {
+    if (retryCount < MAX_RETRIES) {
+        retryCount++;
+        mostrarError(`Error de conexión. Reintentando... (${retryCount}/${MAX_RETRIES})`);
+        setTimeout(() => {
+            cambiarCanal(videoUrl, channelName, channelDescription);
+        }, 3000);
+    } else {
+        mostrarError('No se pudo conectar al canal después de varios intentos, Recarga el reproductor y/o Cambia El Canal.');
+        retryCount = 0;
     }
+}
 
-    // Función para deshabilitar controles de progreso y pausa
-    function disableSeekAndPauseControls() {
-        const video = document.getElementById('video');
-        if (!video) return;
+/**
+ * Función debounce para optimizar eventos de alta frecuencia.
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
-        // Prevenir interacción con la barra de progreso pero permitir controles de volumen
-        const existingStyle = document.getElementById('hide-controls-style');
-        if (!existingStyle) {
-            const style = document.createElement('style');
-            style.id = 'hide-controls-style';
-            style.innerHTML = `
-                /* Ocultar solo barra de progreso pero permitir controles de volumen */
-                #video::-webkit-media-controls-timeline,
-                #video::-webkit-media-controls-current-time-display,
-                #video::-webkit-media-controls-time-remaining-display,
-                #video::-webkit-media-controls-timeline-container {
-                    display: none !important;
-                }
-                
-                /* Ocultar en pantalla completa también */
-                video:fullscreen::-webkit-media-controls-timeline,
-                video:fullscreen::-webkit-media-controls-current-time-display,
-                video:fullscreen::-webkit-media-controls-time-remaining-display {
-                    display: none !important;
-                }
-                
-                /* Asegurar que los controles nativos sean visibles en móviles */
-                #video::-webkit-media-controls {
-                    display: flex !important;
-                }
-                
-                #video::-webkit-media-controls-volume-slider,
-                #video::-webkit-media-controls-mute-button {
-                    display: flex !important;
-                }
-                
-                /* Para iOS específicamente */
-                #video::-webkit-media-controls-start-playback-button {
-                    display: none !important;
-                    opacity: 0 !important;
-                    pointer-events: none !important;
-                    width: 0 !important;
-                    height: 0 !important;
-                }
-            `;
-            document.head.appendChild(style);
-        }
+
+// =================================================================================
+// 4. MANEJO DE LA INTERFAZ DE USUARIO (UI)
+// =================================================================================
+
+/**
+ * Muestra u oculta el spinner de carga.
+ */
+function mostrarLoading(mostrar) {
+    const loading = document.getElementById('loading');
+    if (loading) loading.style.display = mostrar ? 'flex' : 'none';
+}
+
+/**
+ * Muestra un mensaje de error temporal en el reproductor.
+ */
+function mostrarError(mensaje) {
+    const errorDiv = document.getElementById('error-message');
+    if (errorDiv) {
+        errorDiv.textContent = mensaje;
+        errorDiv.style.display = 'flex';
+        setTimeout(() => {
+            errorDiv.style.display = 'none';
+        }, 5000);
     }
+}
 
-    // Función para forzar la reproducción si se intenta pausar
-    function preventVideoPause() {
-        const video = document.getElementById('video');
-        if (!video) return;
+/**
+ * Muestra una notificación toast en la parte inferior de la pantalla.
+ */
+function showToast(message) {
+    let toast = document.getElementById('share-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'share-toast';
+        toast.className = 'share-toast';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
 
-        video.addEventListener('pause', () => {
-            // Si hay un canal cargado y el video se ha pausado, forzar su reproducción.
-            if (currentChannel && video.paused) {
-                // Usamos un pequeño timeout para evitar bucles infinitos en algunos navegadores.
+/**
+ * Crea dinámicamente los botones de las categorías.
+ */
+function crearBotonesCategorias() {
+    const contenedor = document.getElementById('section-buttons');
+    if (!contenedor) return;
+    contenedor.innerHTML = '';
+    Object.keys(todosCanales).forEach(categoria => {
+        if (todosCanales[categoria].length > 0) {
+            const boton = document.createElement('div');
+            boton.className = 'section-button';
+            boton.innerHTML = `<i class=""></i> ${categoria}`;
+            boton.onclick = () => {
+                showingFavorites = false;
+                document.querySelectorAll('.section-button').forEach(b => b.classList.remove('active'));
+                boton.classList.add('active');
+                mostrarCategoria(categoria);
+                document.getElementById('favorites-toggle').classList.remove('active');
                 setTimeout(() => {
-                    video.play().catch(e => console.warn("Reanudación forzada falló:", e));
-                }, 150);
-            }
-        });
-    }
-
-    // Función para habilitar pantalla completa con doble clic/tap
-    function setupDoubleClickFullscreen() {
-        const videoPlayer = document.getElementById('video-player');
-        if (!videoPlayer) return;
-
-        videoPlayer.addEventListener('dblclick', () => {
-            if (!document.fullscreenElement) {
-                videoPlayer.requestFullscreen().catch(err => {
-                    console.error(`Error al activar pantalla completa: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        });
-    }
-
-    // Gestos táctiles
-    function setupTouchGestures() {
-        const videoPlayer = document.getElementById('video-player');
-        let startX = 0;
-        let startY = 0;
-        let startTime = 0;
-        const minSwipeDist = 50;
-        const maxSwipeTime = 500;
-        let isDoubleTap = false;
-        
-        // Para detectar doble tap
-        let lastTap = 0;
-        let tapTimeout;
-        
-        videoPlayer.addEventListener('touchstart', function(e) {
-            if (e.touches.length === 1) {
-                const touch = e.touches[0];
-                startX = touch.clientX;
-                startY = touch.clientY;
-                startTime = new Date().getTime();
-                
-                // Detectar doble tap
-                const currentTime = new Date().getTime();
-                const tapLength = currentTime - lastTap;
-                
-                if (tapLength < 300 && tapLength > 0) {
-                    // Es un doble tap - toggle fullscreen
-                    clearTimeout(tapTimeout);
-                    isDoubleTap = true;
-                    
-                    if (!document.fullscreenElement) {
-                        videoPlayer.requestFullscreen().catch(err => {
-                            console.error(`Error al activar pantalla completa: ${err.message}`);
-                        });
-                    } else {
-                        document.exitFullscreen();
-                    }
-                } else {
-                    // Es un solo tap
-                    isDoubleTap = false;
-                    tapTimeout = setTimeout(() => {
-                        lastTap = 0;
-                    }, 300);
-                }
-                lastTap = currentTime;
-            }
-        }, { passive: true });
-        
-        videoPlayer.addEventListener('touchend', function(e) {
-            if (isDoubleTap || e.touches.length > 0) return;
-            
-            const touch = e.changedTouches[0];
-            const distX = touch.clientX - startX;
-            const distY = touch.clientY - startY;
-            const elapsedTime = new Date().getTime() - startTime;
-            
-            if (elapsedTime <= maxSwipeTime && !isDoubleTap) {
-                if (Math.abs(distX) >= minSwipeDist && Math.abs(distY) <= 100) {
-                    // Deslizamiento horizontal - Cambiar canal
-                    if (distX > 0) {
-                        navigateToPreviousChannel();
-                    } else {
-                        navigateToNextChannel();
-                    }
-                }
-            }
-        }, { passive: true });
-        
-        // Prevenir zoom con doble tap
-        videoPlayer.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
-        });
-        
-        videoPlayer.addEventListener('gesturechange', function(e) {
-            e.preventDefault();
-        });
-        
-        videoPlayer.addEventListener('gestureend', function(e) {
-            e.preventDefault();
-        });
-    }
-
-    // Función para crear botones de categorías
-    function crearBotonesCategorias() {
-        const contenedor = document.getElementById('section-buttons');
-        if (!contenedor) return;
-        
-        contenedor.innerHTML = '';
-        
-        Object.keys(todosCanales).forEach(categoria => {
-            if (todosCanales[categoria].length > 0) {
-                const boton = document.createElement('div');
-                boton.className = 'section-button';
-                boton.innerHTML = `<i class=""></i> ${categoria}`;
-                boton.onclick = () => {
-                    showingFavorites = false;
-                    document.querySelectorAll('.section-button').forEach(b => b.classList.remove('active'));
-                    boton.classList.add('active');
-                    mostrarCategoria(categoria);
-                    
-                    // Quitar resaltado del botón de favoritos
-                    document.getElementById('favorites-toggle').classList.remove('active');
-                    
-                    setTimeout(() => {
-                        smoothScrollTo('channels-container');
-                    }, 100);
-                };
-                contenedor.appendChild(boton);
-            }
-        });
-        
-        if (contenedor.firstChild) {
-            contenedor.firstChild.classList.add('active');
+                    smoothScrollTo('channels-container');
+                }, 100);
+            };
+            contenedor.appendChild(boton);
         }
-        
-        setTimeout(adjustCategoryScroll, 100);
+    });
+    if (contenedor.firstChild) {
+        contenedor.firstChild.classList.add('active');
     }
+    setTimeout(adjustCategoryScroll, 100);
+}
 
-    // Función para mostrar canales de una categoría
-    function mostrarCategoria(categoria) {
-        showingFavorites = false;
-
-        // Quitar resaltado del botón de favoritos
-        document.getElementById('favorites-toggle').classList.remove('active');
-        
-        const canales = todosCanales[categoria];
-        if (!canales) return;
-        
-        document.querySelectorAll('.channel-list').forEach(el => {
-            el.style.display = 'none';
-        });
-        
-        const seccionId = `categoria-${categoria.replace(/\W+/g, '-').toLowerCase()}`;
-        let seccion = document.getElementById(seccionId);
-        
-        if (!seccion) {
-            seccion = document.createElement('div');
-            seccion.id = seccionId;
-            seccion.className = 'channel-list';
-            document.getElementById('channels-container').appendChild(seccion);
-        }
-        
-        // REEMPLAZA la línea de seccion.innerHTML con ESTO:
-seccion.innerHTML = `
+/**
+ * Muestra los canales de una categoría específica.
+ */
+function mostrarCategoria(categoria) {
+    showingFavorites = false;
+    document.getElementById('favorites-toggle').classList.remove('active');
+    const canales = todosCanales[categoria];
+    if (!canales) return;
+    document.querySelectorAll('.channel-list').forEach(el => {
+        el.style.display = 'none';
+    });
+    const seccionId = `categoria-${categoria.replace(/\W+/g, '-').toLowerCase()}`;
+    let seccion = document.getElementById(seccionId);
+    if (!seccion) {
+        seccion = document.createElement('div');
+        seccion.id = seccionId;
+        seccion.className = 'channel-list';
+        document.getElementById('channels-container').appendChild(seccion);
+    }
+    seccion.innerHTML = `
     <h2>
         <span><i class=""></i> ${categoria}</span>
         <button class="view-toggle-button" id="view-toggle-btn-${seccion.id}">
@@ -2411,28 +2297,21 @@ seccion.innerHTML = `
     </h2>
     <div class="channel-grid"></div>
 `;
-
-// APLICA la clase de vista actual
-if (currentView === 'list') {
-    seccion.classList.add('list-view');
-}
-
-// AÑADE estas líneas justo después para activar el botón:
-const newToggleButton = document.getElementById(`view-toggle-btn-${seccion.id}`);
-if (newToggleButton) {
-    setupDynamicViewToggle(newToggleButton, seccion);
-}
-
-        const grid = seccion.querySelector('.channel-grid');
-        canales.forEach(canal => {
-            const item = document.createElement('div');
-            item.className = 'channel-item';
-            
-            const logoSrc = canal.logo || canal['tvg-logo'] || '';
-            const channelId = `${categoria}-${canal.nombre}`;
-            const isFavorite = favorites[channelId] !== undefined;
-            
-            item.innerHTML = `
+    if (currentView === 'list') {
+        seccion.classList.add('list-view');
+    }
+    const newToggleButton = document.getElementById(`view-toggle-btn-${seccion.id}`);
+    if (newToggleButton) {
+        setupDynamicViewToggle(newToggleButton, seccion);
+    }
+    const grid = seccion.querySelector('.channel-grid');
+    canales.forEach(canal => {
+        const item = document.createElement('div');
+        item.className = 'channel-item';
+        const logoSrc = canal.logo || canal['tvg-logo'] || '';
+        const channelId = `${categoria}-${canal.nombre}`;
+        const isFavorite = favorites[channelId] !== undefined;
+        item.innerHTML = `
                 <div class="image-container">
                     <img src="${logoSrc}" 
                          alt="${canal.nombre}" 
@@ -2444,434 +2323,55 @@ if (newToggleButton) {
                 <div class="channel-name">${canal.nombre}</div>
                 <div class="channel-description">${categoria}</div>
             `;
-            
-            const streamUrl = canal.url || canal.link || '';
-            item.onclick = () => {
-                cambiarCanal(streamUrl, canal.nombre, categoria, logoSrc);
-                toggleChannels();
-                
-                setTimeout(() => {
-                    smoothScrollTo('player-container');
-                }, 300);
-            };
-            grid.appendChild(item);
-        });
-        
-        seccion.style.display = 'block';
-    }
+        const streamUrl = canal.url || canal.link || '';
+        item.onclick = () => {
+            userManuallyChangedChannel = true;
+            retryCount = 0;
+            cambiarCanal(streamUrl, canal.nombre, categoria, logoSrc);
+            toggleChannels();
+            setTimeout(() => {
+                smoothScrollTo('player-container');
+            }, 300);
+        };
+        grid.appendChild(item);
+    });
+    seccion.style.display = 'block';
+}
 
-    // Función para cambiar de canal
-    function cambiarCanal(url, nombre, categoria, logo) {
-        console.log('Reproduciendo:', nombre, 'URL:', url);
-        
-        // Verificar conexión antes de intentar cargar un canal
-        if (!navigator.onLine) {
-            mostrarError('No hay conexión a internet. No se puede cargar el canal.');
-            return;
-        }
-        
-        document.getElementById('loading').style.display = 'flex';
-        document.getElementById('error-message').style.display = 'none';
-        
-        document.querySelector('.player-placeholder').style.display = 'none';
-        document.getElementById('video').style.display = 'block';
-        
-        document.querySelector('.channel-details').innerHTML = `
-            <p><i class="fas fa-info-circle"></i> ${nombre}</p><p><i class="fas fa-align-left"></i> ${categoria}</p>
-        `;
-        
-        document.getElementById('live-indicator-small').style.display = 'inline-flex';
-        
-        document.querySelectorAll('.channel-item').forEach(item => {
-            item.classList.remove('active');
-        });
-        
-        const items = document.querySelectorAll('.channel-item');
-        for (let item of items) {
-            if (item.querySelector('.channel-name').textContent === nombre) {
-                item.classList.add('active');
+/**
+ * Muestra la lista de canales favoritos.
+ */
+function mostrarFavoritos() {
+    showingFavorites = true;
+    document.getElementById('favorites-toggle').classList.add('active');
+    document.querySelectorAll('.channel-list').forEach(el => {
+        el.style.display = 'none';
+    });
+    document.querySelectorAll('.section-button').forEach(b => b.classList.remove('active'));
+    const seccionId = 'favoritos';
+    let seccion = document.getElementById(seccionId);
+    if (!seccion) {
+        seccion = document.createElement('div');
+        seccion.id = seccionId;
+        seccion.className = 'channel-list';
+        document.getElementById('channels-container').appendChild(seccion);
+    }
+    const canalesFavoritos = [];
+    for (const id in favorites) {
+        const favorite = favorites[id];
+        for (const categoria in todosCanales) {
+            const canal = todosCanales[categoria].find(c => c.nombre === favorite.name);
+            if (canal) {
+                canalesFavoritos.push({
+                    ...canal,
+                    categoria: favorite.category || categoria
+                });
                 break;
             }
         }
-        
-        var video = document.getElementById('video');
-        
-        if (currentHls) {
-            currentHls.destroy();
-        }
-        
-        if (playbackPositionInterval) {
-            clearInterval(playbackPositionInterval);
-        }
-        
-        video.pause();
-        video.src = '';
-        
-        // Nuevo: Usar proxy para streams HTTP
-        const proxiedUrl = getProxiedUrl(url);
-        console.log(`Reproduciendo: ${nombre} desde URL: ${proxiedUrl}`);
-        
-        if (Hls.isSupported()) {
-            currentHls = new Hls({
-                debug: false,
-                enableWorker: true,
-                lowLatencyMode: true,
-                
-                // Buffering configuration OPTIMIZADA
-                backBufferLength: 30,
-                maxBufferLength: 30,
-                maxMaxBufferLength: 60,
-                maxBufferSize: 60 * 1000 * 1000, // 60MB
-                maxBufferHole: 0.1,
-                
-                // Asegurar que todos los fragmentos usen proxy
-                xhrSetup: function(xhr, url) {
-                    // Forzar todas las solicitudes a través del proxy
-                    const proxiedUrl = getProxiedUrl(url);
-                    xhr.open('GET', proxiedUrl, true);
-                },
-                
-                // Live streaming configuration
-                liveSyncDurationCount: 5,
-                liveMaxLatencyDurationCount: 15,
-                liveDurationInfinity: true,
-                
-                // ABR configuration
-                abrEwmaDefaultEstimate: 500000,
-                abrEwmaSlowLive: 3,
-                abrEwmaFastLive: 2,
-                abrEwmaDefaultLive: 1,
-                
-                // Performance
-                stretchShortVideoTrack: true,
-                maxFragLookUpTolerance: 0.1,
-                emeEnabled: true,
-                
-                // Timeouts and retries
-                manifestLoadingTimeOut: 10000,
-                manifestLoadingMaxRetry: 3,
-                manifestLoadingRetryDelay: 1000,
-                levelLoadingTimeOut: 10000,
-                levelLoadingMaxRetry: 3,
-                levelLoadingRetryDelay: 1000,
-                fragLoadingTimeOut: 20000,
-                fragLoadingMaxRetry: 6,
-                fragLoadingRetryDelay: 1000,
-                
-                // Additional optimizations
-                enableDateRange: false,
-                enableCEA708Captions: false,
-                requestTimeout: 10000,
-                levelLoadTimeout: 10000,
-                fragLoadTimeout: 20000
-            });
-            
-            currentHls.loadSource(proxiedUrl);
-            currentHls.attachMedia(video);
-            
-// CÓDIGO CORREGIDO (DESPUÉS) ✨
-currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
-    addToStreamCache(url, url);
-    document.getElementById('loading').style.display = 'none';
-    retryCount = 0;
-
-    video.play().catch(e => {
-        // Ignoramos el error "AbortError" que es común al cambiar de canal.
-        if (e.name === 'AbortError') {
-            console.warn('La reproducción fue interrumpida por una nueva carga (comportamiento esperado).');
-        } else {
-            // Para cualquier otro error real, sí lo mostramos.
-            mostrarError('Error al reproducir: ' + e.message);
-            console.error('Error de reproducción:', e);
-        }
-    });
-
-    playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
-});
-            
-            currentHls.on(Hls.Events.ERROR, function(event, data) {
-                if (data.fatal) {
-                    console.error('Error fatal de HLS:', data.details);
-                    switch(data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR:
-                            // Si hay un error de red, rotamos el proxy y reintentamos
-                            mostrarError(`Error de conexión. Reintentando con otro servidor...`);
-                            rotateProxy();
-                            setTimeout(() => cambiarCanal(url, nombre, categoria, logo), 1000);
-                            break;
-                        case Hls.ErrorTypes.MEDIA_ERROR:
-                            console.error('Error de media, intentando recuperar...');
-                            currentHls.recoverMediaError();
-                            break;
-                        default:
-                            // Si es otro error fatal, lo destruimos y reintentamos
-                            currentHls.destroy();
-                            setTimeout(() => cambiarCanal(url, nombre, categoria, logo), 1000);
-                            break;
-                    }
-                }
-            });
-        } 
-        
-        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            // Para Safari y otros navegadores que soportan HLS nativamente
-            video.src = proxiedUrl;
-            video.addEventListener('loadedmetadata', function() {
-                addToStreamCache(url, proxiedUrl);
-                document.getElementById('loading').style.display = 'none';
-                retryCount = 0;
-                
-                document.querySelector('.channel-details').innerHTML = `
-                    <p><i class="fas fa-info-circle"></i> ${nombre}</p>
-                    <p><i class="fas fa-align-left"></i> ${categoria}</p>
-                `;
-                
-  // Y REEMPLAZARLO POR ESTO ✨
-video.play().catch(e => {
-    // Ignoramos el error "AbortError" que es común al cambiar de canal.
-    if (e.name === 'AbortError') {
-        console.warn('La reproducción fue interrumpida por una nueva carga (comportamiento esperado).');
-    } else {
-        // Para cualquier otro error real, sí lo mostramos.
-        mostrarError('Error al reproducir: ' + e.message);
-        console.error('Error de reproducción:', e);
     }
-});
-                
-                playbackPositionInterval = setInterval(savePlaybackPosition, 5000);
-            });
-            
-            video.addEventListener('error', function() {
-                mostrarError('Error al cargar el video. Reintentando...');
-                rotateProxy();
-                setTimeout(() => cambiarCanal(url, nombre, categoria, logo), 2000);
-            });
-        } else {
-            mostrarError("Tu navegador no soporta la reproducción de este formato.");
-        }
-        
-        currentChannel = {
-            url: url,
-            name: nombre,
-            description: categoria
-        };
-    }
-
-    // Función para manejar errores de carga de imágenes
-    function handleImageError(img) {
-        img.onerror = null;
-        
-        // Si ya es una URL de proxy o está vacía, no hacer nada más
-        if (!img.src || img.src.includes('corsproxy.io') || img.src.includes('cors-anywhere') || 
-            img.src.includes('proxy.cors.sh') || img.src.includes('codetabs.com')) {
-            return;
-        }
-        
-        // Intentar con proxy primero
-        const proxiedSrc = getProxiedUrl(img.src);
-        
-        // Crear una nueva imagen para probar
-        const testImage = new Image();
-        testImage.onload = function() {
-            img.src = proxiedSrc;
-        };
-        testImage.onerror = function() {
-            // Si falla, mostrar ícono por defecto directamente
-            img.style.display = 'none';
-            const container = img.parentElement;
-            
-            // Verificar si ya existe un ícono por defecto
-            if (!container.querySelector('.default-icon')) {
-                const defaultIcon = document.createElement('div');
-                defaultIcon.className = 'default-icon';
-                defaultIcon.innerHTML = '<i class="fas fa-tv"></i>';
-                container.appendChild(defaultIcon);
-            }
-        };
-        testImage.src = proxiedSrc;
-    }
-
-    // Función para desplazar suavemente a un elemento
-    function smoothScrollTo(elementId) {
-    // 1. Obtenemos el elemento al que queremos ir (el reproductor).
-    const elemento = document.getElementById(elementId);
-    // 2. Obtenemos el header para poder medir su altura.
-    const header = document.querySelector('header');
-
-    if (elemento && header) {
-        // 3. Calculamos la altura exacta del header.
-        const alturaHeader = header.offsetHeight;
-
-        // 4. Obtenemos la posición del reproductor en la página.
-        const posicionElemento = elemento.getBoundingClientRect().top + window.scrollY;
-
-        // 5. Calculamos la posición final, restando la altura del header y añadiendo un pequeño margen.
-        const posicionFinal = posicionElemento - alturaHeader - 15; // Dejamos 15px de margen extra.
-
-        // 6. Hacemos el scroll suave a esa posición perfectamente calculada.
-        window.scrollTo({
-            top: posicionFinal,
-            behavior: 'smooth'
-        });
-    }
-}
-
-    // Función para ajustar el scroll de categorías en móvil
-    function adjustCategoryScroll() {
-        if (window.innerWidth <= 768) {
-            const sectionButtons = document.getElementById('section-buttons');
-            if (sectionButtons) {
-                sectionButtons.scrollLeft = 0;
-            }
-        }
-    }
-
-    // Función para guardar favoritos en localStorage
-    function saveFavorites() {
-        localStorage.setItem('favoriteChannels', JSON.stringify(favorites));
-    }
-
-    // Función para guardar la última posición de reproducción
-    function savePlaybackPosition() {
-        if (currentChannel && currentChannel.url) {
-            const video = document.getElementById('video');
-            const position = video.currentTime;
-            
-            const playbackInfo = {
-                channel: currentChannel,
-                position: position,
-                timestamp: Date.now()
-            };
-            
-            localStorage.setItem('lastPlayback', JSON.stringify(playbackInfo));
-        }
-    }
-
-    // Función para cargar la última posición de reproducción
-    function loadPlaybackPosition() {
-        const playbackInfo = JSON.parse(localStorage.getItem('lastPlayback'));
-        if (playbackInfo && playbackInfo.channel && playbackInfo.position) {
-            document.getElementById('last-channel-name').textContent = playbackInfo.channel.name;
-            document.getElementById('continue-modal').classList.add('active');
-            
-            document.getElementById('continue-yes').onclick = function() {
-                cambiarCanal(
-                    playbackInfo.channel.url, 
-                    playbackInfo.channel.name, 
-                    playbackInfo.channel.description
-                );
-                
-                document.getElementById('continue-modal').classList.remove('active');
-            };
-            
-            document.getElementById('continue-no').onclick = function() {
-                localStorage.removeItem('lastPlayback');
-                document.getElementById('continue-modal').classList.remove('active');
-            };
-        }
-    }
-
-    // Función para alternar un canal como favorito
-    function toggleFavorite(channelName, category, event) {
-        if (event) event.stopPropagation();
-        
-        const channelId = `${category}-${channelName}`;
-        
-        if (favorites[channelId]) {
-            delete favorites[channelId];
-        } else {
-            favorites[channelId] = {
-                name: channelName,
-                category: category
-            };
-        }
-        
-        saveFavorites();
-        
-        // Actualizar el estado visual del ícono
-        const favoriteIcons = document.querySelectorAll('.favorite-icon');
-        favoriteIcons.forEach(icon => {
-            const item = icon.closest('.channel-item');
-            if (item && item.querySelector('.channel-name').textContent === channelName) {
-                if (favorites[channelId]) {
-                    icon.classList.add('active');
-                } else {
-                    icon.classList.remove('active');
-                }
-            }
-        });
-        
-        if (showingFavorites) {
-            mostrarFavoritos();
-        }
-        
-        return favorites[channelId] !== undefined;
-    }
-
-    // Función para agregar a caché de streams
-    function addToStreamCache(url, data) {
-        const keys = Object.keys(streamCache);
-        if (keys.length >= 20) {
-            delete streamCache[keys[0]];
-        }
-        
-        streamCache[url] = {
-            data: data,
-            timestamp: Date.now()
-        };
-        
-        localStorage.setItem('streamCache', JSON.stringify(streamCache));
-    }
-
-    // Función para obtener del caché de streams
-    function getFromStreamCache(url) {
-        const cached = streamCache[url];
-        if (cached && (Date.now() - cached.timestamp) < 3600000) {
-            return cached.data;
-        }
-        return null;
-    }
-
-    // Función para mostrar canales favoritos
-    function mostrarFavoritos() {
-        showingFavorites = true;
-        
-        // Resaltar el botón de favoritos
-        document.getElementById('favorites-toggle').classList.add('active');
-        
-        document.querySelectorAll('.channel-list').forEach(el => {
-            el.style.display = 'none';
-        });
-        
-        document.querySelectorAll('.section-button').forEach(b => b.classList.remove('active'));
-        
-        const seccionId = 'favoritos';
-        let seccion = document.getElementById(seccionId);
-        
-        if (!seccion) {
-            seccion = document.createElement('div');
-            seccion.id = seccionId;
-            seccion.className = 'channel-list';
-            document.getElementById('channels-container').appendChild(seccion);
-        }
-        
-        const canalesFavoritos = [];
-        for (const id in favorites) {
-            const favorite = favorites[id];
-            for (const categoria in todosCanales) {
-                const canal = todosCanales[categoria].find(c => c.nombre === favorite.name);
-                if (canal) {
-                    canalesFavoritos.push({
-                        ...canal,
-                        categoria: favorite.category || categoria
-                    });
-                    break;
-                }
-            }
-        }
-        
-        if (canalesFavoritos.length === 0) {
-            seccion.innerHTML = `
+    if (canalesFavoritos.length === 0) {
+        seccion.innerHTML = `
                 <h2><i class="fas fa-heart"></i> Favoritos</h2>
                 <div class="no-results" style="display: block;">
                     <i class="fas fa-heart" style="color: #ff1500;"></i>
@@ -2879,22 +2379,19 @@ video.play().catch(e => {
                     <p>Haz clic en el corazón de un canal para agregarlo.</p>
                 </div>
             `;
-        } else {
-            seccion.innerHTML = `
+    } else {
+        seccion.innerHTML = `
                 <h2><i class="fas fa-heart"></i> Favoritos (${canalesFavoritos.length})</h2>
                 <div class="channel-grid"></div>
             `;
-            
-            const grid = seccion.querySelector('.channel-grid');
-            canalesFavoritos.forEach(canal => {
-                const item = document.createElement('div');
-                item.className = 'channel-item';
-                
-                const logoSrc = canal.logo || canal['tvg-logo'] || '';
-                const channelId = `${canal.categoria}-${canal.nombre}`;
-                const isFavorite = favorites[channelId] !== undefined;
-                
-                item.innerHTML = `
+        const grid = seccion.querySelector('.channel-grid');
+        canalesFavoritos.forEach(canal => {
+            const item = document.createElement('div');
+            item.className = 'channel-item';
+            const logoSrc = canal.logo || canal['tvg-logo'] || '';
+            const channelId = `${canal.categoria}-${canal.nombre}`;
+            const isFavorite = favorites[channelId] !== undefined;
+            item.innerHTML = `
                     <div class="image-container">
                         <img src="${logoSrc}" 
                              alt="${canal.nombre}" 
@@ -2906,38 +2403,32 @@ video.play().catch(e => {
                     <div class="channel-name">${canal.nombre}</div>
                     <div class="channel-description">${canal.categoria}</div>
                 `;
-                
-                const streamUrl = canal.url || canal.link || '';
-                item.onclick = () => {
-                    cambiarCanal(streamUrl, canal.nombre, canal.categoria, logoSrc);
-                    toggleChannels();
-                    
-                    setTimeout(() => {
-                        smoothScrollTo('player-container');
-                    }, 300);
-                };
-                grid.appendChild(item);
-            });
-        }
-        
-        seccion.style.display = 'block';
+            const streamUrl = canal.url || canal.link || '';
+            item.onclick = () => {
+                cambiarCanal(streamUrl, canal.nombre, canal.categoria, logoSrc);
+                toggleChannels();
+                setTimeout(() => {
+                    smoothScrollTo('player-container');
+                }, 300);
+            };
+            grid.appendChild(item);
+        });
     }
+    seccion.style.display = 'block';
+}
 
-
-    // Función para mostrar/ocultar canales
-// PEGA ESTA VERSIÓN CORREGIDA EN SU LUGAR
+/**
+ * Muestra u oculta el contenedor de canales.
+ */
 function toggleChannels() {
     const channelsContainer = document.getElementById('channels-container');
     const sectionButtons = document.getElementById('section-buttons');
     const toggleBtn = document.getElementById('toggle-channels-btn');
-    
     channelsVisible = !channelsVisible;
-    
     if (channelsVisible) {
         channelsContainer.style.display = 'block';
         sectionButtons.style.display = 'flex';
         toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Ocultar Canales';
-        
         setTimeout(() => {
             smoothScrollTo('channels-container');
         }, 100);
@@ -2945,36 +2436,319 @@ function toggleChannels() {
         channelsContainer.style.display = 'none';
         sectionButtons.style.display = 'none';
         toggleBtn.innerHTML = '<i class="fas fa-list"></i> Mostrar Canales';
-        
         setTimeout(() => {
             smoothScrollTo('player-container');
         }, 100);
     }
 }
 
-    // Configurar el botón de favoritos en el header
-    function setupFavoritesToggle() {
-        const favoritesToggle = document.getElementById('favorites-toggle');
-        
-        favoritesToggle.addEventListener('click', () => {
-            // Mostrar favoritos
-            mostrarFavoritos();
-            
-            // Si los canales están ocultos, mostrarlos primero
-            if (!channelsVisible) {
-                toggleChannels();
-            }
-            
-            // Scroll suave a la sección de canales
-            setTimeout(() => {
-                smoothScrollTo('channels-container');
-            }, 100);
+/**
+ * Realiza un scroll suave hacia un elemento.
+ */
+function smoothScrollTo(elementId) {
+    const elemento = document.getElementById(elementId);
+    const header = document.querySelector('header');
+    if (elemento && header) {
+        const alturaHeader = header.offsetHeight;
+        const posicionElemento = elemento.getBoundingClientRect().top + window.scrollY;
+        const posicionFinal = posicionElemento - alturaHeader - 15;
+        window.scrollTo({
+            top: posicionFinal,
+            behavior: 'smooth'
         });
     }
+}
 
-// ▼▼▼ PEGA ESTA FUNCIÓN COMPLETA EN SU LUGAR ▼▼▼
-// ▼▼▼ PEGA ESTA FUNCIÓN COMPLETA EN SU LUGAR ▼▼▼
-// ▼▼▼ ESTA ES LA FUNCIÓN FINAL Y CORREGIDA ▼▼▼
+/**
+ * Ajusta la posición del scroll de categorías en vista móvil.
+ */
+function adjustCategoryScroll() {
+    if (window.innerWidth <= 768) {
+        const sectionButtons = document.getElementById('section-buttons');
+        if (sectionButtons) {
+            sectionButtons.scrollLeft = 0;
+        }
+    }
+}
+
+
+// =================================================================================
+// 5. MANEJO DE ESTADO Y DATOS LOCALES
+// =================================================================================
+
+/**
+ * Guarda la lista de favoritos en localStorage.
+ */
+function saveFavorites() {
+    localStorage.setItem('favoriteChannels', JSON.stringify(favorites));
+}
+
+/**
+ * Agrega o quita un canal de la lista de favoritos.
+ */
+function toggleFavorite(channelName, category, event) {
+    if (event) event.stopPropagation();
+    const channelId = `${category}-${channelName}`;
+    if (favorites[channelId]) {
+        delete favorites[channelId];
+    } else {
+        favorites[channelId] = {
+            name: channelName,
+            category: category
+        };
+    }
+    saveFavorites();
+    const favoriteIcons = document.querySelectorAll('.favorite-icon');
+    favoriteIcons.forEach(icon => {
+        const item = icon.closest('.channel-item');
+        if (item && item.querySelector('.channel-name').textContent === channelName) {
+            if (favorites[channelId]) {
+                icon.classList.add('active');
+            } else {
+                icon.classList.remove('active');
+            }
+        }
+    });
+    if (showingFavorites) {
+        mostrarFavoritos();
+    }
+    return favorites[channelId] !== undefined;
+}
+
+/**
+ * Guarda la posición actual de reproducción en localStorage.
+ */
+function savePlaybackPosition() {
+    if (currentChannel && currentChannel.url) {
+        const video = document.getElementById('video');
+        const position = video.currentTime;
+        const playbackInfo = {
+            channel: currentChannel,
+            position: position,
+            timestamp: Date.now()
+        };
+        localStorage.setItem('lastPlayback', JSON.stringify(playbackInfo));
+    }
+}
+
+/**
+ * Carga la última posición de reproducción al iniciar la app.
+ */
+function loadPlaybackPosition() {
+    const playbackInfo = JSON.parse(localStorage.getItem('lastPlayback'));
+    if (playbackInfo && playbackInfo.channel && playbackInfo.position) {
+        document.getElementById('last-channel-name').textContent = playbackInfo.channel.name;
+        document.getElementById('continue-modal').classList.add('active');
+        document.getElementById('continue-yes').onclick = function() {
+            cambiarCanal(
+                playbackInfo.channel.url,
+                playbackInfo.channel.name,
+                playbackInfo.channel.description
+            );
+            document.getElementById('continue-modal').classList.remove('active');
+        };
+        document.getElementById('continue-no').onclick = function() {
+            localStorage.removeItem('lastPlayback');
+            document.getElementById('continue-modal').classList.remove('active');
+        };
+    }
+}
+
+/**
+ * Carga un canal directamente si viene en los parámetros de la URL.
+ */
+function loadChannelFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const channelName = urlParams.get('channel');
+    const category = urlParams.get('category');
+    if (channelName && category && todosCanales[category]) {
+        const canal = todosCanales[category].find(c => c.nombre === channelName);
+        if (canal) {
+            cambiarCanal(canal.url, canal.nombre, category, canal.logo);
+        }
+    }
+}
+
+/**
+ * Guarda los datos de un stream en caché.
+ */
+function addToStreamCache(url, data) {
+    const keys = Object.keys(streamCache);
+    if (keys.length >= 20) {
+        delete streamCache[keys[0]];
+    }
+    streamCache[url] = {
+        data: data,
+        timestamp: Date.now()
+    };
+    localStorage.setItem('streamCache', JSON.stringify(streamCache));
+}
+
+/**
+ * Obtiene datos de un stream desde el caché.
+ */
+function getFromStreamCache(url) {
+    const cached = streamCache[url];
+    if (cached && (Date.now() - cached.timestamp) < 3600000) {
+        return cached.data;
+    }
+    return null;
+}
+
+
+// =================================================================================
+// 6. CONTROLES DEL REPRODUCTOR DE VIDEO
+// =================================================================================
+
+/**
+ * Deshabilita la barra de progreso y el botón de pausa en los controles de video.
+ */
+function disableSeekAndPauseControls() {
+    const video = document.getElementById('video');
+    if (!video) return;
+    const existingStyle = document.getElementById('hide-controls-style');
+    if (!existingStyle) {
+        const style = document.createElement('style');
+        style.id = 'hide-controls-style';
+        style.innerHTML = `
+                #video::-webkit-media-controls-timeline,
+                #video::-webkit-media-controls-current-time-display,
+                #video::-webkit-media-controls-time-remaining-display,
+                #video::-webkit-media-controls-timeline-container {
+                    display: none !important;
+                }
+                video:fullscreen::-webkit-media-controls-timeline,
+                video:fullscreen::-webkit-media-controls-current-time-display,
+                video:fullscreen::-webkit-media-controls-time-remaining-display {
+                    display: none !important;
+                }
+                #video::-webkit-media-controls { display: flex !important; }
+                #video::-webkit-media-controls-volume-slider,
+                #video::-webkit-media-controls-mute-button { display: flex !important; }
+                #video::-webkit-media-controls-start-playback-button {
+                    display: none !important; opacity: 0 !important;
+                    pointer-events: none !important; width: 0 !important; height: 0 !important;
+                }
+            `;
+        document.head.appendChild(style);
+    }
+}
+
+/**
+ * Evita que el usuario pause el video.
+ */
+function preventVideoPause() {
+    const video = document.getElementById('video');
+    if (!video) return;
+    video.addEventListener('pause', () => {
+        if (currentChannel && video.paused) {
+            setTimeout(() => {
+                video.play().catch(e => console.warn("Reanudación forzada falló:", e));
+            }, 150);
+        }
+    });
+}
+
+/**
+ * Habilita los controles nativos del video.
+ */
+function enableNativeControls() {
+    const video = document.getElementById('video');
+    if (!video) return;
+    video.controls = true;
+    const style = document.createElement('style');
+    style.innerHTML = `
+            #video { -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+            #video::-webkit-media-controls-panel { display: flex !important; opacity: 1 !important; }
+            #video::-webkit-media-controls-play-button,
+            #video::-webkit-media-controls-volume-slider,
+            #video::-webkit-media-controls-mute-button { display: flex !important; }
+            #video::-webkit-media-controls-enclosure { display: flex !important; }
+        `;
+    document.head.appendChild(style);
+}
+
+
+// =================================================================================
+// 7. INTERACCIONES DEL USUARIO (CLICS, GESTOS, BÚSQUEDA)
+// =================================================================================
+
+/**
+ * Configura el doble clic/tap para pantalla completa.
+ */
+function setupDoubleClickFullscreen() {
+    const videoPlayer = document.getElementById('video-player');
+    if (!videoPlayer) return;
+    videoPlayer.addEventListener('dblclick', () => {
+        if (!document.fullscreenElement) {
+            videoPlayer.requestFullscreen().catch(err => {
+                console.error(`Error al activar pantalla completa: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    });
+}
+
+/**
+ * Configura gestos táctiles para cambiar de canal.
+ */
+function setupTouchGestures() {
+    const videoPlayer = document.getElementById('video-player');
+    let startX = 0, startY = 0, startTime = 0, isDoubleTap = false, lastTap = 0, tapTimeout;
+    const minSwipeDist = 50;
+    const maxSwipeTime = 500;
+    videoPlayer.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            startX = touch.clientX;
+            startY = touch.clientY;
+            startTime = new Date().getTime();
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 300 && tapLength > 0) {
+                clearTimeout(tapTimeout);
+                isDoubleTap = true;
+                if (!document.fullscreenElement) {
+                    videoPlayer.requestFullscreen().catch(err => {
+                        console.error(`Error al activar pantalla completa: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            } else {
+                isDoubleTap = false;
+                tapTimeout = setTimeout(() => {
+                    lastTap = 0;
+                }, 300);
+            }
+            lastTap = currentTime;
+        }
+    }, { passive: true });
+    videoPlayer.addEventListener('touchend', function(e) {
+        if (isDoubleTap || e.touches.length > 0) return;
+        const touch = e.changedTouches[0];
+        const distX = touch.clientX - startX;
+        const distY = touch.clientY - startY;
+        const elapsedTime = new Date().getTime() - startTime;
+        if (elapsedTime <= maxSwipeTime && !isDoubleTap) {
+            if (Math.abs(distX) >= minSwipeDist && Math.abs(distY) <= 100) {
+                if (distX > 0) {
+                    navigateToPreviousChannel();
+                } else {
+                    navigateToNextChannel();
+                }
+            }
+        }
+    }, { passive: true });
+    videoPlayer.addEventListener('gesturestart', e => e.preventDefault());
+    videoPlayer.addEventListener('gesturechange', e => e.preventDefault());
+    videoPlayer.addEventListener('gestureend', e => e.preventDefault());
+}
+
+/**
+ * Inicializa la funcionalidad de búsqueda de canales.
+ */
 function inicializarBusqueda() {
     const searchInput = document.getElementById('header-search-input');
     const searchSuggestions = document.getElementById('search-suggestions');
@@ -2983,16 +2757,13 @@ function inicializarBusqueda() {
 
     if (!searchInput) return;
 
-    // --- Función para REINICIAR la búsqueda y NAVEGAR a la categoría del canal seleccionado ---
     const finalizarBusquedaYNavegar = (categoriaDestino) => {
-        searchInput.value = ''; // Limpia el texto
+        searchInput.value = '';
         searchSuggestions.innerHTML = '';
         searchSuggestions.classList.remove('active');
         searchResultsContainer.style.display = 'none';
         noResults.style.display = 'none';
-        
         mostrarCategoria(categoriaDestino);
-
         document.querySelectorAll('.section-button').forEach(btn => {
             if (btn.textContent.trim().toLowerCase() === categoriaDestino.toLowerCase()) {
                 btn.classList.add('active');
@@ -3002,12 +2773,10 @@ function inicializarBusqueda() {
         });
     };
 
-    // --- Función para RESTAURAR la vista de categorías (cuando se borra el texto) ---
     const restaurarVistaCategorias = () => {
         searchSuggestions.classList.remove('active');
         searchResultsContainer.style.display = 'none';
         noResults.style.display = 'none';
-        
         const categoriaActiva = document.querySelector('.section-button.active');
         if (categoriaActiva) {
             mostrarCategoria(categoriaActiva.textContent.trim());
@@ -3016,13 +2785,11 @@ function inicializarBusqueda() {
         }
     };
 
-    // --- Función para mostrar los resultados en la cuadrícula ---
     const mostrarResultadosEnCuadricula = (resultados) => {
         document.querySelectorAll('#channels-container > .channel-list:not(#search-results-container)').forEach(el => el.style.display = 'none');
         searchResultsContainer.style.display = 'block';
         const grid = searchResultsContainer.querySelector('.channel-grid');
         grid.innerHTML = '';
-
         if (resultados.length > 0) {
             noResults.style.display = 'none';
             resultados.forEach(canalInfo => {
@@ -3041,14 +2808,13 @@ function inicializarBusqueda() {
                     </div>
                     <div class="channel-name">${canal.nombre}</div>
                     <div class="channel-description">${categoria}</div>`;
-
                 item.onclick = () => {
                     document.getElementById('header-search-form').classList.remove('active');
                     cambiarCanal(streamUrl, canal.nombre, categoria, logoSrc);
                     if (!channelsVisible) toggleChannels();
                     setTimeout(() => {
                         smoothScrollTo('player-container');
-                        finalizarBusquedaYNavegar(categoria); 
+                        finalizarBusquedaYNavegar(categoria);
                     }, 300);
                 };
                 grid.appendChild(item);
@@ -3057,8 +2823,7 @@ function inicializarBusqueda() {
             noResults.style.display = 'block';
         }
     };
-    
-    // --- Función para mostrar las sugerencias en el menú desplegable ---
+
     const mostrarSugerencias = (resultados) => {
         searchSuggestions.innerHTML = '';
         if (resultados.length > 0) {
@@ -3068,7 +2833,6 @@ function inicializarBusqueda() {
                 const suggestionItem = document.createElement('div');
                 suggestionItem.className = 'suggestion-item';
                 suggestionItem.innerHTML = `<i class="fas fa-tv"></i> ${canal.nombre} <small>(${categoria})</small>`;
-                
                 suggestionItem.onclick = () => {
                     const streamUrl = canal.url || canal.link || '';
                     cambiarCanal(streamUrl, canal.nombre, categoria);
@@ -3076,7 +2840,7 @@ function inicializarBusqueda() {
                     if (!channelsVisible) toggleChannels();
                     setTimeout(() => {
                         smoothScrollTo('player-container');
-                        finalizarBusquedaYNavegar(categoria); 
+                        finalizarBusquedaYNavegar(categoria);
                     }, 300);
                 };
                 searchSuggestions.appendChild(suggestionItem);
@@ -3086,7 +2850,6 @@ function inicializarBusqueda() {
         }
     };
 
-    // --- Evento principal de búsqueda ---
     searchInput.addEventListener('input', function(e) {
         const termino = e.target.value.toLowerCase().trim();
         if (termino.length >= 2) {
@@ -3101,19 +2864,15 @@ function inicializarBusqueda() {
             mostrarSugerencias(resultados);
             mostrarResultadosEnCuadricula(resultados);
         } else {
-            // BUG FIX: Esta sección causaba que el texto se borrara al escribir.
-            // Ahora, solo restaura la vista sin borrar el texto del input.
             restaurarVistaCategorias();
         }
     });
 
-    // --- Lógica para el botón de cierre ---
     document.getElementById('header-search-close').addEventListener('click', () => {
-        searchInput.value = ''; // Limpiamos el input aquí
+        searchInput.value = '';
         restaurarVistaCategorias();
     });
 
-    // --- Cerrar sugerencias al hacer clic fuera ---
     document.addEventListener('click', (e) => {
         if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
             searchSuggestions.classList.remove('active');
@@ -3122,172 +2881,128 @@ function inicializarBusqueda() {
 }
 
 
+// =================================================================================
+// 8. CONFIGURACIÓN DE COMPONENTES DE LA UI
+// =================================================================================
 
-    function mostrarLoading(mostrar) {
-        const loading = document.getElementById('loading');
-        if (loading) loading.style.display = mostrar ? 'flex' : 'none';
-    }
-
-    function mostrarError(mensaje) {
-        const errorDiv = document.getElementById('error-message');
-        if (errorDiv) {
-            errorDiv.textContent = mensaje;
-            errorDiv.style.display = 'flex';
-            setTimeout(() => {
-                errorDiv.style.display = 'none';
-            }, 5000);
-        }
-    }
-    
-    function tryReconnect(videoUrl, channelName, channelDescription) {
-        if (retryCount < MAX_RETRIES) {
-            retryCount++;
-            mostrarError(`Error de conexión. Reintentando... (${retryCount}/${MAX_RETRIES})`);
-            
-            setTimeout(() => {
-                cambiarCanal(videoUrl, channelName, channelDescription);
-            }, 3000);
+/**
+ * Configura la funcionalidad del botón flotante para volver arriba.
+ */
+function setupFloatingButton() {
+    const floatingButton = document.getElementById('back-to-player');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            floatingButton.classList.add('visible');
         } else {
-            mostrarError('No se pudo conectar al canal después de varios intentos, Recarga el reproductor y/o Cambia El Canal.');
-            retryCount = 0;
+            floatingButton.classList.remove('visible');
         }
-    }
+    });
+    floatingButton.addEventListener('click', () => {
+        smoothScrollTo('player-container');
+    });
+}
 
-    function setupFloatingButton() {
-        const floatingButton = document.getElementById('back-to-player');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                floatingButton.classList.add('visible');
-            } else {
-                floatingButton.classList.remove('visible');
-            }
-        });
-        
-        floatingButton.addEventListener('click', () => {
-            smoothScrollTo('player-container');
-        });
-    }
-
-    function setupHeaderSearch() {
-        const searchToggle = document.getElementById('search-toggle');
-        const searchForm = document.getElementById('header-search-form');
-        const searchInput = document.getElementById('header-search-input');
-        const searchClose = document.getElementById('header-search-close');
-        
-        searchToggle.addEventListener('click', () => {
-            searchForm.classList.toggle('active');
-            if (searchForm.classList.contains('active')) {
-                searchInput.focus();
-            }
-        });
-        
-        searchClose.addEventListener('click', () => {
+/**
+ * Configura la visibilidad y funcionalidad del campo de búsqueda en el header.
+ */
+function setupHeaderSearch() {
+    const searchToggle = document.getElementById('search-toggle');
+    const searchForm = document.getElementById('header-search-form');
+    const searchInput = document.getElementById('header-search-input');
+    const searchClose = document.getElementById('header-search-close');
+    searchToggle.addEventListener('click', () => {
+        searchForm.classList.toggle('active');
+        if (searchForm.classList.contains('active')) {
+            searchInput.focus();
+        }
+    });
+    searchClose.addEventListener('click', () => {
+        searchForm.classList.remove('active');
+        searchInput.value = '';
+        if (showingFavorites) {
+            mostrarFavoritos();
+        } else {
+            Object.keys(todosCanales).forEach(categoria => {
+                const seccion = document.getElementById(`categoria-${categoria.replace(/\W+/g, '-').toLowerCase()}`);
+                if (seccion) seccion.style.display = 'block';
+            });
+        }
+        document.getElementById('no-results').style.display = 'none';
+    });
+    document.addEventListener('click', (e) => {
+        if (!searchForm.contains(e.target) && e.target !== searchToggle) {
             searchForm.classList.remove('active');
-            searchInput.value = '';
-            
-            if (showingFavorites) {
-                mostrarFavoritos();
-            } else {
-                Object.keys(todosCanales).forEach(categoria => {
-                    const seccion = document.getElementById(`categoria-${categoria.replace(/\W+/g, '-').toLowerCase()}`);
-                    if (seccion) seccion.style.display = 'block';
-                });
-            }
-            document.getElementById('no-results').style.display = 'none';
-        });
-        
-        document.addEventListener('click', (e) => {
-            if (!searchForm.contains(e.target) && e.target !== searchToggle) {
-                searchForm.classList.remove('active');
-            }
-        });
-    }
+        }
+    });
+}
 
-    // Configurar el tema
-    function setupTheme() {
-        const themeToggle = document.getElementById('theme-toggle');
-        const icon = themeToggle.querySelector('i');
-        
-        // Cargar tema guardado
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        
-        // Actualizar icono
-        if (savedTheme === 'light') {
+/**
+ * Configura el botón para cambiar entre tema claro y oscuro.
+ */
+function setupTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const icon = themeToggle.querySelector('i');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'light') {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    }
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        if (newTheme === 'light') {
             icon.classList.remove('fa-moon');
             icon.classList.add('fa-sun');
         } else {
             icon.classList.remove('fa-sun');
             icon.classList.add('fa-moon');
         }
-        
-        // Alternar tema al hacer clic
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            if (newTheme === 'light') {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
-        });
-    }
+    });
+}
 
-    // Configurar vista (cuadrícula/lista)
-    function setupViewToggle() {
-        const viewToggleButtons = document.querySelectorAll('.view-toggle-btn');
-        
-        // Establecer el botón activo según la preferencia guardada
-        viewToggleButtons.forEach(btn => {
-            if (btn.dataset.view === currentView) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-            
-            btn.addEventListener('click', () => {
-                viewToggleButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                currentView = btn.dataset.view;
-                localStorage.setItem('viewPreference', currentView);
-                
-                // Aplicar la nueva vista a todas las secciones
-                document.querySelectorAll('.channel-list').forEach(section => {
-                    if (currentView === 'list') {
-                        section.classList.add('list-view');
-                    } else {
-                        section.classList.remove('list-view');
-                    }
-                });
+/**
+ * Configura los botones para cambiar entre vista de cuadrícula y lista.
+ */
+function setupViewToggle() {
+    const viewToggleButtons = document.querySelectorAll('.view-toggle-btn');
+    viewToggleButtons.forEach(btn => {
+        if (btn.dataset.view === currentView) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+        btn.addEventListener('click', () => {
+            viewToggleButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentView = btn.dataset.view;
+            localStorage.setItem('viewPreference', currentView);
+            document.querySelectorAll('.channel-list').forEach(section => {
+                if (currentView === 'list') {
+                    section.classList.add('list-view');
+                } else {
+                    section.classList.remove('list-view');
+                }
             });
         });
-    }
+    });
+}
 
-
-
-// NUEVA FUNCIÓN PARA MANEJAR EL BOTÓN DE VISTA
+/**
+ * Configura el botón de cambio de vista que se genera dinámicamente.
+ */
 function setupDynamicViewToggle(button, section) {
-    // 1. Determina qué ícono mostrar al inicio
     const icon = button.querySelector('i');
     icon.className = (currentView === 'grid') ? 'fas fa-list-ul' : 'fas fa-th';
-
-    // 2. Añade el evento de clic
     button.addEventListener('click', () => {
-        // Invierte la vista actual
         currentView = (currentView === 'grid') ? 'list' : 'grid';
         localStorage.setItem('viewPreference', currentView);
-
-        // Cambia el ícono en el botón
         icon.className = (currentView === 'grid') ? 'fas fa-list-ul' : 'fas fa-th';
-        
-        // Aplica o quita la clase a la lista de canales
         if (currentView === 'list') {
             section.classList.add('list-view');
         } else {
@@ -3295,332 +3010,270 @@ function setupDynamicViewToggle(button, section) {
         }
     });
 }
-    // Configurar botón de información deportiva
-    function setupSportsInfoButton() {
-        const sportsInfoBtn = document.getElementById('sports-info-btn');
-        
-        sportsInfoBtn.addEventListener('click', () => {
-            // Aquí puedes redirigir a otra página o mostrar un modal con información
-            window.open('https://www.espn.com.ar/', '_blank');
-        });
-    }
 
-    // Registrar Service Worker
-    async function registerServiceWorker() {
-        if ('serviceWorker' in navigator) {
-            try {
-                const registration = await navigator.serviceWorker.register('/service-worker.js');
-                console.log('Service Worker registrado con éxito:', registration);
-                return registration;
-            } catch (error) {
-                console.error('Error registrando Service Worker:', error);
-                return null;
-            }
+/**
+ * Configura el botón de información deportiva.
+ */
+function setupSportsInfoButton() {
+    const sportsInfoBtn = document.getElementById('sports-info-btn');
+    sportsInfoBtn.addEventListener('click', () => {
+        window.open('https://www.espn.com.ar/', '_blank');
+    });
+}
+
+/**
+ * Configura el botón de favoritos en el header.
+ */
+function setupFavoritesToggle() {
+    const favoritesToggle = document.getElementById('favorites-toggle');
+    favoritesToggle.addEventListener('click', () => {
+        mostrarFavoritos();
+        if (!channelsVisible) {
+            toggleChannels();
         }
-        return null;
-    }
-
-    // Verificar si la PWA está instalada
-    function checkIfAppIsInstalled() {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            document.body.classList.add('pwa-installed');
-            console.log('La aplicación está ejecutándose como PWA instalada');
-        }
-        
-        window.matchMedia('(display-mode: standalone)').addListener((e) => {
-            document.body.classList.toggle('pwa-installed', e.matches);
-        });
-    }
-
-    // Manejar el evento de instalación
-    function setupInstallPrompt() {
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            const installButton = document.getElementById('install-button');
-            if (installButton) {
-                installButton.style.display = 'block';
-                
-                installButton.addEventListener('click', async () => {
-                    if (!deferredPrompt) return;
-                    
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    
-                    if (outcome === 'accepted') {
-                        console.log('Usuario aceptó instalar la PWA');
-                    } else {
-                        console.log('Usuario rechazó instalar la PWA');
-                    }
-                    
-                    deferredPrompt = null;
-                    installButton.style.display = 'none';
-                });
-            }
-        });
-        
-        window.addEventListener('appinstalled', () => {
-            deferredPrompt = null;
-            console.log('PWA instalada con éxito');
-            
-            const installButton = document.getElementById('install-button');
-            if (installButton) {
-                installButton.style.display = 'none';
-            }
-            
-            document.body.classList.add('pwa-installed');
-        });
-    }
-
-    // Verificar estado de conexión
-    function setupOnlineOfflineDetection() {
-        function updateOnlineStatus() {
-            if (navigator.onLine) {
-                document.body.classList.remove('offline');
-                document.body.classList.add('online');
-            } else {
-                document.body.classList.remove('online');
-                document.body.classList.add('offline');
-                showOfflineMessage();
-            }
-        }
-        
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-        updateOnlineStatus();
-    }
-
-    // Mostrar mensaje de offline
-    function showOfflineMessage() {
-        let offlineMessage = document.getElementById('offline-message');
-        if (offlineMessage) {
-            offlineMessage.style.display = 'block';
-            
-            if (navigator.onLine) {
-                setTimeout(() => {
-                    offlineMessage.style.display = 'none';
-                }, 5000);
-            }
-        }
-    }
-
-    // Inicializar todas las funcionalidades PWA
-    async function initPWA() {
-        await registerServiceWorker();
-        checkIfAppIsInstalled();
-        setupInstallPrompt();
-        setupOnlineOfflineDetection();
-    }
-
-    // Función para compartir canal
-    function setupShareFunctionality() {
-        const shareButton = document.getElementById('share-channel-btn');
-        const shareModal = document.getElementById('share-modal');
-        const shareUrlInput = document.getElementById('share-url');
-        const copyShareUrlButton = document.getElementById('copy-share-url');
-        const closeShareModal = document.getElementById('close-share-modal');
-        const socialShareButtons = document.querySelectorAll('.social-share-btn');
-        
-        shareButton.addEventListener('click', () => {
-            if (!currentChannel) {
-                showToast('Selecciona un canal primero para compartir');
-                return;
-            }
-            
-            // Generar URL única para el canal
-            const baseUrl = window.location.origin + window.location.pathname;
-            const shareUrl = `${baseUrl}?channel=${encodeURIComponent(currentChannel.name)}&category=${encodeURIComponent(currentChannel.description)}`;
-            
-            shareUrlInput.value = shareUrl;
-            shareModal.classList.add('active');
-        });
-        
-        copyShareUrlButton.addEventListener('click', () => {
-            shareUrlInput.select();
-            document.execCommand('copy');
-            showToast('Enlace copiado al portapapeles');
-        });
-        
-        closeShareModal.addEventListener('click', () => {
-            shareModal.classList.remove('active');
-        });
-        
-        // Compartir en redes sociales
-        socialShareButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const platform = button.dataset.platform;
-                shareOnPlatform(platform, shareUrlInput.value, currentChannel.name);
-            });
-        });
-        
-        // Cerrar modal al hacer clic fuera
-        shareModal.addEventListener('click', (e) => {
-            if (e.target === shareModal) {
-                shareModal.classList.remove('active');
-            }
-        });
-    }
-
-    // Función para compartir en plataformas específicas
-    function shareOnPlatform(platform, url, channelName) {
-        let shareUrl = '';
-        
-        switch(platform) {
-            case 'whatsapp':
-                shareUrl = `https://wa.me/?text=Mira ${encodeURIComponent(channelName)} en Maik Sport: ${encodeURIComponent(url)}`;
-                break;
-            case 'facebook':
-                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                break;
-            case 'twitter':
-                shareUrl = `https://twitter.com/intent/tweet?text=Mira ${encodeURIComponent(channelName)} en Maik Sport&url=${encodeURIComponent(url)}`;
-                break;
-            case 'telegram':
-                shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=Mira ${encodeURIComponent(channelName)} en Maik Sport`;
-                break;
-        }
-        
-        window.open(shareUrl, '_blank', 'width=600,height=400');
-    }
-
-    // Función para mostrar notificación toast
-    function showToast(message) {
-        let toast = document.getElementById('share-toast');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.id = 'share-toast';
-            toast.className = 'share-toast';
-            document.body.appendChild(toast);
-        }
-        
-        toast.textContent = message;
-        toast.classList.add('show');
-        
         setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
-    }
+            smoothScrollTo('channels-container');
+        }, 100);
+    });
+}
 
-    // Función para cargar canal desde URL
-    function loadChannelFromURL() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const channelName = urlParams.get('channel');
-        const category = urlParams.get('category');
-        
-        if (channelName && category && todosCanales[category]) {
-            const canal = todosCanales[category].find(c => c.nombre === channelName);
-            if (canal) {
-                cambiarCanal(canal.url, canal.nombre, category, canal.logo);
-            }
+
+// =================================================================================
+// 9. FUNCIONALIDAD DE PWA (PROGRESSIVE WEB APP)
+// =================================================================================
+
+/**
+ * Registra el Service Worker.
+ */
+async function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        try {
+            const registration = await navigator.serviceWorker.register('/service-worker.js');
+            console.log('Service Worker registrado con éxito:', registration);
+            return registration;
+        } catch (error) {
+            console.error('Error registrando Service Worker:', error);
+            return null;
         }
     }
+    return null;
+}
 
-    // Al cargar la página, guardar una copia de los canales en localStorage
-    // para tener un respaldo en caso de que falle la carga en el futuro
+/**
+ * Comprueba si la app ya está instalada como PWA.
+ */
+function checkIfAppIsInstalled() {
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        document.body.classList.add('pwa-installed');
+        console.log('La aplicación está ejecutándose como PWA instalada');
+    }
+    window.matchMedia('(display-mode: standalone)').addListener((e) => {
+        document.body.classList.toggle('pwa-installed', e.matches);
+    });
+}
+
+/**
+ * Configura el prompt de instalación de la PWA.
+ */
+function setupInstallPrompt() {
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const installButton = document.getElementById('install-button');
+        if (installButton) {
+            installButton.style.display = 'block';
+            installButton.addEventListener('click', async () => {
+                if (!deferredPrompt) return;
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('Usuario aceptó instalar la PWA');
+                } else {
+                    console.log('Usuario rechazó instalar la PWA');
+                }
+                deferredPrompt = null;
+                installButton.style.display = 'none';
+            });
+        }
+    });
+    window.addEventListener('appinstalled', () => {
+        deferredPrompt = null;
+        console.log('PWA instalada con éxito');
+        const installButton = document.getElementById('install-button');
+        if (installButton) {
+            installButton.style.display = 'none';
+        }
+        document.body.classList.add('pwa-installed');
+    });
+}
+
+/**
+ * Detecta el estado de la conexión (online/offline).
+ */
+function setupOnlineOfflineDetection() {
+    function updateOnlineStatus() {
+        if (navigator.onLine) {
+            document.body.classList.remove('offline');
+            document.body.classList.add('online');
+        } else {
+            document.body.classList.remove('online');
+            document.body.classList.add('offline');
+            showOfflineMessage();
+        }
+    }
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    updateOnlineStatus();
+}
+
+/**
+ * Muestra un mensaje cuando la app está sin conexión.
+ */
+function showOfflineMessage() {
+    let offlineMessage = document.getElementById('offline-message');
+    if (offlineMessage) {
+        offlineMessage.style.display = 'block';
+        if (navigator.onLine) {
+            setTimeout(() => {
+                offlineMessage.style.display = 'none';
+            }, 5000);
+        }
+    }
+}
+
+/**
+ * Inicializa todas las funciones relacionadas con la PWA.
+ */
+async function initPWA() {
+    await registerServiceWorker();
+    checkIfAppIsInstalled();
+    setupInstallPrompt();
+    setupOnlineOfflineDetection();
+}
+
+
+// =================================================================================
+// 10. FUNCIONALIDAD PARA COMPARTIR
+// =================================================================================
+
+/**
+ * Configura la funcionalidad del modal para compartir.
+ */
+function setupShareFunctionality() {
+    const shareButton = document.getElementById('share-channel-btn');
+    const shareModal = document.getElementById('share-modal');
+    const shareUrlInput = document.getElementById('share-url');
+    const copyShareUrlButton = document.getElementById('copy-share-url');
+    const closeShareModal = document.getElementById('close-share-modal');
+    const socialShareButtons = document.querySelectorAll('.social-share-btn');
+    shareButton.addEventListener('click', () => {
+        if (!currentChannel) {
+            showToast('Selecciona un canal primero para compartir');
+            return;
+        }
+        const baseUrl = window.location.origin + window.location.pathname;
+        const shareUrl = `${baseUrl}?channel=${encodeURIComponent(currentChannel.name)}&category=${encodeURIComponent(currentChannel.description)}`;
+        shareUrlInput.value = shareUrl;
+        shareModal.classList.add('active');
+    });
+    copyShareUrlButton.addEventListener('click', () => {
+        shareUrlInput.select();
+        document.execCommand('copy');
+        showToast('Enlace copiado al portapapeles');
+    });
+    closeShareModal.addEventListener('click', () => {
+        shareModal.classList.remove('active');
+    });
+    socialShareButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const platform = button.dataset.platform;
+            shareOnPlatform(platform, shareUrlInput.value, currentChannel.name);
+        });
+    });
+    shareModal.addEventListener('click', (e) => {
+        if (e.target === shareModal) {
+            shareModal.classList.remove('active');
+        }
+    });
+}
+
+/**
+ * Abre la ventana para compartir en una red social específica.
+ */
+function shareOnPlatform(platform, url, channelName) {
+    let shareUrl = '';
+    switch (platform) {
+        case 'whatsapp':
+            shareUrl = `https://wa.me/?text=Mira ${encodeURIComponent(channelName)} en Maik Sport: ${encodeURIComponent(url)}`;
+            break;
+        case 'facebook':
+            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            break;
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?text=Mira ${encodeURIComponent(channelName)} en Maik Sport&url=${encodeURIComponent(url)}`;
+            break;
+        case 'telegram':
+            shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=Mira ${encodeURIComponent(channelName)} en Maik Sport`;
+            break;
+    }
+    window.open(shareUrl, '_blank', 'width=600,height=400');
+}
+
+
+// =================================================================================
+// 11. PUNTO DE ENTRADA Y EVENT LISTENERS PRINCIPALES
+// =================================================================================
+
+/**
+ * Se ejecuta cuando el DOM está completamente cargado.
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Carga inicial
+    cargarCanales();
+
+    // Listeners de botones principales
+    document.getElementById('toggle-channels-btn').addEventListener('click', toggleChannels);
+    const reloadBtn = document.getElementById('reload-player-btn');
+    if (reloadBtn) {
+        reloadBtn.addEventListener('click', () => {
+            if (currentChannel && currentChannel.url) {
+                console.log(`Recargando el stream para: ${currentChannel.name}`);
+                showToast(`Recargando ${currentChannel.name}...`);
+                cambiarCanal(currentChannel.url, currentChannel.name, currentChannel.description);
+            } else {
+                showToast('No hay ningún canal activo para recargar.');
+            }
+        });
+    }
+
+    // Configuraciones de UI
+    setupFloatingButton();
+    setupHeaderSearch();
+    setupTheme();
+    setupViewToggle();
+    setupSportsInfoButton();
+    setupFavoritesToggle();
+    
+    // Configuraciones del reproductor
+    disableSeekAndPauseControls();
+    enableNativeControls();
+    preventVideoPause();
+    setupDoubleClickFullscreen();
+    setupTouchGestures();
+
+    // Funcionalidades adicionales
+    setupShareFunctionality();
+    loadChannelFromURL();
+    initPWA();
+
+    // Listeners de la ventana
+    window.addEventListener('resize', debounce(adjustCategoryScroll, 250));
     window.addEventListener('beforeunload', function() {
         if (Object.keys(todosCanales).length > 0) {
             localStorage.setItem('canalesBackup', JSON.stringify(todosCanales));
         }
     });
-
-    // Añadir esta función para habilitar controles nativos
-    function enableNativeControls() {
-        const video = document.getElementById('video');
-        if (!video) return;
-        
-        // Habilitar controles nativos en dispositivos móviles
-        video.controls = true;
-        
-        // Asegurar que los controles sean visibles
-        const style = document.createElement('style');
-        style.innerHTML = `
-            /* Mostrar controles nativos en todos los dispositivos */
-            #video {
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-            }
-            
-            #video::-webkit-media-controls-panel {
-                display: flex !important;
-                opacity: 1 !important;
-            }
-            
-            #video::-webkit-media-controls-play-button,
-            #video::-webkit-media-controls-volume-slider,
-            #video::-webkit-media-controls-mute-button {
-                display: flex !important;
-            }
-            
-            /* Asegurar que los controles sean visibles en iOS */
-            #video::-webkit-media-controls-enclosure {
-                display: flex !important;
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    // Función debounce para optimizar eventos
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    // Inicializar la aplicación
-    document.addEventListener('DOMContentLoaded', function() {
-        cargarCanales();
-        document.getElementById('toggle-channels-btn').addEventListener('click', toggleChannels);
-        setupFloatingButton();
-        setupHeaderSearch();
-        setupTheme();
-        setupViewToggle();
-        setupSportsInfoButton();
-        window.addEventListener('resize', debounce(adjustCategoryScroll, 250));
-
-        // ▼▼ AÑADE ESTE CÓDIGO NUEVO AQUÍ DENTRO ▼▼
-      const reloadBtn = document.getElementById('reload-player-btn');
-      if (reloadBtn) {
-          reloadBtn.addEventListener('click', () => {
-              // 1. Verificamos si hay un canal activo guardado en la variable 'currentChannel'
-              if (currentChannel && currentChannel.url) {
-                  console.log(`Recargando el stream para: ${currentChannel.name}`);
-                  showToast(`Recargando ${currentChannel.name}...`);
-                  
-                  // 2. Reutilizamos tu función 'cambiarCanal' con la info del canal actual
-                  cambiarCanal(currentChannel.url, currentChannel.name, currentChannel.description);
-              } else {
-                  // 3. Si no hay nada reproduciéndose, informamos al usuario.
-                  showToast('No hay ningún canal activo para recargar.');
-              }
-          });
-      }
-
-        
-        // Nuevas inicializaciones
-        setupShareFunctionality();
-        loadChannelFromURL();
-        
-        // Inicializar funcionalidades PWA
-        initPWA();
-
-        // Configuración de controles de video
-        disableSeekAndPauseControls();
-        enableNativeControls();
-        preventVideoPause();
-        setupDoubleClickFullscreen();
-        setupTouchGestures();
-        
-        // Configurar el nuevo botón de favoritos
-        setupFavoritesToggle();
-    });
+});
 </script>    
 </body>
 </html>
