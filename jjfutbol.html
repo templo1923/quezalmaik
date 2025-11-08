@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JJFUTBOL - Transmisiones en Vivo</title>
+    <style>
+        :root {
+            --primary-color: #ff0000; /* Amarillo vibrante */
+            --secondary-color: #FFA500; /* Naranja cálido */
+            --accent-color: #27ae60;
+            --bg-light: #fff9e6;
+            --bg-card: #ffffff;
+            --text-dark: #333;
+            --text-light: #666;
+            --border-color: #eee;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header con logo */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #333;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 120px;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-weight: bold;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Agenda Section */
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 40px 0 20px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+
+        /* --- INICIO DE NUEVOS ESTILOS PARA LA AGENDA --- */
+        
+        #agenda-lista {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .evento-contenedor {
+            border-bottom: 1px solid var(--border-color);
+        }
+        .evento-contenedor:last-child {
+            border-bottom: none;
+        }
+
+        .evento {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .evento:hover {
+            background-color: #f9f9f9;
+        }
+
+        .hora {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            min-width: 60px;
+        }
+
+        .evento-icono {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            margin-left: 10px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-evento {
+            flex-grow: 1;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .flecha {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            transform: rotate(90deg);
+            transition: transform 0.3s ease;
+        }
+        
+        .canales {
+            display: none; /* Oculto por defecto, JS lo muestra */
+            background: #fafafa;
+            padding: 15px 20px 15px 85px; /* Alineado con la info del evento */
+            border-top: 1px dashed var(--border-color);
+        }
+        
+        .canal-link {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            background-color: var(--primary-color);
+            color: #333;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .canal-link:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.03);
+        }
+
+        .sin-canales {
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .error {
+            text-align: center;
+            padding: 30px;
+            color: red;
+            font-weight: bold;
+        }
+        
+        /* --- FIN DE NUEVOS ESTILOS PARA LA AGENDA --- */
+
+        /* Carousel Section */
+        .carousel-section {
+            margin: 40px 0;
+        }
+
+        .carousel-title {
+            font-size: 1.6rem;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            background: white;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .carousel-item img:hover {
+            transform: scale(1.02);
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .carousel-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        /* Channels Section */
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .channel-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .channel-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .channel-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .channel-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .channel-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .channel-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: #333;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            background: #333;
+            color: white;
+            text-align: center;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            margin: 15px 0;
+        }
+
+        .social-btn {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px 15px;
+            background: var(--primary-color);
+            color: #333;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .channels-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .channel-logo {
+                width: 80px;
+                height: 80px;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .carousel-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/mg6MVMjw/1762386751.png" alt="JJFUTBOL Logo" class="logo">
+        </div>
+        <h1>⚽ JJFUTBOL</h1>
+        <p>Transmisiones en vivo de los mejores partidos de fútbol, NBA y más. ¡Sin registros, sin publicidad!</p>
+    </header>
+
+    <div class="container">
+    
+        <h2 class="section-title" id="agenda-titulo">📅 Agenda de Partidos</h2>
+        
+        <div id="agenda-lista">
+             <p style="text-align: center; padding: 30px; font-weight: bold;">Cargando agenda...</p>
+        </div>
+        
+    </div>
+
+    <div class="container carousel-section">
+        <h2 class="carousel-title">✨ Promociones Exclusivas</h2>
+        <div class="carousel-container">
+            <div class="carousel-inner" id="carouselInner">
+                </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn" id="prevBtn">‹</button>
+                <button class="carousel-btn" id="nextBtn">›</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title">📺 Canales Deportivos en Vivo</h2>
+        <div class="channels-grid">
+
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/wMjRhcPn/Direc-TV-Sports-Latin-America-2018.png" alt="DSports">
+                </div>
+                <h3 class="channel-name">DSports</h3>
+                <p class="channel-desc">Ver DSports online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/90QwGtKc/DSports2.webp" alt="DSports2">
+                </div>
+                <h3 class="channel-name">DSports2</h3>
+                <p class="channel-desc">Ver DSports2 online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/5y2QwqT1/DSports-M-s.webp" alt="DSports+">
+                </div>
+                <h3 class="channel-name">DSports+</h3>
+                <p class="channel-desc">Ver DSports+ online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+             <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/vTZxWLkH/pngwing-com-1.png" alt="Fox Sports 2">
+                </div>
+                <h3 class="channel-name">ESPN Deportes</h3>
+                <p class="channel-desc">Ver ESPN Deportes online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/x81NKyh1/pngwing-com.png" alt="ESPN1">
+                </div>
+                <h3 class="channel-name">ESPN1</h3>
+                <p class="channel-desc">Ver ESPN1 online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/SRxYW73y/313652.png" alt="ESPN2">
+                </div>
+                <h3 class="channel-name">ESPN2</h3>
+                <p class="channel-desc">Ver ESPN2 online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/gj2LvqQm/pngwing-com-3.png" alt="ESPN3">
+                </div>
+                <h3 class="channel-name">ESPN3</h3>
+                <p class="channel-desc">Ver ESPN3 online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+             <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/gj2LvqQm/pngwing-com-3.png" alt="ESPN3">
+                </div>
+                <h3 class="channel-name">ESPN 4</h3>
+                <p class="channel-desc">Ver ESPN 4 online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+             <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/gj2LvqQm/pngwing-com-3.png" alt="ESPN3">
+                </div>
+                <h3 class="channel-name">ESPN 5</h3>
+                <p class="channel-desc">Ver ESPN 5 online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/NFj217SG/pngwing-com-2.png" alt="Fox Sports">
+                </div>
+                <h3 class="channel-name">Fox Sports</h3>
+                <p class="channel-desc">Ver Fox Sports online en vivo y en directo.</p>
+                <a href="httpsaxdeportesop1.html" class="btn">Ver Canal</a>
+            </div>
+
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/vTZxWLkH/pngwing-com-1.png" alt="Fox Sports 2">
+                </div>
+                <h3 class="channel-name">Fox Sports 2</h3>
+                <p class="channel-desc">Ver Fox Sports 2 online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+             <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/vTZxWLkH/pngwing-com-1.png" alt="Fox Sports 2">
+                </div>
+                <h3 class="channel-name">Fox Sports </h3>
+                <p class="channel-desc">Ver Fox Sports 3 online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+             <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://i.postimg.cc/vTZxWLkH/pngwing-com-1.png" alt="Fox Sports 2">
+                </div>
+                <h3 class="channel-name">Fox Sports Premium</h3>
+                <p class="channel-desc">Ver Fox Sports Premium online en vivo y en directo.</p>
+                <a href="#" class="btn">Ver Canal</a>
+            </div>
+
+            
+            <div class="channel-card">
+                <div class="channel-logo">
+                    <img src="https://logowik.com/content/uploads/images/tudn-tv7860.logowik.com.webp" alt="Fox Sports 2">
+                </div>
+                <h3 class="channel-name">TUDN</h3>
+                <p class="channel-desc">Ver TUDN online en vivo y en directo.</p>
+                <a href="tudn.html" class="btn">Ver Canal</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 JJFUTBOL. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="https://t.me/+EPyKMpHXlv5lMmYx" target="_blank" class="social-btn">Telegram</a>
+            <a href="https://whatsapp.com/channel/0029Vacgezz9sBI3nZYNhb2o" target="_blank" class="social-btn">WhatsApp</a>
+        </div>
+    </footer>
+
+    <script>
+        // Datos del carrusel (reemplaza con tus propias imágenes y enlaces)
+        const carouselItems = [
+            {
+                image: "https://i.postimg.cc/8k0j2DM7/4927066489634884360.jpg",
+                link: "https://t.me/+EPyKMpHXlv5lMmYx"
+            },
+            {
+                image: "https://i.postimg.cc/fWrJGZm9/4927066489634884361.jpg",
+                link: "https://whatsapp.com/channel/0029Vacgezz9sBI3nZYNhb2o"
+            },
+            {
+                image: "https://i.postimg.cc/mZ5tvRC9/4927066489634884362.jpg",
+                link: "https://t.me/+EPyKMpHXlv5lMmYx"
+            }
+        ];
+
+        // Inicializar el carrusel
+        const carouselInner = document.getElementById('carouselInner');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let currentIndex = 0;
+
+        function renderCarousel() {
+            carouselInner.innerHTML = '';
+            carouselItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'carousel-item';
+                if (index === currentIndex) {
+                    div.style.display = 'block';
+                } else {
+                    div.style.display = 'none';
+                }
+                const img = document.createElement('img');
+                img.src = item.image;
+                img.alt = `Promoción ${index + 1}`;
+                img.onclick = () => window.open(item.link, '_blank');
+                div.appendChild(img);
+                carouselInner.appendChild(div);
+            });
+        }
+
+        function showNext() {
+            currentIndex = (currentIndex + 1) % carouselItems.length;
+            renderCarousel();
+        }
+
+        function showPrev() {
+            currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+            renderCarousel();
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', showNext);
+        prevBtn.addEventListener('click', showPrev);
+
+        // Auto-play every 5 seconds (opcional)
+        setInterval(showNext, 5000);
+
+        // Renderizar al cargar
+        renderCarousel();
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+
+        const AGENDA_URL = "https://golazoplay.com/agenda.json";
+        const agendaLista = $('#agenda-lista');
+        const tituloAgenda = $('#agenda-titulo');
+
+        function convertirHora(utcHour) {
+            const DateTime = luxon.DateTime;
+            // Asumimos que la hora del JSON es de "America/Lima" como en tu script
+            const utcDateTime = DateTime.fromISO(utcHour, { zone: "America/Lima" }); 
+            // la convertimos a la hora local del usuario
+            return utcDateTime.toLocal().toFormat("HH:mm"); 
+        }
+
+        async function cargarAgenda() {
+            try {
+                // Usamos un parámetro 't' con la fecha para evitar que el caché muestre una agenda vieja
+                const respuesta = await fetch(AGENDA_URL + "?t=" + new Date().getTime());
+                const json = await respuesta.json();
+                const eventos = json.data;
+
+                agendaLista.empty(); // Limpiamos la lista (quitamos el "Cargando...")
+
+                const hoy = new Date();
+                tituloAgenda.text('AGENDA - ' + hoy.getDate() + ' DE ' + hoy.toLocaleString('es-ES', { month: 'long' }).toUpperCase() + ' DE ' + hoy.getFullYear());
+
+                eventos.sort((a, b) => a.attributes.diary_hour.localeCompare(b.attributes.diary_hour));
+                
+                if (eventos.length === 0) {
+                     agendaLista.html('<p class="error">No hay eventos programados para hoy.</p>');
+                     return;
+                }
+
+                eventos.forEach(evento => {
+                    const attr = evento.attributes;
+                    const horaLocal = convertirHora(attr.diary_hour);
+                    const titulo = attr.diary_description;
+
+                    let urlIcono = "https://i.imgur.com/Vdef5Rz.png";  
+                    if (attr.country?.data?.attributes?.image?.data?.attributes?.url) {
+                        urlIcono = "https://img.golazoplay.com" + attr.country.data.attributes.image.data.attributes.url;
+                    }
+
+                    let canalesHtml = '<div class="canales">';
+                    if (attr.embeds && attr.embeds.data.length > 0) {
+                        attr.embeds.data.forEach(embed => {
+                            const nombreCanal = embed.attributes.embed_name;
+                            
+                            const urlRelativaConParametro = embed.attributes.embed_iframe;
+                            
+                            // 1. Extraemos solo el parámetro "r" (la URL real codificada)
+                            // Usamos un try/catch por si la URL no tiene el formato esperado
+                            try {
+                                const params = new URLSearchParams(urlRelativaConParametro.split('?')[1]);
+                                const urlRealCodificada = params.get("r");
+
+                                if (urlRealCodificada) {
+                                    // 2. Usamos esa URL real codificada para nuestro reproductor
+                                    // Asumo que tienes una página 'embed/eventos.html' en tu sitio
+                                    canalesHtml += `<a href="embed/eventos.html?r=${urlRealCodificada}" target="_blank" class="canal-link">➤ ${nombreCanal}</a>`;
+                                } else {
+                                     canalesHtml += `<span class="sin-canales">${nombreCanal} (No disponible)</span>`;
+                                }
+
+                            } catch (e) {
+                                console.error("Error parseando URL de embed:", urlRelativaConParametro);
+                                canalesHtml += `<span class="sin-canales">${nombreCanal} (Error)</span>`;
+                            }
+                        });
+                    } else {
+                        canalesHtml += `<span class="sin-canales">Próximamente...</span>`;
+                    }
+                    canalesHtml += '</div>';
+                    
+                    const eventoHtml = `
+                        <div class="evento-contenedor">
+                            <div class="evento">
+                                <div class="hora">${horaLocal}</div>
+                                <img src="${urlIcono}" class="evento-icono" alt="">
+                                <div class="info-evento">${titulo}</div>
+                                <div class="flecha">›</div>
+                            </div>
+                            ${canalesHtml}
+                        </div>
+                    `;
+                    agendaLista.append(eventoHtml);
+                });
+
+            } catch (error) {
+                console.error("Error al cargar la agenda:", error);
+                // Si hay un error de CORS, se mostrará en la consola, y aquí probablemente también.
+                agendaLista.html('<p class="error">No se pudo cargar la agenda. (Posible error de CORS)</p>');
+            }
+        }
+
+        // Evento click para abrir/cerrar los canales (el acordeón)
+        agendaLista.on('click', '.evento', function() {
+            const subMenu = $(this).siblings('.canales');
+            // Cierra todos los demás menús
+            $('.canales').not(subMenu).slideUp('fast');
+            // Abre o cierra el menú clickeado
+            subMenu.slideToggle('fast');
+        });
+
+        // Carga la agenda al iniciar
+        cargarAgenda();
+        
+        // Recarga la agenda cada 60 segundos
+        setInterval(cargarAgenda, 60000);
+    });
+    </script>
+    </body>
+</html>
