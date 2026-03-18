@@ -3,105 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Señal en Vivo</title>
+    <title>MAIK SPORT - Live</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        /* RESET Y FUENTES */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
         
-        /* EL TRUCO: min-height y display flex para centrar todo verticalmente */
-        body { 
+        /* Ocupamos el 100% de la pantalla sin scroll */
+        body, html { 
+            height: 100%; 
             background: #0d1b2a; 
             color: #e0e0e0; 
-            min-height: 100vh; 
             display: flex; 
             flex-direction: column; 
-            overflow: hidden; /* Evita el scroll innecesario en PC */
+            overflow: hidden; 
         }
 
-        /* HEADER DISEÑO ORIGINAL (Ajustado a 10% de altura aprox) */
         header { 
             background: linear-gradient(90deg, #1e3a8a, #60a5fa); 
             padding: 10px 20px; 
-            z-index: 1000; 
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); 
-            width: 100%;
+            flex-shrink: 0; /* Que el header no se encoja */
         }
         .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
         .header-title h1 { color: #ffffff; font-size: 22px; font-weight: 900; }
-        .soccer-ball { font-size: 28px; color: #ffffff; animation: spin 3s linear infinite; display: inline-block; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         .back-button { 
-            background: rgba(0,0,0,0.3); border-radius: 50%; width: 40px; height: 40px; 
-            color: #ffffff; font-size: 18px; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; text-decoration: none; 
-            transition: 0.3s;
+            background: rgba(255,255,255,0.1); border-radius: 50%; width: 35px; height: 35px; 
+            color: #ffffff; display: flex; align-items: center; justify-content: center; text-decoration: none; 
         }
-        .back-button:hover { background: #ef4444; }
 
-        /* VISTA PRINCIPAL: ESTO centra el video en el espacio que sobra */
-        .main-view {
+        /* EL TRUCO: El contenedor ocupa el resto de la pantalla */
+        .main-container {
             flex: 1;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 10px;
         }
 
-        /* CONTENEDOR CENTRAL LOGICO */
-        .content-container { 
+        /* El video no puede ser más alto que el 70% de la pantalla */
+        .video-box { 
             width: 100%;
-            max-width: 1000px; /* Tamaño justo para PC */
-            text-align: center; 
-        }
-
-        .live-text { 
-            font-size: 12px; font-weight: 700; color: #ffffff; 
-            margin-bottom: 12px; background: #ef4444; 
-            padding: 5px 12px; border-radius: 20px; 
-            display: inline-flex; align-items: center; gap: 6px;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-        }
-        .dot { width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-        /* REPRODUCTOR CON BLINDAJE */
-        .embed-responsive { 
-            position: relative; width: 100%; padding-top: 56.25%; 
-            border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
+            max-width: 1000px; /* Ancho máximo para que no se vea estirado */
+            max-height: 70vh; /* Máximo 70% del alto de la pantalla */
+            position: relative; 
+            aspect-ratio: 16 / 9; 
             background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
-        .embed-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* CAPA DE CLIC (GUARD) */
+        iframe { width: 100%; height: 100%; border: none; }
+
         #maik-guard {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 10; cursor: pointer; background: rgba(0,0,0,0.5);
             display: flex; align-items: center; justify-content: center;
         }
-        #maik-guard i { font-size: 45px; color: white; background: #3b82f6; padding: 18px; border-radius: 50%; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        #maik-guard i { font-size: 40px; color: white; background: #3b82f6; padding: 15px; border-radius: 50%; }
 
-        /* BOTONES DE ACCION COMPACTOS */
-        .action-btns { margin-top: 15px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-        
+        .action-btns { margin-top: 15px; display: flex; gap: 10px; flex-shrink: 0; }
         .btn-pro { 
             padding: 10px 20px; border: none; border-radius: 8px; 
             background: linear-gradient(90deg, #3b82f6, #1e40af); 
             color: #ffffff; cursor: pointer; font-size: 14px; font-weight: 600;
-            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+            display: flex; align-items: center; gap: 8px;
         }
-        .btn-pro:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); }
-        .btn-full { background: linear-gradient(90deg, #10b981, #059669); }
 
-        /* AJUSTES PARA MÓVILES */
         @media (max-width: 768px) {
-            body { overflow-y: auto; } /* Permite scroll en móvil si es necesario */
-            .main-view { padding: 10px; }
-            .content-container { max-width: 100%; }
-            .embed-responsive { border-radius: 8px; }
-            .header-title h1 { font-size: 18px; }
+            .video-box { border-radius: 0; max-height: none; }
+            .main-container { padding: 0; }
         }
     </style>
 </head>
@@ -109,72 +82,44 @@
 
     <header>
         <div class="header-content">
-            <div class="header-title" style="display: flex; align-items: center; gap: 10px;">
-                <span class="soccer-ball">⚽</span>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 25px;">⚽</span>
                 <h1>MAIK SPORT</h1>
             </div>
             <a href="../agenda.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
         </div>
     </header>
 
-    <div class="main-view">
-        <div class="content-container">
-            <div class="live-text">
-                <div class="dot"></div> EN VIVO
-            </div>
+    <div class="main-container">
+        <div style="background: #ef4444; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 10px;">
+            EN VIVO
+        </div>
 
-            <div class="embed-responsive">
-                <div id="maik-guard"><i class="fas fa-play"></i></div>
-                <iframe id="videoFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen></iframe>
-            </div>
+        <div class="video-box">
+            <div id="maik-guard"><i class="fas fa-play"></i></div>
+            <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen></iframe>
+        </div>
 
-            <div class="action-btns">
-                <button class="btn-pro" onclick="location.reload()">
-                    <i class="fas fa-redo"></i> Recargar
-                </button>
-                <button class="btn-pro btn-full" onclick="toggleFS()">
-                    <i class="fas fa-expand"></i> Pantalla Completa
-                </button>
-            </div>
+        <div class="action-btns">
+            <button class="btn-pro" onclick="location.reload()"><i class="fas fa-redo"></i> Recargar</button>
+            <button class="btn-pro" onclick="toggleFS()"><i class="fas fa-expand"></i> Pantalla Completa</button>
         </div>
     </div>
 
     <script>
-        // ESCUDO CONTRA ANUNCIOS
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('../sw.js');
-        }
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
+        const r = new URLSearchParams(window.location.search).get("r");
+        if (r) document.getElementById("vFrame").src = atob(r);
 
-        const iframe = document.getElementById("videoFrame");
-        const guard = document.getElementById("maik-guard");
-        const params = new URLSearchParams(window.location.search);
-        const encodedUrl = params.get("r");
-
-        if (encodedUrl) {
-            try {
-                iframe.src = atob(encodedUrl);
-            } catch (e) {
-                console.error("Error decodificando URL");
-            }
-        }
-
-        guard.addEventListener('click', function() {
-            this.style.display = 'none';
-            // Bloqueo de popups adicionales al primer clic
-            window.open = function() { return null; };
+        document.getElementById('maik-guard').addEventListener('click', function() {
+            this.remove();
+            window.open = () => null;
         });
 
         function toggleFS() {
-            const el = document.querySelector('.embed-responsive');
-            if (!document.fullscreenElement) {
-                if (el.requestFullscreen) {
-                    el.requestFullscreen();
-                } else if (iframe.requestFullscreen) {
-                    iframe.requestFullscreen();
-                }
-            } else {
-                document.exitFullscreen();
-            }
+            const el = document.querySelector('.video-box');
+            if (!document.fullscreenElement) el.requestFullscreen();
+            else document.exitFullscreen();
         }
     </script>
 </body>
