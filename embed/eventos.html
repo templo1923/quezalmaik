@@ -3,36 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Live</title>
+    <title>MAIK SPORT - Live Streaming</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        /* RESET Y FUENTES */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         
-        /* Ocupamos el 100% de la pantalla sin scroll */
+        /* FONDO PREMIUM */
         body, html { 
             height: 100%; 
-            background: #0d1b2a; 
-            color: #e0e0e0; 
+            background: radial-gradient(circle, #1e293b 0%, #080c14 100%); 
+            color: #f1f5f9; 
             display: flex; 
             flex-direction: column; 
             overflow: hidden; 
         }
 
+        /* HEADER DISEÑO ELITE */
         header { 
-            background: linear-gradient(90deg, #1e3a8a, #60a5fa); 
-            padding: 10px 20px; 
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); 
-            flex-shrink: 0; /* Que el header no se encoja */
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 20px; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+            z-index: 100;
         }
-        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .header-title h1 { color: #ffffff; font-size: 22px; font-weight: 900; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .header-title { display: flex; align-items: center; gap: 12px; }
+        .header-title i { color: #60a5fa; font-size: 24px; filter: drop-shadow(0 0 5px #60a5fa); }
+        .header-title h1 { color: #ffffff; font-size: 22px; font-weight: 900; letter-spacing: 1px; }
         
         .back-button { 
-            background: rgba(255,255,255,0.1); border-radius: 50%; width: 35px; height: 35px; 
+            background: rgba(255,255,255,0.05); border-radius: 50%; width: 38px; height: 38px; 
             color: #ffffff; display: flex; align-items: center; justify-content: center; text-decoration: none; 
+            transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        .back-button:hover { background: #ef4444; border-color: #ef4444; transform: scale(1.1); }
 
-        /* EL TRUCO: El contenedor ocupa el resto de la pantalla */
+        /* CONTENEDOR (MISMA LÓGICA QUE LE FUNCIONÓ) */
         .main-container {
             flex: 1;
             display: flex;
@@ -42,39 +52,82 @@
             padding: 10px;
         }
 
-        /* El video no puede ser más alto que el 70% de la pantalla */
+        /* BADGE EN VIVO PRO */
+        .live-badge { 
+            background: linear-gradient(90deg, #ef4444, #b91c1c); 
+            padding: 4px 14px; 
+            border-radius: 20px; 
+            font-size: 10px; 
+            font-weight: 800; 
+            margin-bottom: 12px; 
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+            display: flex; align-items: center; gap: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .live-dot { width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+        /* VIDEO BOX (SUS MEDIDAS DE ORO) */
         .video-box { 
             width: 100%;
-            max-width: 1000px; /* Ancho máximo para que no se vea estirado */
-            max-height: 70vh; /* Máximo 70% del alto de la pantalla */
+            max-width: 1000px; 
+            max-height: 70vh; 
             position: relative; 
             aspect-ratio: 16 / 9; 
             background: #000;
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 15px rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         iframe { width: 100%; height: 100%; border: none; }
 
+        /* GUARD DISEÑO NETFLIX */
         #maik-guard {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; cursor: pointer; background: rgba(0,0,0,0.5);
+            z-index: 10; cursor: pointer; 
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
             display: flex; align-items: center; justify-content: center;
+            transition: 0.5s;
         }
-        #maik-guard i { font-size: 40px; color: white; background: #3b82f6; padding: 15px; border-radius: 50%; }
+        #maik-guard i { 
+            font-size: 50px; color: white; 
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8); 
+            width: 85px; height: 85px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 50%; border: 3px solid #93c5fd;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+        }
+        #maik-guard:hover i { transform: scale(1.1); box-shadow: 0 0 40px rgba(59, 130, 246, 0.8); }
 
-        .action-btns { margin-top: 15px; display: flex; gap: 10px; flex-shrink: 0; }
+        /* BOTONES ELITE */
+        .action-btns { margin-top: 18px; display: flex; gap: 12px; flex-shrink: 0; }
         .btn-pro { 
-            padding: 10px 20px; border: none; border-radius: 8px; 
-            background: linear-gradient(90deg, #3b82f6, #1e40af); 
-            color: #ffffff; cursor: pointer; font-size: 14px; font-weight: 600;
-            display: flex; align-items: center; gap: 8px;
+            padding: 11px 22px; border: none; border-radius: 12px; 
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff; cursor: pointer; font-size: 13px; font-weight: 700;
+            display: flex; align-items: center; gap: 10px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        .btn-pro:hover { 
+            background: #3b82f6; 
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+            border-color: #93c5fd;
+        }
+        .btn-pro i { color: #60a5fa; font-size: 15px; }
+        .btn-pro:hover i { color: white; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
         @media (max-width: 768px) {
             .video-box { border-radius: 0; max-height: none; }
             .main-container { padding: 0; }
+            .header-title h1 { font-size: 18px; }
         }
     </style>
 </head>
@@ -82,37 +135,43 @@
 
     <header>
         <div class="header-content">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 25px;">⚽</span>
-                <h1>MAIK SPORT</h1>
+            <div class="header-title">
+                <i class="fas fa-broadcast-tower"></i>
+                <h1>MAIK SPORT <span style="font-weight: 300; color: #60a5fa;">LIVE</span></h1>
             </div>
-            <a href="../agenda.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+            <a href="../agenda.html" class="back-button" title="Volver"><i class="fas fa-arrow-left"></i></a>
         </div>
     </header>
 
     <div class="main-container">
-        <div style="background: #ef4444; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 10px;">
-            EN VIVO
+        <div class="live-badge">
+            <div class="live-dot"></div> EN VIVO
         </div>
 
         <div class="video-box">
             <div id="maik-guard"><i class="fas fa-play"></i></div>
-            <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen></iframe>
+            <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
         </div>
 
         <div class="action-btns">
-            <button class="btn-pro" onclick="location.reload()"><i class="fas fa-redo"></i> Recargar</button>
-            <button class="btn-pro" onclick="toggleFS()"><i class="fas fa-expand"></i> Pantalla Completa</button>
+            <button class="btn-pro" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Recargar
+            </button>
+            <button class="btn-pro" onclick="toggleFS()">
+                <i class="fas fa-expand-arrows-alt"></i> Pantalla Completa
+            </button>
         </div>
     </div>
 
     <script>
+        // EL MISMO SW QUE SÍ FUNCIONA (Blindaje Maikol)
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
         const r = new URLSearchParams(window.location.search).get("r");
         if (r) document.getElementById("vFrame").src = atob(r);
 
         document.getElementById('maik-guard').addEventListener('click', function() {
-            this.remove();
+            this.style.opacity = '0';
+            setTimeout(() => this.remove(), 500);
             window.open = () => null;
         });
 
