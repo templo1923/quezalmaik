@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    // Proxy AllOrigins para leer el HTML de la agenda robusta
     const PROXY_URL = "https://api.allorigins.win/get?url=";
     const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     const AGENDA_URL = PROXY_URL + TARGET_URL;
@@ -29,31 +30,25 @@ $(document).ready(function() {
                 subitems.forEach(canal => {
                     const nombreCanal = canal.textContent.trim();
                     const hrefOriginal = canal.href;
+                    
+                    // --- LÓGICA DE SALTO DE CAPO ---
                     let streamID = "";
+                    let urlFinal = "";
 
-                    // 1. LÓGICA MEJORADA: Buscamos el ID del canal en cualquier parte del link
-                    if (hrefOriginal.includes('capoplay.net/')) {
-                        streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
-                    } else if (hrefOriginal.includes('live=')) {
-                        const urlParams = new URLSearchParams(hrefOriginal.split('?')[1]);
-                        streamID = urlParams.get('live');
-                    } else if (hrefOriginal.includes('?r=')) {
-                        try {
-                            const r = new URLSearchParams(hrefOriginal.split('?')[1]).get("r");
-                            const decoded = atob(r);
-                            if (decoded.includes('live=')) {
-                                streamID = new URLSearchParams(decoded.split('?')[1]).get("live");
-                            }
-                        } catch(e) {}
+                    // Detectamos si el link es de la red Capo/Rojadirecta/Elitegol
+                    // Buscamos patrones como 'canal-X.php' o 'winsports.php'
+                    if (hrefOriginal.includes('.php')) {
+                        const partes = hrefOriginal.split('/');
+                        const archivoPhp = partes[partes.length - 1]; // ej: canal-20.php
+                        streamID = archivoPhp.replace('.php', '').replace('canal-', 'canal');
                     }
 
-                    let urlFinal;
                     if (streamID && streamID !== "") {
-                        // 2. CONSTRUCCIÓN DIRECTA: Forzamos la señal de Capo2 (la limpia)
+                        // Construimos el link DIRECTO a Capo7 (El reproductor real)
                         const urlCapoDirecto = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
                         urlFinal = `embed/eventos.html?r=${btoa(urlCapoDirecto)}`;
                     } else {
-                        // Respaldo si no encontramos ID: mandamos el link original codificado
+                        // Respaldo por si no se detecta el patrón
                         urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
                     }
 
@@ -75,11 +70,11 @@ $(document).ready(function() {
                 agendaLista.append(eventoHtml);
             });
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Error cargando agenda robusta:", error);
         }
     }
 
-    // INTERCEPTOR: Forzamos apertura en nueva pestaña para eventos de la agenda
+    // Interceptor para abrir en nueva pestaña/modal de reproducción
     agendaLista.on('click', '.canal-link', function(e) {
         e.preventDefault();
         const urlDestino = $(this).attr('href');
