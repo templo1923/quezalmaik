@@ -7,7 +7,10 @@ const BLACKLIST = [
     'doubleclick.net',
     'adnxs.com',
     'mads.com',
-    'proads.cc'
+    'proads.cc',
+    'agacelele.com', // Nuevo: Muy común en Win Sports
+    'safelinks.top', // Nuevo: Acortadores basura
+    'clismedia.com'  // Nuevo: Publicidad invisible
 ];
 
 self.addEventListener('fetch', (event) => {
