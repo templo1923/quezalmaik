@@ -6,44 +6,61 @@
     <title>MAIK SPORT - Señal en Vivo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        /* FUSIONANDO DISEÑO QUETZALITO + LÓGICA MAIK */
+        /* RESET Y FUENTES */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
         
-        body { background: #0d1b2a; color: #e0e0e0; overflow-x: hidden; }
+        /* EL TRUCO: min-height y display flex para centrar todo verticalmente */
+        body { 
+            background: #0d1b2a; 
+            color: #e0e0e0; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; /* Evita el scroll innecesario en PC */
+        }
 
-        /* HEADER DISEÑO ORIGINAL */
+        /* HEADER DISEÑO ORIGINAL (Ajustado a 10% de altura aprox) */
         header { 
             background: linear-gradient(90deg, #1e3a8a, #60a5fa); 
-            padding: 15px 20px; 
-            position: sticky; top: 0; z-index: 1000; 
+            padding: 10px 20px; 
+            z-index: 1000; 
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); 
+            width: 100%;
         }
         .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .header-title h1 { color: #ffffff; font-size: 24px; font-weight: 900; }
-        .soccer-ball { font-size: 30px; color: #ffffff; animation: spin 3s linear infinite; display: inline-block; }
+        .header-title h1 { color: #ffffff; font-size: 22px; font-weight: 900; }
+        .soccer-ball { font-size: 28px; color: #ffffff; animation: spin 3s linear infinite; display: inline-block; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         .back-button { 
-            background: rgba(0,0,0,0.3); border-radius: 50%; width: 45px; height: 45px; 
-            color: #ffffff; font-size: 20px; cursor: pointer; 
+            background: rgba(0,0,0,0.3); border-radius: 50%; width: 40px; height: 40px; 
+            color: #ffffff; font-size: 18px; cursor: pointer; 
             display: flex; align-items: center; justify-content: center; text-decoration: none; 
             transition: 0.3s;
         }
         .back-button:hover { background: #ef4444; }
 
+        /* VISTA PRINCIPAL: ESTO centra el video en el espacio que sobra */
+        .main-view {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
         /* CONTENEDOR CENTRAL LOGICO */
         .content-container { 
-            max-width: 1100px; /* Tamaño equilibrado para PC */
-            margin: 20px auto; 
-            padding: 0 15px; 
+            width: 100%;
+            max-width: 1000px; /* Tamaño justo para PC */
             text-align: center; 
         }
 
         .live-text { 
-            font-size: 14px; font-weight: 700; color: #ffffff; 
-            margin-bottom: 15px; background: #ef4444; 
-            padding: 6px 15px; border-radius: 20px; 
-            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 12px; font-weight: 700; color: #ffffff; 
+            margin-bottom: 12px; background: #ef4444; 
+            padding: 5px 12px; border-radius: 20px; 
+            display: inline-flex; align-items: center; gap: 6px;
             box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
         }
         .dot { width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite; }
@@ -53,7 +70,7 @@
         .embed-responsive { 
             position: relative; width: 100%; padding-top: 56.25%; 
             border-radius: 12px; overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8); 
             background: #000;
         }
         .embed-responsive iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
@@ -64,27 +81,27 @@
             z-index: 10; cursor: pointer; background: rgba(0,0,0,0.5);
             display: flex; align-items: center; justify-content: center;
         }
-        #maik-guard i { font-size: 50px; color: white; background: #3b82f6; padding: 20px; border-radius: 50%; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        #maik-guard i { font-size: 45px; color: white; background: #3b82f6; padding: 18px; border-radius: 50%; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
 
-        /* BOTONES DE ACCION */
-        .action-btns { margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        /* BOTONES DE ACCION COMPACTOS */
+        .action-btns { margin-top: 15px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
         
         .btn-pro { 
-            padding: 12px 25px; border: none; border-radius: 12px; 
+            padding: 10px 20px; border: none; border-radius: 8px; 
             background: linear-gradient(90deg, #3b82f6, #1e40af); 
-            color: #ffffff; cursor: pointer; font-size: 16px; font-weight: 600;
-            display: flex; align-items: center; gap: 10px; transition: 0.3s;
+            color: #ffffff; cursor: pointer; font-size: 14px; font-weight: 600;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
         }
-        .btn-pro:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); }
+        .btn-pro:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4); }
         .btn-full { background: linear-gradient(90deg, #10b981, #059669); }
 
-        /* PUBLICIDAD EXTERNA */
-        .ads-box { margin-top: 30px; padding: 20px; border: 2px dashed rgba(255,255,255,0.1); border-radius: 12px; color: #4b5563; }
-
+        /* AJUSTES PARA MÓVILES */
         @media (max-width: 768px) {
-            .content-container { padding: 0; margin-top: 0; }
-            .embed-responsive { border-radius: 0; }
-            header { padding: 10px 15px; }
+            body { overflow-y: auto; } /* Permite scroll en móvil si es necesario */
+            .main-view { padding: 10px; }
+            .content-container { max-width: 100%; }
+            .embed-responsive { border-radius: 8px; }
+            .header-title h1 { font-size: 18px; }
         }
     </style>
 </head>
@@ -92,7 +109,7 @@
 
     <header>
         <div class="header-content">
-            <div class="header-title" style="display: flex; align-items: center; gap: 12px;">
+            <div class="header-title" style="display: flex; align-items: center; gap: 10px;">
                 <span class="soccer-ball">⚽</span>
                 <h1>MAIK SPORT</h1>
             </div>
@@ -100,27 +117,25 @@
         </div>
     </header>
 
-    <div class="content-container">
-        <div class="live-text">
-            <div class="dot"></div> EN VIVO
-        </div>
+    <div class="main-view">
+        <div class="content-container">
+            <div class="live-text">
+                <div class="dot"></div> EN VIVO
+            </div>
 
-        <div class="embed-responsive">
-            <div id="maik-guard"><i class="fas fa-play"></i></div>
-            <iframe id="videoFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen></iframe>
-        </div>
+            <div class="embed-responsive">
+                <div id="maik-guard"><i class="fas fa-play"></i></div>
+                <iframe id="videoFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen></iframe>
+            </div>
 
-        <div class="action-btns">
-            <button class="btn-pro" onclick="location.reload()">
-                <i class="fas fa-redo"></i> Recargar Señal
-            </button>
-            <button class="btn-pro btn-full" onclick="toggleFS()">
-                <i class="fas fa-expand"></i> Pantalla Completa
-            </button>
-        </div>
-
-        <div class="ads-box">
-            <i class="fas fa-dollar-sign"></i> Publicidad Maik Sport (Banner aquí)
+            <div class="action-btns">
+                <button class="btn-pro" onclick="location.reload()">
+                    <i class="fas fa-redo"></i> Recargar
+                </button>
+                <button class="btn-pro btn-full" onclick="toggleFS()">
+                    <i class="fas fa-expand"></i> Pantalla Completa
+                </button>
+            </div>
         </div>
     </div>
 
@@ -136,18 +151,27 @@
         const encodedUrl = params.get("r");
 
         if (encodedUrl) {
-            iframe.src = atob(encodedUrl);
+            try {
+                iframe.src = atob(encodedUrl);
+            } catch (e) {
+                console.error("Error decodificando URL");
+            }
         }
 
         guard.addEventListener('click', function() {
             this.style.display = 'none';
+            // Bloqueo de popups adicionales al primer clic
             window.open = function() { return null; };
         });
 
         function toggleFS() {
             const el = document.querySelector('.embed-responsive');
             if (!document.fullscreenElement) {
-                el.requestFullscreen().catch(e => iframe.requestFullscreen());
+                if (el.requestFullscreen) {
+                    el.requestFullscreen();
+                } else if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                }
             } else {
                 document.exitFullscreen();
             }
