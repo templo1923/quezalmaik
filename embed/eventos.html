@@ -1,114 +1,302 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="referrer" content="no-referrer">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MAIK SPORT - Player Pro</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAIK SPORT - Player Pro</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 <style>
-    :root {
-        --bg-page: #0a0a0c;
-        --accent: #22c55e;
-        --maik-blue: #1e40af;
+:root {
+    --bg-page: #0a0a0c;
+    --bg-player: #000;
+    --accent: #22c55e;
+    --maik-blue: #1e40af;
+    --text: #fff;
+}
+
+/* BASE */
+body {
+    margin:0;
+    background: var(--bg-page);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* LAYOUT */
+.layout {
+    display: grid;
+    grid-template-columns: 160px 1fr 160px;
+    max-width: 1800px;
+    margin: auto;
+}
+
+/* ADS LATERALES */
+.ad-side {
+    display:flex;
+    justify-content:center;
+    padding-top:40px;
+}
+
+.ad-box {
+    width:120px;
+    height:600px;
+    border-radius:10px;
+    border:1px dashed #333;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#555;
+}
+
+/* CENTRO */
+.main-content {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* CONTENEDOR PLAYER */
+.cinema-container {
+    width:95%;
+    max-width:1400px;
+    margin-top:20px;
+}
+
+/* VIDEO */
+.player-wrapper {
+    position:relative;
+    width:100%;
+    padding-bottom:56.25%;
+    background:black;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(30,64,175,0.3);
+}
+
+iframe {
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    border:none;
+}
+
+/* GUARD */
+#maik-guard {
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:50;
+}
+
+#maik-guard i {
+    font-size:50px;
+    background:rgba(30,64,175,0.9);
+    width:80px;
+    height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    transition:0.3s;
+}
+
+#maik-guard:hover i {
+    transform:scale(1.2);
+}
+
+/* CONTROLES */
+.maik-controls {
+    background:rgba(20,20,23,0.8);
+    backdrop-filter:blur(10px);
+    padding:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-radius:0 0 12px 12px;
+}
+
+/* LIVE */
+.live-indicator {
+    display:flex;
+    gap:8px;
+    font-size:13px;
+}
+
+.live-dot {
+    width:10px;
+    height:10px;
+    background:var(--accent);
+    border-radius:50%;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%{opacity:1}
+    50%{opacity:0.3}
+    100%{opacity:1}
+}
+
+/* BOTONES */
+.ctrl-right {
+    display:flex;
+    gap:10px;
+}
+
+.ctrl-btn {
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:6px;
+    background:#27272a;
+    color:white;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.ctrl-btn:hover {
+    background:var(--maik-blue);
+    transform:scale(1.1);
+}
+
+.ctrl-btn.close {
+    background:#7f1d1d;
+}
+
+/* BANNER ABAJO */
+.ads-bottom {
+    width:100%;
+    max-width:900px;
+    margin:20px;
+    padding:15px;
+    text-align:center;
+    border:1px dashed #333;
+    border-radius:10px;
+    color:#555;
+}
+
+/* RESPONSIVE */
+@media(max-width:1200px){
+    .layout {
+        grid-template-columns:1fr;
     }
 
-    body, html { 
-        margin: 0; padding: 0; min-height: 100%; 
-        background-color: var(--bg-page); 
-        font-family: sans-serif; 
-        display: flex; flex-direction: column; align-items: center;
+    .ad-side {
+        display:none;
     }
 
-    /* LA MAGIA: 1200px en PC, 100% en Celular */
     .cinema-container {
-        width: 100%;
-        max-width: 1200px; /* Tamaño estándar de video en web */
-        margin: 0 auto;
-        padding: 10px;
-        box-sizing: border-box;
+        width:100%;
+        margin-top:0;
     }
 
     .player-wrapper {
-        position: relative;
-        width: 100%;
-        padding-bottom: 56.25%; /* Relación 16:9 perfecta */
-        background: #000;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        border-radius:0;
     }
-
-    iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
     .maik-controls {
-        width: 100%;
-        background: #141417;
-        margin-top: 10px;
-        padding: 12px;
-        border-radius: 8px;
-        display: flex; justify-content: space-between; align-items: center;
-        box-sizing: border-box;
+        border-radius:0;
     }
-
-    /* SI ES CELULAR: Se pega a los bordes para no desperdiciar espacio */
-    @media (max-width: 768px) {
-        .cinema-container { padding: 0; }
-        .player-wrapper, .maik-controls { border-radius: 0; }
-    }
+}
 </style>
-
-
 </head>
+
 <body>
 
-    <div class="cinema-container">
-        <div class="player-wrapper">
-            <div id="maik-guard"><i class="fas fa-play"></i></div>
-            <iframe id="video-frame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+<div class="layout">
+
+    <!-- IZQUIERDA -->
+    <aside class="ad-side">
+        <div class="ad-box">Publicidad</div>
+    </aside>
+
+    <!-- CENTRO -->
+    <main class="main-content">
+
+        <div class="cinema-container">
+
+            <div class="player-wrapper">
+                <div id="maik-guard">
+                    <i class="fas fa-play"></i>
+                </div>
+
+                <iframe id="video-frame"
+                sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts"
+                allowfullscreen
+                allow="autoplay; encrypted-media">
+                </iframe>
+            </div>
+
+            <div class="maik-controls">
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>EN VIVO MAIK SPORT</span>
+                </div>
+
+                <div class="ctrl-right">
+                    <button class="ctrl-btn" onclick="location.reload();">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+
+                    <button class="ctrl-btn" onclick="toggleFS();">
+                        <i class="fas fa-expand"></i>
+                    </button>
+
+                    <button class="ctrl-btn close" onclick="location.href='../agenda.html';">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
         </div>
 
-        <div class="maik-controls">
-            <div class="live-indicator">
-                <div class="live-dot"></div>
-                <span>EN VIVO MAIK SPORT</span>
-            </div>
-            <div class="ctrl-right">
-                <button class="ctrl-btn" onclick="location.reload();"><i class="fas fa-sync-alt"></i></button>
-                <button class="ctrl-btn" onclick="toggleFS();"><i class="fas fa-expand"></i></button>
-                <button class="ctrl-btn" onclick="location.href='../agenda.html';" style="background:#450a0a;"><i class="fas fa-times"></i></button>
-            </div>
+        <div class="ads-bottom">
+            Banner 728x90
         </div>
-    </div>
 
-    <div class="ads-placeholder">
-        <i class="fas fa-dollar-sign"></i> Zona de Publicidad (Banner 728x90 aquí)
-    </div>
+    </main>
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('../sw.js');
-        }
+    <!-- DERECHA -->
+    <aside class="ad-side">
+        <div class="ad-box">Publicidad</div>
+    </aside>
 
-        const params = new URLSearchParams(window.location.search);
-        const r = params.get("r");
-        const iframe = document.getElementById('video-frame');
-        const guard = document.getElementById('maik-guard');
+</div>
 
-        if (r) { iframe.src = atob(r); }
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('../sw.js');
+}
 
-        guard.addEventListener('click', function() {
-            this.style.display = 'none';
-            window.open = function() { return null; };
-        });
+const params = new URLSearchParams(window.location.search);
+const r = params.get("r");
+const iframe = document.getElementById('video-frame');
+const guard = document.getElementById('maik-guard');
 
-        function toggleFS() {
-            if (!document.fullscreenElement) {
-                document.querySelector('.cinema-container').requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        }
-    </script>
+if (r) { iframe.src = atob(r); }
+
+guard.addEventListener('click', function() {
+    this.style.display = 'none';
+    window.open = function() { return null; };
+});
+
+function toggleFS() {
+    if (!document.fullscreenElement) {
+        document.querySelector('.cinema-container').requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
+</script>
+
 </body>
 </html>
