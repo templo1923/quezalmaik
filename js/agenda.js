@@ -1,6 +1,5 @@
 $(document).ready(function() {
-
-    // Cambiamos la fuente a Rojadirecta usando un Proxy para Vercel
+    // Usamos AllOrigins para saltar el bloqueo de CORS en Vercel
     const PROXY_URL = "https://api.allorigins.win/get?url=";
     const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     const AGENDA_URL = PROXY_URL + TARGET_URL;
@@ -17,13 +16,13 @@ $(document).ready(function() {
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlContent, 'text/html');
             
-            // Estructura de la web robusta: los partidos están en .menu > li
+            // Los partidos en la fuente robusta están en la clase .menu > li
             const partidosRaw = doc.querySelectorAll('.menu > li');
 
             agendaLista.empty();
 
             const hoy = new Date();
-            tituloAgenda.text('AGENDA - ' + hoy.getDate() + ' DE ' + hoy.toLocaleString('es-ES', { month: 'long' }).toUpperCase() + ' DE ' + hoy.getFullYear());
+            tituloAgenda.text('AGENDA - ' + hoy.getDate() + ' DE ' + hoy.toLocaleString('es-ES', { month: 'long' }).toUpperCase());
 
             partidosRaw.forEach(partido => {
                 const linkPrincipal = partido.querySelector('a');
@@ -43,12 +42,14 @@ $(document).ready(function() {
                         const hrefOriginal = canal.href;
 
                         let urlFinal = hrefOriginal;
-                        // Extraemos el parámetro 'r' que contiene el stream real
+                        
+                        // Extraemos el parámetro 'r' que contiene la URL real del stream
                         if (hrefOriginal.includes('?r=')) {
                             const params = new URLSearchParams(hrefOriginal.split('?')[1]);
                             const r = params.get("r");
                             
-                            // IMPORTANTE: Redirigimos a TU archivo vivo.html para limpiar anuncios
+                            // IMPORTANTE: Redirigimos a TU archivo vivo.html
+                            // Esto evita que se abra la web de ellos con anuncios
                             urlFinal = `vivo.html?stream=${r}`;
                         }
 
@@ -75,11 +76,11 @@ $(document).ready(function() {
 
         } catch (error) {
             console.error("Error al sincronizar agenda:", error);
-            agendaLista.html('<p class="error">No se pudo cargar la agenda robusta.</p>');
+            agendaLista.html('<p class="error">No se pudo cargar la agenda.</p>');
         }
     }
 
-    // Tu lógica de acordeón original
+    // Tu lógica de acordeón para mostrar los canales al hacer clic
     agendaLista.on('click', '.evento', function() {
         const subMenu = $(this).siblings('.canales');
         $('.canales').not(subMenu).slideUp('fast');
@@ -87,5 +88,5 @@ $(document).ready(function() {
     });
 
     cargarAgenda();
-    setInterval(cargarAgenda, 60000);
+    setInterval(cargarAgenda, 60000); // Actualiza cada minuto
 });
