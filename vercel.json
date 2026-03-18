@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/agenda",
+      "destination": "https://pltvhd.com/diaries.json"
+    },
+    {
       "source": "/api/get-source",
       "destination": "https://tvtvhd.com/canales.php"
     },
