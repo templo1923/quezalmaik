@@ -8,23 +8,28 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
-/* FONDO SIN SCROLL EN PC */
+/* FONDO MEJORADO */
 body, html { 
     height: 100%; 
     background: radial-gradient(circle, #1e293b 0%, #080c14 100%); 
     color: #f1f5f9; 
     display: flex; 
     flex-direction: column; 
-    overflow: hidden; /* Evita que la pantalla se mueva en PC */
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
-/* HEADER FIJO */
+/* HEADER */
 header { 
     background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(12px);
-    padding: 10px 20px; 
+    padding: 12px 20px; 
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 .header-content { 
     max-width: 1400px; 
@@ -33,97 +38,144 @@ header {
     align-items: center; 
     justify-content: space-between; 
 }
-.header-title h1 { color: #ffffff; font-size: 20px; font-weight: 900; }
+.header-title { display: flex; align-items: center; gap: 12px; }
+.header-title i { color: #60a5fa; font-size: 24px; }
+.header-title h1 { color: #ffffff; font-size: 22px; font-weight: 900; }
 
-/* CONTENEDOR QUE AJUSTA TODO AL ALTO */
+.back-button { 
+    background: rgba(255,255,255,0.05); 
+    border-radius: 50%; 
+    width: 38px; height: 38px; 
+    display: flex; align-items: center; justify-content: center; 
+    color: white; text-decoration: none;
+    transition: 0.3s;
+}
+.back-button:hover { background: #ef4444; }
+
+/* CONTENEDOR PRINCIPAL */
 .main-container {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centra todo verticalmente */
-    padding: 10px;
+    justify-content: flex-start; 
+    padding: 20px 10px;
     width: 100%;
 }
 
+/* LIVE BADGE */
 .live-badge { 
-    background: #ef4444; 
-    padding: 4px 12px; 
+    background: linear-gradient(90deg, #ef4444, #b91c1c); 
+    padding: 4px 14px; 
     border-radius: 20px; 
     font-size: 10px; 
     font-weight: 800; 
-    margin-bottom: 8px;
-    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 15px;
+    display: flex; 
+    align-items: center; 
+    gap: 6px;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 }
 
-/* VIDEO BOX: El truco para que quepa todo */
+/* VIDEO BOX */
 .video-box { 
     width: 100%;
-    max-width: 950px; 
-    max-height: 65vh; /* Limita el alto al 65% de la pantalla */
+    max-width: 1000px; 
+    position: relative; 
     aspect-ratio: 16 / 9; 
     background: #000;
-    border-radius: 12px;
+    border-radius: 15px;
     overflow: hidden;
-    position: relative;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
 }
 
-/* RECORTE LATERAL PARA QUITAR LO NEGRO */
+/* 🔥 RECORTE LATERAL CORREGIDO */
+/* Bajamos un poco el height para que los controles no se mochen */
 .video-box iframe {
     position: absolute;
     width: 124%;
-    height: 100%;
+    height: 94%; /* Ajustado para que la barra de controles se vea */
     left: -12%;
     top: 0;
     border: none;
 }
 
-#maik-guard { position: absolute; width: 100%; height: 100%; z-index: 10; cursor: pointer; }
-
-/* BOTONES SUBIDOS */
-.action-btns { 
-    margin-top: 10px; 
+/* GUARD INVISIBLE */
+#maik-guard {
+    position: absolute; 
+    width: 100%; 
+    height: 100%;
     display: flex; 
-    gap: 10px;
+    align-items: center; 
+    justify-content: center;
+    background: rgba(0,0,0,0.1); 
+    cursor: pointer;
+    z-index: 10;
 }
+
+/* BOTONES */
+.action-btns { 
+    margin: 20px 0;
+    display: flex; 
+    gap: 12px;
+}
+
 .btn-pro { 
-    padding: 8px 18px; 
-    border-radius: 8px; 
+    padding: 10px 20px; 
+    border-radius: 10px; 
     background: #1e40af;
-    border: none; 
+    border: 1px solid rgba(255,255,255,0.1); 
     color: white; 
     cursor: pointer;
-    font-size: 13px;
     font-weight: 600;
+    transition: 0.3s;
 }
+.btn-pro:hover { background: #2563eb; transform: translateY(-2px); }
 
-/* ADS ROW: Ahora sí se verán */
+/* ADS CENTRADOS */
 .ads-row {
     width: 100%;
-    max-width: 950px;
+    max-width: 1000px;
     display: flex;
-    gap: 10px;
+    gap: 15px;
     margin-top: 10px;
 }
+
 .ad-box {
     flex: 1;
-    height: 70px; /* Bajamos un poco el alto para que quepa */
-    border: 1px dashed rgba(255,255,255,0.2);
+    height: 90px;
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.1);
     border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    color: #555; font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    font-size: 12px;
 }
 
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+@keyframes pulse { 
+    0% { opacity: 1; } 
+    50% { opacity: 0.4; } 
+    100% { opacity: 1; } 
+}
 
-/* MÓVIL: Aquí sí permitimos scroll si es necesario */
+/* 📱 MÓVIL AJUSTADO */
 @media (max-width: 768px) {
-    body, html { overflow-y: auto; }
-    .main-container { padding: 0; justify-content: flex-start; }
-    .video-box { border-radius: 0; max-height: none; }
-    .video-box iframe { width: 140%; left: -20%; }
-    .ads-row { flex-direction: column; padding: 10px; }
+    .video-box { 
+        border-radius: 0; 
+    }
+    .video-box iframe {
+        width: 140%;
+        height: 92%; /* Más margen en móvil para los controles */
+        left: -20%;
+    }
+    .main-container { padding: 0; }
+    .ads-row {
+        flex-direction: column;
+        padding: 10px;
+    }
+    .ad-box { height: 70px; }
 }
 </style>
 </head>
@@ -135,7 +187,7 @@ header {
                 <i class="fas fa-broadcast-tower"></i>
                 <h1>MAIK SPORT <span style="font-weight: 300; color: #60a5fa;">LIVE</span></h1>
             </div>
-            <a href="../agenda.html" style="color:white; text-decoration:none;"><i class="fas fa-arrow-left"></i> Volver</a>
+            <a href="../agenda.html" class="back-button" title="Volver"><i class="fas fa-arrow-left"></i></a>
         </div>
     </header>
 
@@ -151,13 +203,17 @@ header {
         </div>
 
         <div class="action-btns">
-            <button class="btn-pro" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Recargar</button>
-            <button class="btn-pro" onclick="toggleFS()"><i class="fas fa-expand-arrows-alt"></i> Pantalla Completa</button>
+            <button class="btn-pro" onclick="location.reload()">
+                <i class="fas fa-sync-alt"></i> Recargar
+            </button>
+            <button class="btn-pro" onclick="toggleFS()">
+                <i class="fas fa-expand-arrows-alt"></i> Pantalla Completa
+            </button>
         </div>
 
         <div class="ads-row">
-            <div class="ad-box">Banner Ads 1</div>
-            <div class="ad-box">Banner Ads 2</div>
+            <div class="ad-box">Publicidad 1</div>
+            <div class="ad-box">Publicidad 2</div>
         </div>
     </div>
     
