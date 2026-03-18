@@ -5,18 +5,9 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; frame-src *; connect-src *;"
+          "value": "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.capoplay.net https://*.capoplayer.net https://cdnjs.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net; connect-src 'self' https://*.capoplay.net https://*.capoplayer.net; frame-src *; img-src *; style-src * 'unsafe-inline';"
         }
       ]
     }
-  ],
-  "rewrites": [
-    { "source": "/(.*)acscdn.com/(.*)", "destination": "/404" },
-    { "source": "/(.*)ads.tiogolhd.com/(.*)", "destination": "/404" },
-    { "source": "/(.*)bvtpk.com/(.*)", "destination": "/404" },
-    { "source": "/(.*)waust.at/(.*)", "destination": "/404" },
-    { "source": "/(.*)googletagmanager.com/(.*)", "destination": "/404" },
-    { "source": "/(.*)jnbhi.com/(.*)", "destination": "/404" },
-    { "source": "/(.*)deepz.cyou/(.*)", "destination": "/404" }
   ]
 }
