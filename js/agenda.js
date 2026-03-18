@@ -1,7 +1,14 @@
 $(document).ready(function() {
-    const PROXY = "https://api.allorigins.win/get?url=";
-    : "/api/proxy?url=";
+    // DETECTOR DE ENTORNO: Si es tu PC usa el público, si es Vercel usa EL TUYO (Más rápido)
+    const esLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+    
+    const PROXY = esLocal 
+        ? "https://api.allorigins.win/get?url=" 
+        : "/api/proxy?url=";
+
     const TARGET = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
+    const AGENDA_URL = PROXY + TARGET;
+    
     const agendaLista = $('#agenda-lista');
 
     // MOTOR 1: CARGAR LA AGENDA (Rápido y simple)
