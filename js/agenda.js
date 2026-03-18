@@ -1,20 +1,39 @@
 $(document).ready(function() {
-    const PROXY_URL = "https://api.allorigins.win/get?url=";
-    const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
-    const AGENDA_URL = PROXY_URL + TARGET_URL;
+    // Lista de proxies para evitar el error 500
+    const PROXIES = [
+        "https://api.allorigins.win/get?url=",
+        "https://api.codetabs.com/v1/proxy/?quest=",
+        "https://thingproxy.freeboard.io/fetch/"
+    ];
     
+    const TARGET_BASE = "https://www.rojadirectatv3.pl/agenda.php";
     const agendaLista = $('#agenda-lista');
 
-    async function cargarAgenda() {
+    async function cargarAgenda(proxyIndex = 0) {
+        if (proxyIndex >= PROXIES.length) {
+            agendaLista.html('<p style="text-align:center; color:white; padding:20px;">Error: Todos los servidores de carga están saturados. Intenta recargar en un momento.</p>');
+            return;
+        }
+
+        const currentProxy = PROXIES[proxyIndex];
+        const finalUrl = currentProxy + encodeURIComponent(TARGET_BASE);
+
         try {
-            const respuesta = await fetch(AGENDA_URL);
+            console.log("Intentando con proxy:", currentProxy);
+            const respuesta = await fetch(finalUrl);
+            
+            if (!respuesta.ok) throw new Error("Error en servidor");
+
             const data = await respuesta.json();
-            const doc = new DOMParser().parseFromString(data.contents, 'text/html');
+            // Algunos proxies devuelven el string directo, otros un objeto con .contents
+            const htmlRaw = data.contents || data; 
+            
+            const doc = new DOMParser().parseFromString(htmlRaw, 'text/html');
             const partidosRaw = doc.querySelectorAll('.menu > li');
 
             if (partidosRaw.length === 0) {
-                agendaLista.html('<p style="text-align:center; color:white; margin-top:20px;">No hay eventos disponibles.</p>');
-                return;
+                // Si no hay errores pero no hay partidos, probamos el siguiente proxy por si acaso
+                throw new Error("HTML vacío");
             }
 
             agendaLista.empty();
@@ -26,75 +45,71 @@ $(document).ready(function() {
                 const titulo = linkPrincipal.textContent.split('\n')[0].trim();
                 const horaLocal = linkPrincipal.querySelector('.t')?.textContent.trim() || "--:--";
 
-                let canalesHtml = '<div class="canales" style="display:none; background: rgba(0,0,0,0.3);">';
+                let canalesHtml = '<div class="canales" style="display:none; background: rgba(0,0,0,0.5);">';
                 const subitems = partido.querySelectorAll('ul li a');
                 
                 subitems.forEach(canal => {
                     const nombreCanal = canal.textContent.trim();
                     let hrefOriginal = canal.href;
 
-                    // Corrección de rutas relativas
+                    // Reparar links si vienen relativos
                     if (hrefOriginal.includes('applewebdata') || !hrefOriginal.startsWith('http')) {
                         const slug = hrefOriginal.split('/').pop();
                         hrefOriginal = `https://www.rojadirectatv3.pl/${slug}`;
                     }
 
-                    canalesHtml += `<a href="#" data-url="${hrefOriginal}" class="canal-link" style="display:block; padding:12px; color:#60a5fa; text-decoration:none; border-bottom:1px solid #222;">➤ ${nombreCanal}</a>`;
+                    canalesHtml += `<a href="#" data-url="${hrefOriginal}" class="canal-link" style="display:block; padding:12px; color:#60a5fa; text-decoration:none; border-bottom:1px solid #333;">➤ ${nombreCanal}</a>`;
                 });
                 
                 canalesHtml += '</div>';
                 
                 const eventoHtml = `
-                    <div class="evento-contenedor" style="margin-bottom:8px; border-radius:10px; overflow:hidden; border: 1px solid #333;">
+                    <div class="evento-contenedor" style="margin-bottom:10px; border-radius:10px; overflow:hidden; border: 1px solid #333;">
                         <div class="evento" style="padding:15px; background:#1b263b; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
-                            <span style="color:#f87171; font-weight:bold; font-size:14px;">${horaLocal}</span>
-                            <span style="color:white; flex:1; margin-left:15px; font-weight:500;">${titulo}</span>
-                            <i class="fas fa-chevron-down" style="color:#60a5fa; font-size:12px;"></i>
+                            <span style="color:#f87171; font-weight:bold;">${horaLocal}</span>
+                            <span style="color:white; flex:1; margin-left:15px;">${titulo}</span>
+                            <i class="fas fa-chevron-down" style="color:#60a5fa;"></i>
                         </div>
                         ${canalesHtml}
                     </div>`;
                 agendaLista.append(eventoHtml);
             });
-        } catch (error) { 
-            console.error("Error cargando agenda:", error);
-            agendaLista.html('<p style="text-align:center; color:white;">Error de conexión con la agenda.</p>');
+
+        } catch (error) {
+            console.warn(`Proxy ${proxyIndex} falló. Intentando con el siguiente...`);
+            cargarAgenda(proxyIndex + 1); // SALTO AUTOMÁTICO AL SIGUIENTE PROXY
         }
     }
 
-    // LÓGICA DEL DETECTIVE: Extrae el iframe real al hacer clic
+    // EL DETECTIVE (Lógica de extracción al hacer clic)
     agendaLista.on('click', '.canal-link', async function(e) {
         e.preventDefault();
         const btn = $(this);
         const urlCascara = btn.attr('data-url');
-        const textoOriginal = btn.text();
+        const originalText = btn.text();
         
         btn.html('<i class="fas fa-spinner fa-spin"></i> Buscando señal limpia...');
 
         try {
-            // Entramos a la página del canal (Pirlo, RojaDirecta, etc.)
-            const response = await fetch(PROXY_URL + encodeURIComponent(urlCascara));
+            // Aquí también usamos AllOrigins pero con un fallback si falla
+            const response = await fetch(PROXIES[0] + encodeURIComponent(urlCascara));
             const data = await response.json();
-            const pageDoc = new DOMParser().parseFromString(data.contents, 'text/html');
+            const pageDoc = new DOMParser().parseFromString(data.contents || data, 'text/html');
             
-            // Buscamos el iframe que apunta a capoplay o capoplayer
             const iframe = pageDoc.querySelector('iframe[src*="capoplay.net"], iframe[src*="capoplayer.net"]');
             
             if (iframe && iframe.src) {
-                // Abrimos tu reproductor con el link REAL del video
                 window.open(`embed/eventos.html?r=${btoa(iframe.src)}`, '_blank');
             } else {
-                // Si no encontramos el iframe, mandamos la original como respaldo
                 window.open(`embed/eventos.html?r=${btoa(urlCascara)}`, '_blank');
             }
         } catch (err) {
-            console.error("Error de extracción:", err);
             window.open(`embed/eventos.html?r=${btoa(urlCascara)}`, '_blank');
         } finally {
-            btn.text(textoOriginal);
+            btn.text(originalText);
         }
     });
 
-    // Abrir/Cerrar canales
     agendaLista.on('click', '.evento', function() {
         $(this).siblings('.canales').slideToggle('fast');
         $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
