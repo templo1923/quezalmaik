@@ -7,17 +7,19 @@
     <title>MAIK SPORT - Modo Cine Premium</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        :root {
+:root {
             --bg-page: #0a0a0c;
             --bg-player: #000000;
             --accent: #22c55e;
             --maik-blue: #1e40af;
             --text: #ffffff;
 
-            /* --- ESTA ES LA LÍNEA QUE TIENES QUE CAMBIAR --- */
-            /* Antes estaba en 1000px, ahora la subimos a 1250px para PC */
-            --player-max-width: 1250px; 
-            /* ----------------------------------------------- */
+            /* --- CAMBIO CRUCIAL PARA TAMAÑO YOUTUBE --- */
+            /* En PC, queremos que ocupe el 90% del ancho de la ventana (90vw) */
+            /* Pero le ponemos un tope máximo de 1600px para que no se deforme en pantallas gigantes */
+            --player-width-pc: 90vw; 
+            --player-max-width-pc: 1600px;
+            /* ------------------------------------------ */
         }
 
         body, html { 
@@ -28,19 +30,25 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* ... El resto del CSS sigue exactamente igual ... */
-
+        /* -----------------------------------------------------------
+           CONTENEDOR CINE ACTUALIZADO (Tamaño YouTube)
+        ----------------------------------------------------------- */
         .cinema-container {
-            width: 100%;
-            max-width: var(--player-max-width);
-            margin-top: 25px; /* Bajé un poquito el margen superior para que quepa mejor */
-            padding: 0 15px;
+            width: var(--player-width-pc); /* Ocupa el 90% del ancho */
+            max-width: var(--player-max-width-pc); /* Hasta un máximo de 1600px */
+            
+            /* Márgenes automáticos a los lados para centrar */
+            margin: 20px auto 0 auto; 
+            
+            padding: 0; /* Quitamos paddings innecesarios */
             box-sizing: border-box;
             position: relative;
             animation: fadeIn 0.8s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
-
+        
         /* EL REPRODUCTOR (El marco melo) */
         .player-wrapper {
             position: relative;
