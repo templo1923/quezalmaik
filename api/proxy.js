@@ -1,25 +1,21 @@
 export default async function handler(req, res) {
     const { url } = req.query;
-
-    if (!url) return res.status(400).send('Falta la URL');
+    if (!url) return res.status(400).send("No hay URL");
 
     try {
-        const response = await fetch(decodeURIComponent(url), {
+        const response = await fetch(url, {
             headers: {
-                // Engañamos al sitio para que crea que somos un celular Android
-                'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36',
-                'Referer': 'https://www.google.com/'
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                "Referer": "https://tvtvhd.com/",
+                "Origin": "https://tvtvhd.com"
             }
         });
 
-        const html = await response.text();
-        
-        // Esto permite que tu JS en el navegador lea los datos sin errores de CORS
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Content-Type', 'application/json');
-        
-        return res.status(200).json({ contents: html });
-    } catch (error) {
-        return res.status(500).json({ error: 'Error en el servidor proxy' });
+        const data = await response.arrayBuffer();
+        res.setHeader("Content-Type", response.headers.get("content-type") || "application/x-mpegURL");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.status(200).send(Buffer.from(data));
+    } catch (e) {
+        res.status(500).send("Error en el proxy");
     }
 }
