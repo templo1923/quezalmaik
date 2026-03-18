@@ -1,74 +1,91 @@
-$(document).ready(function() {
-    // Usamos tu proxy de Vercel para evitar bloqueos de CORS
-    const PROXY = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") 
-        ? "https://api.allorigins.win/get?url=" 
-        : "/api/proxy?url=";
+/* global luxon, jQuery */
+const $ = jQuery;
 
-    const DATA_URL = "https://pltvhd.com/diaries.json";
-    const agendaLista = $('#agenda-lista');
+// ✅ CONFIGURACIÓN MAIK SPORT
+const AGENDA_URL = "https://pltvhd.com/diaries.json";
+const IMG_BASE   = "https://pltvhd.com"; // Cambiado para que carguen los logos
 
-    async function cargarAgenda() {
-        try {
-            const res = await fetch(PROXY + encodeURIComponent(DATA_URL));
-            const json = await res.json();
-            
-            // Si usas AllOrigins en local, los datos vienen en json.contents (como string)
-            // Si usas tu proxy de Vercel, puede venir el objeto directo.
-            const rawData = typeof json.contents === "string" ? JSON.parse(json.contents) : json;
-            const eventos = rawData.data;
+document.addEventListener("DOMContentLoaded", function () {
+    obtenerAgenda();
 
-            if (!eventos || eventos.length === 0) {
-                agendaLista.html('<p style="color:white; text-align:center;">No hay partidos programados hoy.</p>');
-                return;
-            }
+    // Manejo de submenús (Canales)
+    $(document).on("click", ".toggle-submenu", function (e) {
+        // Si hizo clic en un link de canal, no cerrar el menú
+        if ($(e.target).closest('.submenu-item').length) return;
 
-            agendaLista.empty();
-
-            eventos.forEach(evento => {
-                const attr = evento.attributes;
-                const titulo = attr.diary_description;
-                const hora = attr.diary_hour.substring(0, 5); // Para que quede 14:00 en vez de 14:00:00
-                const categoria = attr.country.data.attributes.name;
-                
-                // Construimos la lista de canales (embeds)
-                let canalesHtml = '<div class="canales" style="display:none; background: #1b263b; border-radius: 0 0 10px 10px;">';
-                
-                attr.embeds.data.forEach(embed => {
-                    const eAttr = embed.attributes;
-                    // El link ya viene con /embed/eventos.html?r=...
-                    // Solo le pegamos tu dominio si es necesario, o lo mandamos directo
-                    canalesHtml += `
-                        <a href="${eAttr.embed_iframe}" class="canal-link" style="display:block; color:#60a5fa; padding:12px; text-decoration:none; border-bottom:1px solid #2a3a4d;">
-                            <i class="fas fa-play-circle"></i> ${eAttr.embed_name}
-                        </a>`;
-                });
-                canalesHtml += '</div>';
-
-                const htmlRow = `
-                    <div class="evento-contenedor" style="margin-bottom: 10px; border-radius: 10px; overflow: hidden; background: #2a2a2a;">
-                        <div class="evento" style="cursor:pointer; padding:15px; display:flex; justify-content:space-between; align-items:center;">
-                            <div style="display:flex; flex-direction:column;">
-                                <span style="color:#60a5fa; font-size: 12px; font-weight: bold; text-transform: uppercase;">${categoria}</span>
-                                <span style="color:white; font-size: 15px;">${titulo}</span>
-                            </div>
-                            <span style="color:#ff4d4d; font-weight:bold; background:#1a1a1a; padding:5px 10px; border-radius:5px; font-size: 14px;">${hora}</span>
-                        </div>
-                        ${canalesHtml}
-                    </div>`;
-                
-                agendaLista.append(htmlRow);
-            });
-
-        } catch (e) {
-            console.error("Error cargando JSON:", e);
-            agendaLista.html('<p style="color:white; text-align:center;">Error al cargar la agenda de PLTV.</p>');
+        const $submenu = $(this).find("ul");
+        if (!$submenu.is(":visible")) {
+            $(".agenda-list ul").slideUp();
+            $submenu.slideDown();
+            $(".agenda-list > li").removeClass("active");
+            $(this).addClass("active");
+        } else {
+            $submenu.slideUp();
+            $(this).removeClass("active");
         }
-    }
-
-    // Lógica para abrir los canales
-    agendaLista.on('click', '.evento', function() {
-        $(this).siblings('.canales').slideToggle('fast');
     });
 
-    cargarAgenda();
+    // Refrescar cada minuto
+    setInterval(obtenerAgenda, 60000);
 });
+
+function convertToUserTimeZone(utcHour) {
+    const DateTime = luxon.DateTime;
+    // El JSON viene en formato HH:mm:ss, le damos una fecha dummy para convertir
+    const dt = DateTime.fromFormat(utcHour, "HH:mm:ss", { zone: "America/Lima" });
+    return dt.toLocal().toFormat("HH:mm");
+}
+
+async function obtenerAgenda() {
+    const menuElement = document.getElementById("menu");
+    const titleElement = document.getElementById("title-agenda");
+
+    try {
+        const response = await fetch(AGENDA_URL, { cache: "no-store" });
+        const result = await response.json();
+        renderAgenda(result, menuElement, titleElement);
+    } catch (error) {
+        console.error("❌ Error:", error);
+    }
+}
+
+function renderAgenda(result, menuElement, titleElement) {
+    if (!result || !result.data) return;
+
+    // Título con la fecha del primer evento
+    if (titleElement && result.data[0]) {
+        const fecha = new Date(result.data[0].attributes.date_diary + "T00:00:00");
+        titleElement.innerHTML = "Agenda - " + fecha.toLocaleDateString("es-ES", { day: 'numeric', month: 'long' });
+    }
+
+    let html = "";
+    result.data.forEach((evento) => {
+        const attr = evento.attributes;
+        const embeds = attr.embeds.data || [];
+        
+        // CORRECCIÓN DE IMAGEN
+        let imageUrl = `${IMG_BASE}/uploads/sin_imagen_d36205f0e8.png`;
+        const flag = attr.country?.data?.attributes?.image?.data?.attributes?.url;
+        if (flag) imageUrl = `${IMG_BASE}${flag}`;
+
+        html += `
+            <li class="toggle-submenu">
+                <div>
+                    <time>${convertToUserTimeZone(attr.diary_hour)}</time>
+                    <img src="${imageUrl}" alt="logo" loading="lazy">
+                    <span>${attr.diary_description}</span>
+                </div>
+                <ul>
+                    ${embeds.map(emb => `
+                        <li>
+                            <a href="${emb.attributes.embed_iframe}" class="submenu-item">
+                                ${emb.attributes.embed_name}
+                            </a>
+                        </li>
+                    `).join('')}
+                </ul>
+            </li>`;
+    });
+
+    menuElement.innerHTML = html;
+}
