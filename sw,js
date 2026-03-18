@@ -1,0 +1,21 @@
+// sw.js - El filtro estilo Adblock para MAIK SPORT
+const Blacklist = [
+    'acscdn.com',
+    'popads.net',
+    'onclickads.net',
+    'adsterra.com',
+    'clappr.js.map' // Evita que carguen mapas de error
+];
+
+self.addEventListener('fetch', (event) => {
+    const url = event.request.url;
+    
+    // Si la petición coincide con la lista negra, la CANCELAMOS (como Brave)
+    if (Blacklist.some(domain => url.includes(domain))) {
+        console.log('🚫 Maik Shield bloqueó:', url);
+        event.respondWith(new Response('', { status: 403, statusText: 'Blocked by Maik Shield' }));
+        return;
+    }
+
+    event.respondWith(fetch(event.request));
+});
