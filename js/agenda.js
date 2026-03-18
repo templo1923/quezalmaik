@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // Lista de proxies para evitar el error 500
     const PROXIES = [
+        "/api/proxy?url="
         "https://api.allorigins.win/get?url=",
         "https://api.codetabs.com/v1/proxy/?quest=",
         "https://thingproxy.freeboard.io/fetch/"
