@@ -4,104 +4,64 @@
     <meta charset="UTF-8">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - En Vivo</title>
+    <title>MAIK SPORT - Señal Activa</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; color: white; }
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
+        .wrapper { position: relative; width: 100%; height: 100vh; }
+        iframe { width: 100%; height: 100%; border: none; }
         
-        /* Contenedor principal */
-        .main-wrapper { position: relative; width: 100%; height: 100vh; background: #000; }
-
-        /* El iframe real (la señal que carga con la IP del usuario) */
-        #reproductor { width: 100%; height: 100%; border: none; z-index: 1; position: absolute; top: 0; left: 0; }
-
-        /* CAPA DE PROTECCIÓN ANTI-POPUPS (Maik Guard) */
-        #fake-layer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 85%; /* Dejamos el 15% abajo para los controles */
-            z-index: 10; cursor: pointer; background: rgba(0,0,0,0); /* Totalmente invisible */
-        }
-
-        /* Tu Header Pro encima del video (para tapar sus logos) */
-        .header-over {
-            position: absolute; top: 0; left: 0; width: 100%; 
-            background: linear-gradient(to bottom, rgba(30,58,138,0.9), transparent);
-            padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; z-index: 20;
-            pointer-events: none; /* Deja pasar los clics si el usuario toca el texto */
-        }
-        .header-over a { pointer-events: auto; } /* El botón de cerrar sí debe recibir clics */
-        .logo { font-weight: 900; font-size: 18px; letter-spacing: 1px; }
-
-        /* Pantalla de carga profesional */
-        #loader {
+        /* Capa invisible de protección (Su idea original que funcionaba) */
+        #maik-guard {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; z-index: 99;
+            z-index: 10; cursor: pointer; background: rgba(0,0,0,0);
         }
-        .spinner { color: #22c55e; font-size: 40px; animation: fa-spin 1s infinite linear; }
+
+        /* Su Diseño Vacano encima */
+        header {
+            position: absolute; top: 0; left: 0; width: 100%;
+            background: linear-gradient(90deg, #1e3a8a, #60a5fa);
+            padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;
+            z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <div id="loader">
-            <i class="fas fa-spinner spinner"></i>
-            <p style="margin-top:15px; font-weight:bold; text-transform:uppercase;">Cargando Señal Maik Sport...</p>
-        </div>
-
-        <div class="header-over">
-            <div class="logo">⚽ MAIK SPORT</div>
+    <div class="wrapper">
+        <header>
+            <div style="color:white; font-weight:900;">⚽ MAIK SPORT</div>
             <a href="../agenda.html" style="color:white; font-size:20px;"><i class="fas fa-times"></i></a>
-        </div>
+        </header>
 
-        <div id="fake-layer"></div>
+        <div id="maik-guard"></div>
 
-        <iframe id="reproductor" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        <iframe id="video-frame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
     </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
-        const reproductor = document.getElementById('reproductor');
-        const loader = document.getElementById('loader');
-        const layer = document.getElementById('fake-layer');
+        const iframe = document.getElementById('video-frame');
+        const guard = document.getElementById('maik-guard');
 
         if (r) {
-            // Decodificamos y cargamos la URL de canales.php directly.
-            // Esto usa la IP del usuario, por eso NO da 403.
-            reproductor.src = atob(r);
-            
-            // Ocultamos el loader cuando el iframe cargue
-            reproductor.onload = function() {
-                loader.style.display = 'none';
-            };
+            // Carga directa sin proxies que fallen
+            iframe.src = atob(r);
         }
 
-        // Blindaje contra popups:
-        // El primer clic del usuario cae en la capa invisible (fake-layer)
-        layer.addEventListener('click', function() {
-            // Ocultamos la capa Maik Guard para que el usuario pueda usar el reproductor original
+        // Blindaje original de Maikol
+        guard.addEventListener('click', function() {
             this.style.display = 'none';
-            // Bloqueamos cualquier intento de abrir ventanas nuevas de inmediato
             window.open = function() { return null; };
-            // Forzamos el foco de vuelta para cerrar intentos ocultos
-            setTimeout(() => { window.focus(); }, 200);
         });
 
-        // Seguro de foco: Si el iframe intenta robar el control, se lo quitamos
+        // Evitar que el iframe robe el foco para abrir basura
         setInterval(() => {
-            if (document.activeElement === reproductor) {
-                setTimeout(() => { window.focus(); }, 150);
+            if (document.activeElement === iframe) {
+                window.focus();
             }
-        }, 1500);
-
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('../sw.js')
-      .then(() => console.log("Escudo Maik Sport Activado"))
-      .catch(err => console.log("Error activando escudo", err));
-  }
-</script>
-        
+        }, 1000);
     </script>
 </body>
 </html>
