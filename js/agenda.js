@@ -1,99 +1,56 @@
 $(document).ready(function() {
-    const PROXY_URL = "https://api.allorigins.win/get?url=";
-    const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
-    const AGENDA_URL = PROXY_URL + TARGET_URL;
+    // Usamos el proxy que normalmente es más estable
+    const PROXY = "https://api.allorigins.win/get?url=";
+    const TARGET = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     
     const agendaLista = $('#agenda-lista');
-    const tituloAgenda = $('#agenda-titulo');
 
     async function cargarAgenda() {
         try {
-            const respuesta = await fetch(AGENDA_URL);
-            const data = await respuesta.json();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data.contents, 'text/html');
-            
-            // Selector original que sí te cargaba los partidos
-            const partidosRaw = doc.querySelectorAll('.menu > li');
+            const res = await fetch(PROXY + TARGET);
+            const data = await res.json();
+            const doc = new DOMParser().parseFromString(data.contents, 'text/html');
+            const partidos = doc.querySelectorAll('.menu > li');
 
-            if (partidosRaw.length === 0) {
-                console.log("No se encontraron partidos en el HTML");
-                return;
-            }
+            if (partidos.length === 0) return;
 
             agendaLista.empty();
-            const hoy = new Date();
-            tituloAgenda.text('AGENDA - ' + hoy.getDate() + ' DE ' + hoy.toLocaleString('es-ES', { month: 'long' }).toUpperCase());
 
-            partidosRaw.forEach(partido => {
-                const linkPrincipal = partido.querySelector('a');
-                if (!linkPrincipal) return;
+            partidos.forEach(partido => {
+                const link = partido.querySelector('a');
+                if (!link) return;
 
-                const titulo = linkPrincipal.textContent.split('\n')[0].trim();
-                const horaLocal = linkPrincipal.querySelector('.t')?.textContent.trim() || "--:--";
+                const titulo = link.textContent.split('\n')[0].trim();
+                const hora = link.querySelector('.t')?.textContent.trim() || "--:--";
 
-                let canalesHtml = '<div class="canales" style="display:none;">';
-                const subitems = partido.querySelectorAll('ul li a');
+                let canales = '<div class="canales" style="display:none;">';
+                const linksCanales = partido.querySelectorAll('ul li a');
 
-                if (subitems.length > 0) {
-                    subitems.forEach(canal => {
-                        const nombreCanal = canal.textContent.trim();
-                        const hrefOriginal = canal.href;
-                        let streamParam = "";
+                linksCanales.forEach(c => {
+                    const nombre = c.textContent.trim();
+                    // Mandamos el link original codificado en Base64 para eventos.html
+                    const urlFinal = `embed/eventos.html?r=${btoa(c.href)}`;
+                    canales += `<a href="${urlFinal}" class="canal-link" style="display:block; padding:10px; color:#60a5fa;">➤ ${nombre}</a>`;
+                });
+                canales += '</div>';
 
-                        // Lógica de extracción del parámetro 'r' o codificación btoa
-                        if (hrefOriginal.includes('?r=')) {
-                            const urlObj = new URL(hrefOriginal);
-                            streamParam = urlObj.searchParams.get("r");
-                        } else {
-                            // Si no tiene 'r', mandamos la URL original codificada
-                            streamParam = btoa(hrefOriginal);
-                        }
-
-                        // Apuntamos a tu reproductor (usa vivo.html o eventos.html según prefieras)
-                        const urlFinal = `embed/eventos.html?r=${streamParam}`;
-                        canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
-                    });
-                } else {
-                    canalesHtml += `<span class="sin-canales">Próximamente...</span>`;
-                }
-
-                canalesHtml += '</div>';
-
-                const eventoHtml = `
-                    <div class="evento-contenedor">
-                        <div class="evento">
-                            <div class="hora">${horaLocal}</div>
-                            <img src="https://i.imgur.com/Vdef5Rz.png" class="evento-icono" alt="">
-                            <div class="info-evento">${titulo}</div>
-                            <div class="flecha">›</div>
+                const html = `
+                    <div class="evento-contenedor" style="border-bottom:1px solid #333;">
+                        <div class="evento" style="padding:15px; cursor:pointer; color:white;">
+                            <span style="color:red; font-weight:bold;">${hora}</span> ${titulo}
                         </div>
-                        ${canalesHtml}
+                        ${canales}
                     </div>`;
-                
-                agendaLista.append(eventoHtml);
+                agendaLista.append(html);
             });
-
-        } catch (error) {
-            console.error("Error:", error);
-            agendaLista.html('<p class="error">Error de sincronización.</p>');
+        } catch (e) {
+            console.error("Error cargando agenda");
         }
     }
 
-    // Acordeón para mostrar canales
     agendaLista.on('click', '.evento', function() {
-        const subMenu = $(this).siblings('.canales');
-        $('.canales').not(subMenu).slideUp('fast');
-        subMenu.slideToggle('fast');
-    });
-
-    // Evento para abrir el canal en tu reproductor
-    agendaLista.on('click', '.canal-link', function(e) {
-        e.preventDefault();
-        const destino = $(this).attr('href');
-        window.location.href = destino; 
+        $(this).siblings('.canales').slideToggle('fast');
     });
 
     cargarAgenda();
-    setInterval(cargarAgenda, 60000); // Actualiza cada minuto
 });
