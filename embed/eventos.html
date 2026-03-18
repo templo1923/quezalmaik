@@ -2,85 +2,97 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Señal Limpia</title>
-    <script src="https://cdn.jsdelivr.net/npm/@clappr/player@0.8/dist/clappr.min.js"></script>
+    <title>MAIK SPORT - En Vivo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
-        #player { width: 100%; height: 100%; }
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; color: white; }
         
+        /* Contenedor principal */
+        .main-wrapper { position: relative; width: 100%; height: 100vh; background: #000; }
+
+        /* El iframe real (la señal que carga con la IP del usuario) */
+        #reproductor { width: 100%; height: 100%; border: none; z-index: 1; position: absolute; top: 0; left: 0; }
+
+        /* CAPA DE PROTECCIÓN ANTI-POPUPS (Maik Guard) */
+        #fake-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 85%; /* Dejamos el 15% abajo para los controles */
+            z-index: 10; cursor: pointer; background: rgba(0,0,0,0); /* Totalmente invisible */
+        }
+
+        /* Tu Header Pro encima del video (para tapar sus logos) */
+        .header-over {
+            position: absolute; top: 0; left: 0; width: 100%; 
+            background: linear-gradient(to bottom, rgba(30,58,138,0.9), transparent);
+            padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; z-index: 20;
+            pointer-events: none; /* Deja pasar los clics si el usuario toca el texto */
+        }
+        .header-over a { pointer-events: auto; } /* El botón de cerrar sí debe recibir clics */
+        .logo { font-weight: 900; font-size: 18px; letter-spacing: 1px; }
+
+        /* Pantalla de carga profesional */
         #loader {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; display: flex; flex-direction: column;
             align-items: center; justify-content: center; z-index: 99;
         }
-        .spinner { color: #22c55e; font-size: 50px; animation: fa-spin 1.5s infinite linear; }
-        .loading-text { color: white; margin-top: 20px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+        .spinner { color: #22c55e; font-size: 40px; animation: fa-spin 1s infinite linear; }
     </style>
 </head>
 <body>
 
-    <div id="loader">
-        <i class="fas fa-circle-notch spinner"></i>
-        <p class="loading-text">Extrayendo señal Maik Sport...</p>
-    </div>
+    <div class="main-wrapper">
+        <div id="loader">
+            <i class="fas fa-spinner spinner"></i>
+            <p style="margin-top:15px; font-weight:bold; text-transform:uppercase;">Cargando Señal Maik Sport...</p>
+        </div>
 
-    <div id="player"></div>
+        <div class="header-over">
+            <div class="logo">⚽ MAIK SPORT</div>
+            <a href="../agenda.html" style="color:white; font-size:20px;"><i class="fas fa-times"></i></a>
+        </div>
+
+        <div id="fake-layer"></div>
+
+        <iframe id="reproductor" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
+        const reproductor = document.getElementById('reproductor');
+        const loader = document.getElementById('loader');
+        const layer = document.getElementById('fake-layer');
 
-        async function cargarSeñal() {
-            if (!r) return;
-            const urlDecodificada = atob(r);
-            const queryParams = urlDecodificada.split('?')[1];
-
-            try {
-                // 1. Obtenemos el código fuente de la página de canales
-                const response = await fetch(`/api/get-source?${queryParams}`);
-                const htmlCode = await response.text();
-                
-                // 2. Buscamos el link del m3u8
-// 2. Buscamos el link del m3u8
-            const match = htmlCode.match(/var playbackURL = "(.*?)";/);
-
-            if (match && match[1]) {
-                // Nombre fijo: m3u8Real
-                const m3u8Real = match[1];
-                
-                // Nombre fijo: videoProxy (este es el que el reproductor va a usar)
-                const videoProxy = `/api/video-proxy?url=${encodeURIComponent(m3u8Real)}`;
-
-                document.getElementById("loader").style.display = "none";
-
-                new Clappr.Player({
-                    source: videoProxy, // Usamos la variable que tiene el proxy
-                    parentId: "#player",
-                    width: "100%",
-                    height: "100%",
-                    autoPlay: true,
-                    hlsjsConfig: {
-                        xhrSetup: function(xhr, url) {
-                            xhr.withCredentials = false;
-                        }
-                    },
-                    mediacontrol: {seekbar: "#22c55e", buttons: "#FFFFFF"},
-                    mimeType: "application/x-mpegURL"
-                });
-            } else {
-                document.getElementById("loader").innerHTML = "<p style='color:red;'>Señal no encontrada en el origen.</p>";
-            }
-            } catch (error) {
-                console.error(error);
-                document.getElementById("loader").innerHTML = "<p style='color:white;'>Error de conexión. Reintenta.</p>";
-            }
+        if (r) {
+            // Decodificamos y cargamos la URL de canales.php directly.
+            // Esto usa la IP del usuario, por eso NO da 403.
+            reproductor.src = atob(r);
+            
+            // Ocultamos el loader cuando el iframe cargue
+            reproductor.onload = function() {
+                loader.style.display = 'none';
+            };
         }
 
-        cargarSeñal();
-        window.open = function() { return null; };
+        // Blindaje contra popups:
+        // El primer clic del usuario cae en la capa invisible (fake-layer)
+        layer.addEventListener('click', function() {
+            // Ocultamos la capa Maik Guard para que el usuario pueda usar el reproductor original
+            this.style.display = 'none';
+            // Bloqueamos cualquier intento de abrir ventanas nuevas de inmediato
+            window.open = function() { return null; };
+            // Forzamos el foco de vuelta para cerrar intentos ocultos
+            setTimeout(() => { window.focus(); }, 200);
+        });
+
+        // Seguro de foco: Si el iframe intenta robar el control, se lo quitamos
+        setInterval(() => {
+            if (document.activeElement === reproductor) {
+                setTimeout(() => { window.focus(); }, 150);
+            }
+        }, 1500);
     </script>
 </body>
 </html>
