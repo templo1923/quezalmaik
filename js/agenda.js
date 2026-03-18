@@ -1,7 +1,6 @@
 $(document).ready(function() {
-    const PROXY_URL = "https://api.allorigins.win/get?url=";
-    const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
-    const AGENDA_URL = PROXY_URL + TARGET_URL;
+    // Usamos el proxy básico que tenías al principio
+    const AGENDA_URL = "https://api.allorigins.win/get?url=" + encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     
     const agendaLista = $('#agenda-lista');
 
@@ -27,54 +26,30 @@ $(document).ready(function() {
                 subitems.forEach(canal => {
                     const nombreCanal = canal.textContent.trim();
                     const hrefOriginal = canal.href;
-                    // Guardamos la URL original
-                    canalesHtml += `<a href="#" data-url="${hrefOriginal}" class="canal-link">➤ ${nombreCanal}</a>`;
+                    
+                    // Mandamos el link de RojaDirecta directo a tu reproductor
+                    // Sin inventar IDs ni carpetas API
+                    const urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
+                    canalesHtml += `<a href="${urlFinal}" class="canal-link" target="_blank">➤ ${nombreCanal}</a>`;
                 });
                 
                 canalesHtml += '</div>';
                 const eventoHtml = `
                     <div class="evento-contenedor">
-                        <div class="evento">
-                            <span class="hora">${horaLocal}</span>
-                            <span class="info-evento">${titulo}</span>
+                        <div class="evento" style="cursor:pointer; padding:10px; border-bottom:1px solid #333;">
+                            <span style="color:red;">${horaLocal}</span> - <span style="color:white;">${titulo}</span>
                         </div>
                         ${canalesHtml}
                     </div>`;
                 agendaLista.append(eventoHtml);
             });
-        } catch (error) { console.error("Error en agenda"); }
+        } catch (error) { 
+            console.error("Error cargando agenda");
+            agendaLista.html("<p style='color:white;'>Error al cargar. Reintenta.</p>");
+        }
     }
 
-    // EL DETECTIVE QUE NO FALLA
-    agendaLista.on('click', '.canal-link', async function(e) {
-        e.preventDefault();
-        const btn = $(this);
-        const urlCascara = btn.attr('data-url');
-        
-        btn.text('⌛ Abriendo...');
-
-        try {
-            const response = await fetch(PROXY_URL + encodeURIComponent(urlCascara));
-            const data = await response.json();
-            const pageDoc = new DOMParser().parseFromString(data.contents, 'text/html');
-            
-            // Buscamos el iframe real
-            const iframe = pageDoc.querySelector('iframe[src*="capoplay"], iframe[src*="capoplayer"]');
-            
-            if (iframe) {
-                // MANDAMOS EL LINK REAL
-                window.open(`embed/eventos.html?r=${btoa(iframe.src)}`, '_blank');
-            } else {
-                // SI NO HAY IFRAME, ABRIMOS LA PÁGINA ORIGINAL (Como antes)
-                window.open(`embed/eventos.html?r=${btoa(urlCascara)}`, '_blank');
-            }
-        } catch (err) {
-            window.open(`embed/eventos.html?r=${btoa(urlCascara)}`, '_blank');
-        } finally {
-            btn.text('➤ Canal listo');
-        }
-    });
-
+    // Abrir canales al tocar el partido
     agendaLista.on('click', '.evento', function() {
         $(this).siblings('.canales').slideToggle('fast');
     });
