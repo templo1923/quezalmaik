@@ -1,11 +1,11 @@
 {
   "rewrites": [
-    { "source": "/waust.at/(.*)", "destination": "https://google.com/404" },
-    { "source": "/bvtpk.com/(.*)", "destination": "https://google.com/404" },
-    { "source": "/ads.tiogolhd.com/(.*)", "destination": "https://google.com/404" },
-    { "source": "/jnbhi.com/(.*)", "destination": "https://google.com/404" },
-    { "source": "/acscdn.com/(.*)", "destination": "https://google.com/404" },
-    { "source": "/deepz.cyou/(.*)", "destination": "https://google.com/404" },
-    { "source": "/googletagmanager.com/(.*)", "destination": "https://google.com/404" }
+    { "source": "/:path*acscdn.com/:path*", "destination": "/404" },
+    { "source": "/:path*waust.at/:path*", "destination": "/404" },
+    { "source": "/:path*bvtpk.com/:path*", "destination": "/404" },
+    { "source": "/:path*adexchangeclear.com/:path*", "destination": "/404" },
+    { "source": "/:path*histats.com/:path*", "destination": "/404" },
+    { "source": "/:path*usrpubtrk.com/:path*", "destination": "/404" },
+    { "source": "/:path*tiogolhd.com/:path*", "destination": "/404" }
   ]
 }
