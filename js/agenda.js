@@ -10,12 +10,10 @@ $(document).ready(function() {
             const respuesta = await fetch(AGENDA_URL);
             const data = await respuesta.json();
             const doc = new DOMParser().parseFromString(data.contents, 'text/html');
-            
-            // Selector específico para la estructura de RojaDirecta
             const partidosRaw = doc.querySelectorAll('.menu > li');
 
             if (partidosRaw.length === 0) {
-                agendaLista.html('<p style="text-align:center; color:white;">No hay eventos disponibles por ahora.</p>');
+                agendaLista.html('<p style="text-align:center; color:white; margin-top:20px;">No hay eventos disponibles.</p>');
                 return;
             }
 
@@ -28,30 +26,30 @@ $(document).ready(function() {
                 const titulo = linkPrincipal.textContent.split('\n')[0].trim();
                 const horaLocal = linkPrincipal.querySelector('.t')?.textContent.trim() || "--:--";
 
-                let canalesHtml = '<div class="canales" style="display:none;">';
+                let canalesHtml = '<div class="canales" style="display:none; background: rgba(0,0,0,0.3);">';
                 const subitems = partido.querySelectorAll('ul li a');
                 
                 subitems.forEach(canal => {
                     const nombreCanal = canal.textContent.trim();
                     let hrefOriginal = canal.href;
 
-                    // Corregir links relativos si el scraping los trae mal
-                    if (hrefOriginal.startsWith('applewebdata')) {
+                    // Corrección de rutas relativas
+                    if (hrefOriginal.includes('applewebdata') || !hrefOriginal.startsWith('http')) {
                         const slug = hrefOriginal.split('/').pop();
                         hrefOriginal = `https://www.rojadirectatv3.pl/${slug}`;
                     }
 
-                    canalesHtml += `<a href="#" data-url="${hrefOriginal}" class="canal-link" style="display:block; padding:10px; color:#60a5fa; text-decoration:none; border-bottom:1px solid #333;">➤ ${nombreCanal}</a>`;
+                    canalesHtml += `<a href="#" data-url="${hrefOriginal}" class="canal-link" style="display:block; padding:12px; color:#60a5fa; text-decoration:none; border-bottom:1px solid #222;">➤ ${nombreCanal}</a>`;
                 });
                 
                 canalesHtml += '</div>';
                 
                 const eventoHtml = `
-                    <div class="evento-contenedor" style="margin-bottom:10px; background:rgba(255,255,255,0.05); border-radius:8px;">
-                        <div class="evento" style="padding:15px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #444;">
-                            <span class="hora" style="color:#ef4444; font-weight:bold;">${horaLocal}</span>
-                            <span class="info-evento" style="color:white; flex:1; margin-left:15px;">${titulo}</span>
-                            <i class="fas fa-chevron-down" style="color:#60a5fa;"></i>
+                    <div class="evento-contenedor" style="margin-bottom:8px; border-radius:10px; overflow:hidden; border: 1px solid #333;">
+                        <div class="evento" style="padding:15px; background:#1b263b; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+                            <span style="color:#f87171; font-weight:bold; font-size:14px;">${horaLocal}</span>
+                            <span style="color:white; flex:1; margin-left:15px; font-weight:500;">${titulo}</span>
+                            <i class="fas fa-chevron-down" style="color:#60a5fa; font-size:12px;"></i>
                         </div>
                         ${canalesHtml}
                     </div>`;
@@ -59,51 +57,48 @@ $(document).ready(function() {
             });
         } catch (error) { 
             console.error("Error cargando agenda:", error);
-            agendaLista.html('<p style="text-align:center; color:white;">Error al conectar con la agenda.</p>');
+            agendaLista.html('<p style="text-align:center; color:white;">Error de conexión con la agenda.</p>');
         }
     }
 
-    // EL DETECTIVE: Al hacer clic en un canal
+    // LÓGICA DEL DETECTIVE: Extrae el iframe real al hacer clic
     agendaLista.on('click', '.canal-link', async function(e) {
         e.preventDefault();
         const btn = $(this);
         const urlCascara = btn.attr('data-url');
-        const originalText = btn.text();
+        const textoOriginal = btn.text();
         
-        btn.text('⌛ Buscando señal limpia...');
+        btn.html('<i class="fas fa-spinner fa-spin"></i> Buscando señal limpia...');
 
         try {
-            // Entramos a la página del canal en segundo plano
+            // Entramos a la página del canal (Pirlo, RojaDirecta, etc.)
             const response = await fetch(PROXY_URL + encodeURIComponent(urlCascara));
             const data = await response.json();
             const pageDoc = new DOMParser().parseFromString(data.contents, 'text/html');
             
-            // BUSCAMOS EL IFRAME DE CAPOPLAY O CAPOPLAYER
+            // Buscamos el iframe que apunta a capoplay o capoplayer
             const iframe = pageDoc.querySelector('iframe[src*="capoplay.net"], iframe[src*="capoplayer.net"]');
             
-            if (iframe) {
-                const urlRealCapo = iframe.src;
-                // Mandamos la URL del iframe directamente a tu reproductor
-                window.open(`embed/eventos.html?r=${btoa(urlRealCapo)}`, '_blank');
+            if (iframe && iframe.src) {
+                // Abrimos tu reproductor con el link REAL del video
+                window.open(`embed/eventos.html?r=${btoa(iframe.src)}`, '_blank');
             } else {
-                // Si no hay iframe de capo, mandamos la original (la cáscara) como respaldo
+                // Si no encontramos el iframe, mandamos la original como respaldo
                 window.open(`embed/eventos.html?r=${btoa(urlCascara)}`, '_blank');
             }
         } catch (err) {
-            console.error("Error al extraer el iframe:", err);
-            // Si falla el detective, intentamos abrir la cáscara
+            console.error("Error de extracción:", err);
             window.open(`embed/eventos.html?r=${btoa(urlCascara)}`, '_blank');
         } finally {
-            btn.text(originalText);
+            btn.text(textoOriginal);
         }
     });
 
-    // Toggle de canales
+    // Abrir/Cerrar canales
     agendaLista.on('click', '.evento', function() {
         $(this).siblings('.canales').slideToggle('fast');
         $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
     });
 
-    // Ejecutar carga inicial
     cargarAgenda();
 });
