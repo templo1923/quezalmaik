@@ -40,6 +40,18 @@
     </div>
 
     <script>
+        <script>
+    // 1. ACTIVAR EL ESCUDO (Service Worker)
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../sw.js')
+            .then(reg => console.log('🛡️ Escudo Maik Sport Activo'))
+            .catch(err => console.error('❌ Error al activar escudo', err));
+    }
+
+    // ... aquí sigue el resto de tu código de carga ...
+</script>
+
+        
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
         const iframe = document.getElementById('video-frame');
