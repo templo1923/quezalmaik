@@ -4,115 +4,189 @@
     <meta charset="UTF-8">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Live Streaming</title>
+    <title>MAIK SPORT - Modo Cine Premium</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --primary: #1e40af;
-            --accent: #60a5fa;
-            --bg: #050505;
+            --bg-page: #0a0a0c; /* Fondo oscuro de la página (donde irán los banners) */
+            --bg-player: #000000; /* Fondo negro puro del reproductor */
+            --accent: #22c55e; /* Verde neón para el "EN VIVO" */
+            --maik-blue: #1e40af; /* Azul para botones */
+            --text: #ffffff;
+            --player-max-width: 1000px; /* Ancho perfecto para PC, responsivo para móvil */
         }
 
-        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); overflow: hidden; font-family: 'Segoe UI', Roboto, sans-serif; }
-        
-        /* Contenedor principal con efecto de profundidad */
-        .wrapper { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        body, html { 
+            margin: 0; padding: 0; height: 100%; 
+            background-color: var(--bg-page); 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            color: var(--text);
+            display: flex; flex-direction: column; align-items: center;
+        }
 
-        /* HEADER PREMIUM (Glassmorphism) */
-        header {
-            position: absolute; top: 0; left: 0; width: 100%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 20px;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 100;
+        /* -----------------------------------------------------------
+           CONTENEDOR CINE (El Jefe del Diseño)
+           Este contenedor centra el reproductor y deja espacio a los lados
+        ----------------------------------------------------------- */
+        .cinema-container {
+            width: 100%;
+            max-width: var(--player-max-width);
+            margin-top: 30px; /* Espacio arriba para que no pegue al techo */
+            padding: 0 15px; /* Margen de seguridad en móviles */
             box-sizing: border-box;
-            animation: slideDown 0.5s ease;
+            position: relative;
+            animation: fadeIn 0.8s ease;
         }
 
-        .brand { display: flex; align-items: center; gap: 10px; color: white; }
-        .brand i { color: var(--accent); font-size: 1.4rem; filter: drop-shadow(0 0 8px var(--accent)); }
-        .brand span { font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; }
-
-        .btn-exit { 
-            color: rgba(255,255,255,0.7); font-size: 22px; text-decoration: none; 
-            transition: 0.3s; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; background: rgba(255,255,255,0.05);
+        /* EL REPRODUCTOR (El marco melo) */
+        .player-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 perfecta */
+            background-color: var(--bg-player);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 15px rgba(30, 64, 175, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .btn-exit:hover { color: white; background: rgba(220, 38, 38, 0.8); transform: rotate(90deg); }
 
-        /* REPRODUCTOR */
-        iframe { width: 100%; height: 100%; border: none; z-index: 1; }
+        /* El Iframe (La señal) */
+        iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border: none; z-index: 1;
+        }
 
-        /* CAPA DE PROTECCIÓN MAIK GUARD */
+        /* PANTALLA DE CARGA PRO */
+        #loader {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-player); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 100; transition: 0.5s;
+        }
+        .spinner { border: 4px solid rgba(255,255,255,0.1); border-left-color: var(--accent); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* MAIK GUARD (Capa de Clic Seguro) */
         #maik-guard {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 50; cursor: pointer;
-            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.5s;
+            background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center; transition: 0.3s;
         }
+        #maik-guard:hover { background: rgba(0,0,0,0.3); }
         #maik-guard i { 
-            color: white; font-size: 60px; opacity: 0.8; 
-            background: rgba(30, 64, 175, 0.6); width: 100px; height: 100px; 
+            color: white; font-size: 50px; opacity: 0.8; 
+            background: rgba(30, 64, 175, 0.8); width: 80px; height: 80px; 
             display: flex; align-items: center; justify-content: center; 
-            border-radius: 50%; border: 2px solid var(--accent);
-            box-shadow: 0 0 30px rgba(96, 165, 250, 0.4);
+            border-radius: 50%; box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        /* LOADER DE CARGA */
-        #loader {
-            position: absolute; width: 100%; height: 100%; background: var(--bg);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 150; color: white;
-        }
-        .shimmer {
-            width: 150px; height: 4px; background: #1a1a1a; border-radius: 10px;
-            position: relative; overflow: hidden; margin-top: 20px;
-        }
-        .shimmer::after {
-            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: loading 1.5s infinite;
+        /* -----------------------------------------------------------
+           BARRA DE CONTROLES PRO MAIK SPORT (Abajo del video)
+        ----------------------------------------------------------- */
+        .maik-controls {
+            width: 100%;
+            background: rgba(20, 20, 23, 0.9);
+            border-radius: 0 0 12px 12px;
+            padding: 10px 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: none;
+            margin-top: -5px; /* Para que pegue perfecto con el video */
+            position: relative; z-index: 60;
         }
 
-        /* ANIMACIONES */
-        @keyframes loading { 100% { left: 100%; } }
-        @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        /* Sección Izquierda: En Vivo */
+        .ctrl-left { display: flex; align-items: center; gap: 10px; }
+        .live-indicator { display: flex; align-items: center; gap: 6px; color: #a1a1aa; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+        .live-dot { height: 8px; width: 8px; background-color: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; box-shadow: 0 0 10px var(--accent); }
+
+        /* Sección Derecha: Botones */
+        .ctrl-right { display: flex; align-items: center; gap: 8px; }
+        .ctrl-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #d1d5db; border-radius: 6px; cursor: pointer;
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s; text-decoration: none; font-size: 16px;
+        }
+        .ctrl-btn:hover { background: rgba(30, 64, 175, 0.3); border-color: var(--maik-blue); color: white; transform: translateY(-2px); }
+        .btn-reload:hover { color: var(--accent); }
+        .btn-exit:hover { background: rgba(220, 38, 38, 0.2); border-color: #ef4444; color: #ef4444; }
+
+        /* -----------------------------------------------------------
+           ZONA DE MONETIZACIÓN (Para después)
+           Aquí es donde pegaremos los banners sin joder el video.
+        ----------------------------------------------------------- */
+        .ads-container-bottom {
+            width: 100%;
+            max-width: var(--player-max-width);
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            border: 1px dashed rgba(255,255,255,0.1);
+            color: #52525b; font-size: 12px;
+            box-sizing: border-box;
+        }
+
+        /* ANIMACIONES Y RESPONSIVE */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+        
+        @media (max-width: 600px) {
+            .cinema-container { margin-top: 10px; padding: 0 10px; }
+            .maik-controls { padding: 8px 10px; }
+            .live-indicator span { display: none; } /* Oculta texto en móviles muy pequeños */
+        }
     </style>
 </head>
 <body>
 
-    <div id="loader">
-        <i class="fas fa-futbol fa-3x fa-spin" style="color: var(--accent);"></i>
-        <div class="shimmer"></div>
-        <p style="text-transform: uppercase; font-size: 12px; letter-spacing: 2px; margin-top: 15px; opacity: 0.6;">Sincronizando señal Maik Sport...</p>
-    </div>
-
-    <div class="wrapper">
-        <header>
-            <div class="brand">
-                <i class="fas fa-broadcast-tower"></i>
-                <span>Maik Sport <span style="color:var(--accent); font-weight: 300;">LIVE</span></span>
+    <div class="cinema-container">
+        <div class="player-wrapper">
+            <div id="loader">
+                <div class="spinner"></div>
+                <p style="text-transform: uppercase; font-size: 10px; letter-spacing: 2px; margin-top: 15px; opacity: 0.5;">Cargando señal Maik...</p>
             </div>
-            <a href="../agenda.html" class="btn-exit"><i class="fas fa-times"></i></a>
-        </header>
 
-        <div id="maik-guard">
-            <i class="fas fa-play"></i>
+            <div id="maik-guard">
+                <i class="fas fa-play"></i>
+            </div>
+
+            <iframe id="video-frame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
         </div>
 
-        <iframe id="video-frame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        <div class="maik-controls">
+            <div class="ctrl-left">
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>En Vivo <b>Maik Sport</b></span>
+                </div>
+            </div>
+            <div class="ctrl-right">
+                <button class="ctrl-btn btn-reload" onclick="location.reload();" title="Recargar Señal">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button class="ctrl-btn" id="btn-fs" title="Pantalla Completa">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <a href="../agenda.html" class="ctrl-btn btn-exit" title="Volver a la Agenda">
+                    <i class="fas fa-times"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="ads-container-bottom">
+        <i class="fas fa-dollar-sign"></i> Zona de Publicidad Maik Sport (Banner 728x90 aquí después)
     </div>
 
     <script>
-        // REGISTRO DEL ESCUDO SW
+        // EL MISMO SW QUE SÍ FUNCIONA (No tocar)
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('../sw.js').then(reg => {
-                console.log('🛡️ Escudo Maik Sport Nivel Pro');
+                console.log('🛡️ Maik Shield: ON');
             });
         }
 
@@ -121,19 +195,25 @@
         const iframe = document.getElementById('video-frame');
         const guard = document.getElementById('maik-guard');
         const loader = document.getElementById('loader');
+        const cinema = document.querySelector('.cinema-container');
+        const btnFs = document.getElementById('btn-fs');
 
         if (r) {
             iframe.src = atob(r);
-            // Quitamos el loader después de un par de segundos para asegurar carga
+            // El loader se quita cuando el iframe dice que ya cargó
             iframe.onload = () => {
-                setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1500);
+                setTimeout(() => { 
+                    loader.style.opacity = '0'; 
+                    setTimeout(() => loader.remove(), 500); 
+                }, 1000);
             };
         }
 
-        // Blindaje Maikol mejorado
+        // Blindaje Maikol (El clic de seguridad)
         guard.addEventListener('click', function() {
             this.style.opacity = '0';
-            setTimeout(() => this.remove(), 500);
+            setTimeout(() => this.remove(), 400);
+            // Mata los popups invisibles
             window.open = function() { return null; };
         });
 
@@ -142,7 +222,23 @@
             if (document.activeElement === iframe) {
                 window.focus();
             }
-        }, 1000);
+        }, 1200);
+
+        // BOTÓN FULLSCREEN PRO (Lógica Maik)
+        btnFs.addEventListener('click', () => {
+            // Ponemos en fullscreen TODO el contenedor del cine, no solo el iframe
+            // Así se mantiene el indicador "EN VIVO" aunque esté a pantalla completa
+            if (!document.fullscreenElement) {
+                cinema.requestFullscreen().catch(err => {
+                    // Si falla, al menos ponemos el iframe
+                    iframe.requestFullscreen();
+                });
+                btnFs.innerHTML = '<i class="fas fa-compress"></i>';
+            } else {
+                document.exitFullscreen();
+                btnFs.innerHTML = '<i class="fas fa-expand"></i>';
+            }
+        });
     </script>
 </body>
 </html>
