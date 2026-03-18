@@ -3,95 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Sport - Modo Cine</title>
+    <title>Maik Sport - Player Pro</title>
     <meta name="referrer" content="no-referrer">
     <style>
-        /* Fondo oscuro profesional */
+        /* Fondo negro total para que nada distraiga */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { 
-            width: 100%; 
-            height: 100%; 
-            background: #0b0f1a; /* Azul muy oscuro */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Segoe UI', sans-serif;
+        body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
+
+        /* Contenedor que forzará al video a ocupar todo el espacio */
+        .master-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
         }
 
-        /* Contenedor del reproductor "Bonito" */
-        .player-card {
-            width: 95%;
-            max-width: 900px;
-            background: #000;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 15px rgba(96, 165, 250, 0.2);
-            border: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-        }
-
-        /* Proporción 16:9 */
-        .video-container {
-            position: relative;
-            padding-top: 56.25%; /* Relación de aspecto 16:9 */
-            background: #000;
-        }
-
+        /* EL TRUCO: Escalamos el iframe y lo desplazamos con precisión quirúrgica 
+           para que el 'header' y el 'footer' queden fuera del área visible. */
         #videoFrame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /* Escalamos para que el video se estire y tape los bordes de la web original */
+            transform: scale(1.4); 
+            /* Ajustamos la posición para centrar el reproductor de Capo */
+            top: 40px; 
+            left: 0;
+            border: none;
+        }
+
+        /* Botón Volver (Flotante y elegante) */
+        .btn-back {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.7);
+            color: #60a5fa;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            border: 1px solid #60a5fa;
+        }
+
+        /* Capa de protección: Evita que toquen botones de publicidad invisibles */
+        .bloqueador-ads {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
-        }
-
-        /* Botón de cerrar/volver elegante */
-        .btn-cerrar {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 10;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 14px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: 0.3s;
-        }
-        .btn-cerrar:hover { background: #ef4444; }
-
-        /* Texto de apoyo */
-        .info-footer {
-            padding: 15px;
-            text-align: center;
-            color: #60a5fa;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
+            z-index: 50; /* Por debajo del botón volver, por encima del iframe */
+            pointer-events: none; /* Deja pasar los clics al reproductor central */
         }
     </style>
 </head>
 <body>
 
-    <a href="javascript:history.back()" class="btn-cerrar">✕ CERRAR MODO CINE</a>
+    <a href="javascript:history.back()" class="btn-back">⬅ VOLVER</a>
 
-    <div class="player-card">
-        <div class="video-container">
-            <iframe 
-                id="videoFrame" 
-                src="" 
-                allowfullscreen 
-                allow="autoplay; encrypted-media"
-                referrerpolicy="no-referrer">
-            </iframe>
-        </div>
-        <div class="info-footer">Maik Sport - Señal en Vivo</div>
+    <div class="master-container">
+        <div class="bloqueador-ads"></div>
+        
+        <iframe 
+            id="videoFrame" 
+            src="" 
+            allowfullscreen 
+            sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock"
+            referrerpolicy="no-referrer">
+        </iframe>
     </div>
 
     <script>
@@ -102,10 +84,10 @@
 
             if (r) {
                 try {
-                    // Cargamos la URL decodificada
-                    iframe.src = atob(r);
+                    const decodedUrl = atob(r);
+                    iframe.src = decodedUrl;
                 } catch (e) {
-                    console.error("Link no válido");
+                    console.error("Link erróneo");
                 }
             }
         });
