@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Proxy para saltar el bloqueo de CORS en Vercel
     const PROXY_URL = "https://api.allorigins.win/get?url=";
     const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     const AGENDA_URL = PROXY_URL + TARGET_URL;
@@ -27,36 +26,31 @@ $(document).ready(function() {
                 let canalesHtml = '<div class="canales">';
                 const subitems = partido.querySelectorAll('ul li a');
                 
-                // Actualiza esta parte dentro de tu eventos.forEach en js/agenda.js
-subitems.forEach(canal => {
-    const nombreCanal = canal.textContent.trim();
-    const hrefOriginal = canal.href;
-    let streamID = "";
+                subitems.forEach(canal => {
+                    const nombreCanal = canal.textContent.trim();
+                    const hrefOriginal = canal.href;
+                    
+                    // --- MAPEO DE IDs SEGÚN LO QUE ENCONTRASTE ---
+                    let streamID = "";
+                    if (hrefOriginal.includes('winsports')) streamID = "winsportsplus";
+                    else if (hrefOriginal.includes('espnpremium')) streamID = "espnpremium";
+                    else if (hrefOriginal.includes('tntargentina') || hrefOriginal.includes('tnt-sports-argentina')) streamID = "tntargentina";
+                    else if (hrefOriginal.includes('tntchile') || hrefOriginal.includes('tnt-sports-chile')) streamID = "tntchile";
+                    else if (hrefOriginal.includes('liga1max')) streamID = "liga1max";
+                    else if (hrefOriginal.includes('golperu')) streamID = "golperu";
+                    else if (hrefOriginal.includes('mlspass')) streamID = "mlspass";
+                    else {
+                        // Extracción genérica si no está en la lista (ej: canal-20.php)
+                        streamID = hrefOriginal.split('/').pop().replace('.php', '').replace('canal-', 'canal');
+                    }
 
-    // Lógica para extraer el ID (ej: winsportsplus) de los diferentes dominios
-    if (hrefOriginal.includes('capoplay.net/')) {
-        streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
-    } else if (hrefOriginal.includes('canal-')) {
-        // Para links tipo canal-20.php
-        streamID = hrefOriginal.split('/').pop().replace('.php', '');
-    } else if (hrefOriginal.includes('winsports')) {
-        streamID = "winsportsplus"; // Forzado para ese canal específico
-    }
+                    // LA LLAVE MAESTRA: 
+                    // Cargamos la página que ejecuta el script de permiso (capoplay.net)
+                    const urlLlave = `https://www.capoplay.net/${streamID}.php`;
+                    const urlFinal = `embed/eventos.html?r=${btoa(urlLlave)}`;
 
-    let urlFinal;
-    if (streamID) {
-        // Construimos el link DIRECTO al servidor de video (capo2.php)
-        // Esto elimina todo el layout de RojaDirecta/EliteGol
-        const urlLimpia = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
-        urlFinal = `embed/eventos.html?r=${btoa(urlLimpia)}`;
-    } else {
-        // Respaldo si no detectamos el patrón
-        urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
-    }
-
-    canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
-});
-
+                    canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
+                });
                 
                 canalesHtml += '</div>';
                 const eventoHtml = `
@@ -72,11 +66,10 @@ subitems.forEach(canal => {
                 agendaLista.append(eventoHtml);
             });
         } catch (error) {
-            console.error("Error cargando la agenda:", error);
+            console.error("Error en agenda:", error);
         }
     }
 
-    // Interceptor para abrir en tu reproductor eventos.html
     agendaLista.on('click', '.canal-link', function(e) {
         e.preventDefault();
         window.open($(this).attr('href'), '_blank');
