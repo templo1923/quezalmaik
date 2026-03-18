@@ -93,6 +93,15 @@
                 setTimeout(() => { window.focus(); }, 150);
             }
         }, 1500);
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('../sw.js')
+      .then(() => console.log("Escudo Maik Sport Activado"))
+      .catch(err => console.log("Error activando escudo", err));
+  }
+</script>
+        
     </script>
 </body>
 </html>
