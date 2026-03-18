@@ -4,29 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAIK SPORT - Agenda Oficial</title>
+    
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
     <style>
-        body { background: #020617; color: white; font-family: sans-serif; margin: 0; padding: 20px; }
-        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 20px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
-        .agenda-list { list-style: none; padding: 0; max-width: 800px; margin: 0 auto; }
-        .evento { background: #0f172a; margin-bottom: 10px; padding: 15px; border-radius: 10px; border: 1px solid #333; cursor: pointer; }
-        .evento:hover { border-color: #22c55e; }
+        body { margin: 0; background: radial-gradient(circle at top, #0f172a, #020617); font-family: system-ui, sans-serif; color: white; min-height: 100vh; padding: 20px; }
+        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 20px; text-align: center; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #wraper-agenda { max-width: 800px; margin: 0 auto; background: rgba(11, 18, 32, 0.8); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .agenda-list { list-style: none; padding: 0; }
+        .evento { background: #020617; margin-bottom: 12px; padding: 18px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: 0.3s; }
+        .evento:hover { border-color: #22c55e; transform: translateY(-2px); }
         .fila { display: flex; align-items: center; gap: 15px; }
-        time { background: #22c55e; color: black; padding: 5px 10px; border-radius: 5px; font-weight: bold; }
-        img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
-        .canales { display: none; padding: 15px 0 0 50px; }
-        .canales a { color: #86efac; text-decoration: none; display: block; margin-bottom: 8px; font-weight: bold; }
+        time { min-width: 65px; text-align: center; background: linear-gradient(135deg, #22c55e, #16a34a); color: #022c22; padding: 6px 10px; border-radius: 10px; font-weight: 900; font-size: 0.9rem; }
+        .evento img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.2); }
+        .evento span { font-weight: 800; font-size: 1.05rem; color: #f8fafc; flex: 1; }
+        .canales { display: none; margin-top: 15px; padding-left: 45px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
+        .canales a { color: #bbf7d0; text-decoration: none; display: block; margin-bottom: 10px; font-weight: 700; font-size: 0.95rem; }
+        .canales a::before { content: "▶  "; color: #22c55e; }
+        .loading { text-align: center; padding: 40px; color: #86efac; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>⚽ MAIK SPORT</h1>
-        <h2 id="title-agenda">Cargando partidos...</h2>
+        <h1 style="margin:0; letter-spacing: 2px;">⚽ MAIK SPORT</h1>
+        <p id="title-agenda" style="margin:10px 0 0; color: #86efac; font-weight: bold;">Cargando partidos...</p>
     </header>
 
-    <ul id="menu" class="agenda-list"></ul>
+    <div id="wraper-agenda">
+        <ul id="menu" class="agenda-list">
+            <div class="loading"><i class="fas fa-spinner fa-spin"></i> Buscando eventos...</div>
+        </ul>
+    </div>
 
     <script>
         const AGENDA_URL = "https://pltvhd.com/diaries.json";
@@ -38,31 +49,40 @@
                 const json = await res.json();
                 let html = "";
 
+                if(!json.data) return;
+
                 json.data.forEach(ev => {
                     const attr = ev.attributes;
-                    const hora = attr.diary_hour.substring(0, 5);
+                    // Hora local (Luxon)
+                    const hora = luxon.DateTime.fromFormat(attr.diary_hour, "HH:mm:ss", { zone: "America/Lima" }).toLocal().toFormat("HH:mm");
                     const flag = attr.country?.data?.attributes?.image?.data?.attributes?.url;
-                    const img = flag ? (flag.startsWith('http') ? flag : IMG_BASE + flag) : "";
+                    const img = flag ? (flag.startsWith('http') ? flag : IMG_BASE + flag) : "https://img.icons8.com/color/48/football--v1.png";
 
                     html += `
-                        <li class="evento" onclick="$(this).find('.canales').slideToggle()">
+                        <li class="evento" onclick="$(this).find('.canales').slideToggle('fast')">
                             <div class="fila">
                                 <time>${hora}</time>
-                                <img src="${img}">
-                                <strong>${attr.diary_description}</strong>
+                                <img src="${img}" alt="flag">
+                                <span>${attr.diary_description}</span>
                             </div>
                             <div class="canales">
-                                ${attr.embeds.data.map(em => `
-                                    <a href=".${em.attributes.embed_iframe}">▶ ${em.attributes.embed_name}</a>
-                                `).join('')}
+                                ${attr.embeds.data.map(em => {
+                                    let path = em.attributes.embed_iframe;
+                                    if(path.startsWith('/embed/')) path = "." + path;
+                                    return `<a href="${path}">Ver en ${em.attributes.embed_name}</a>`;
+                                }).join('')}
                             </div>
                         </li>`;
                 });
+                
                 document.getElementById("menu").innerHTML = html;
-                document.getElementById("title-agenda").innerText = "Partidos de Hoy";
-            } catch (e) { document.getElementById("title-agenda").innerText = "Error al cargar"; }
+                document.getElementById("title-agenda").innerText = "Agenda de Partidos";
+            } catch (e) { 
+                document.getElementById("title-agenda").innerText = "Error de conexión"; 
+            }
         }
         cargar();
+        setInterval(cargar, 120000); // Recarga cada 2 minutos
     </script>
 </body>
 </html>
