@@ -1,5 +1,6 @@
 $(document).ready(function() {
     const PROXY = "https://api.allorigins.win/get?url=";
+    : "/api/proxy?url=";
     const TARGET = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     const agendaLista = $('#agenda-lista');
 
