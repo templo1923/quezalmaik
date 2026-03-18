@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    // Proxy para saltar el bloqueo de CORS en Vercel
     const PROXY_URL = "https://api.allorigins.win/get?url=";
     const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     const AGENDA_URL = PROXY_URL + TARGET_URL;
@@ -31,7 +32,7 @@ $(document).ready(function() {
                     const hrefOriginal = canal.href;
                     let streamID = "";
 
-                    // Extracción del ID del canal (ej: winsportsplus)
+                    // LÓGICA DE EXTRACCIÓN DEL ID (ej: winsportsplus)
                     if (hrefOriginal.includes('capoplay.net/')) {
                         streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
                     } else if (hrefOriginal.includes('canal-')) {
@@ -39,11 +40,13 @@ $(document).ready(function() {
                     }
 
                     let urlFinal;
-                    if (streamID) {
-                        // Construimos la URL del reproductor real de Capo saltando la web de Roja Directa
+                    if (streamID && streamID !== "") {
+                        // CONSTRUCCIÓN DIRECTA: Saltamos la web de RojaDirecta e info innecesaria
+                        // Usamos capo2.php que es el reproductor limpio
                         const urlCapoDirecto = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
                         urlFinal = `embed/eventos.html?r=${btoa(urlCapoDirecto)}`;
                     } else {
+                        // Respaldo si no se detecta el patrón de Capo
                         urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
                     }
 
