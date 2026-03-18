@@ -1,50 +1,80 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maik Sport - Agenda Deportiva</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
-</head>
-<body>
+/* global luxon, jQuery */
+const $ = jQuery;
 
-    <header>
-        <div class="header-content">
-             <div class="header-title">
-                <span class="soccer-ball">⚽</span>
-                <h1>MAIK SPORT</h1>
-                </div>
-            <a href="/home.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
-        </div>
-    </header>
+const AGENDA_URL = "https://pltvhd.com/diaries.json";
+const IMG_BASE = "https://pltvhd.com"; 
 
-    <main>
-        <div class="agenda-header">
-            <h2 id="agenda-titulo">AGENDA - CARGANDO...</h2>
-        </div>
+$(document).ready(function () {
+    // Carga la agenda apenas abre la página
+    obtenerAgenda();
+
+    // Abre y cierra los canales al tocar el partido
+    $(document).on("click", ".toggle-submenu", function (e) {
+        if ($(e.target).closest('a').length) return;
+        $(this).find("ul").slideToggle();
+        $(this).toggleClass("active");
+    });
+
+    // Actualiza cada 2 minutos solito
+    setInterval(obtenerAgenda, 120000);
+});
+
+async function obtenerAgenda() {
+    const menuElement = document.getElementById("menu");
+    const titleElement = document.getElementById("title-agenda");
+
+    // Si no encuentra el ID 'menu', no hace nada (evita que la web se rompa)
+    if (!menuElement) return;
+
+    try {
+        const response = await fetch(AGENDA_URL);
+        const result = await response.json();
         
-        <div class="agenda-lista" id="agenda-lista">
-            </div>
-    </main>
+        if (!result.data) return;
 
-    <nav class="bottom-nav">
-        <a href="home.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>home</span>
-        </a>
-        <a href="agenda.html" class="nav-item active">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Agenda</span>
-        </a>
-        <a href="television.html" class="nav-item">
-            <i class="fas fa-tv"></i>
-            <span>TV</span>
-        </a>
-    </nav>
+        let html = "";
+        result.data.forEach((evento) => {
+            const attr = evento.attributes;
+            const embeds = attr.embeds?.data || [];
+            
+            // Lógica para que los logos de Champions, NBA, etc., carguen bien
+            let imageUrl = `${IMG_BASE}/uploads/sin_imagen_d36205f0e8.png`;
+            const flagPath = attr.country?.data?.attributes?.image?.data?.attributes?.url;
+            if (flagPath) {
+                imageUrl = flagPath.startsWith('http') ? flagPath : `${IMG_BASE}${flagPath}`;
+            }
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="js/agenda.js"></script>
-</body>
-</html>
+            // Hora en formato HH:mm
+            const hora = attr.diary_hour ? attr.diary_hour.substring(0, 5) : "--:--";
+
+            html += `
+                <li class="toggle-submenu" style="list-style:none; background:#020617; margin-bottom:12px; padding:15px; border-radius:12px; cursor:pointer; border:1px solid #333;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <time style="background:#22c55e; color:black; padding:5px 10px; border-radius:8px; font-weight:900;">${hora}</time>
+                        <img src="${imageUrl}" style="width:28px; height:28px; border-radius:50%; object-fit:cover;">
+                        <span style="color:white; font-weight:800; font-size:1.05rem;">${attr.diary_description}</span>
+                    </div>
+                    <ul style="display:none; padding:15px 0 5px 45px; list-style:none;">
+                        ${embeds.map(emb => {
+                            // Ajuste automático de la ruta del reproductor
+                            let link = emb.attributes.embed_iframe;
+                            if (link.startsWith('/embed/')) link = "." + link;
+
+                            return `
+                                <li style="margin-bottom:10px;">
+                                    <a href="${link}" style="color:#86efac; text-decoration:none; font-weight:bold; display:block;">
+                                       ▶ ${emb.attributes.embed_name}
+                                    </a>
+                                </li>`;
+                        }).join('')}
+                    </ul>
+                </li>`;
+        });
+
+        menuElement.innerHTML = html;
+        if (titleElement) titleElement.innerHTML = "Agenda - Partidos de Hoy";
+
+    } catch (error) {
+        console.error("Error cargando la agenda");
+    }
+}
