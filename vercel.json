@@ -3,6 +3,10 @@
     {
       "source": "/api/get-source",
       "destination": "https://tvtvhd.com/canales.php"
+    },
+    {
+      "source": "/api/video/(.*)",
+      "destination": "https://$1"
     }
   ]
 }
