@@ -4,7 +4,6 @@ $(document).ready(function() {
     const AGENDA_URL = PROXY_URL + TARGET_URL;
     
     const agendaLista = $('#agenda-lista');
-    const tituloAgenda = $('#agenda-titulo');
 
     async function cargarAgenda() {
         try {
@@ -14,7 +13,6 @@ $(document).ready(function() {
             const partidosRaw = doc.querySelectorAll('.menu > li');
 
             agendaLista.empty();
-            tituloAgenda.text('AGENDA - ' + new Date().getDate() + ' DE ' + new Date().toLocaleString('es-ES', { month: 'long' }).toUpperCase());
 
             partidosRaw.forEach(partido => {
                 const linkPrincipal = partido.querySelector('a');
@@ -29,27 +27,9 @@ $(document).ready(function() {
                 subitems.forEach(canal => {
                     const nombreCanal = canal.textContent.trim();
                     const hrefOriginal = canal.href;
-                    
-                    // --- MAPEO DE IDs SEGÚN LO QUE ENCONTRASTE ---
-                    let streamID = "";
-                    if (hrefOriginal.includes('winsports')) streamID = "winsportsplus";
-                    else if (hrefOriginal.includes('espnpremium')) streamID = "espnpremium";
-                    else if (hrefOriginal.includes('tntargentina') || hrefOriginal.includes('tnt-sports-argentina')) streamID = "tntargentina";
-                    else if (hrefOriginal.includes('tntchile') || hrefOriginal.includes('tnt-sports-chile')) streamID = "tntchile";
-                    else if (hrefOriginal.includes('liga1max')) streamID = "liga1max";
-                    else if (hrefOriginal.includes('golperu')) streamID = "golperu";
-                    else if (hrefOriginal.includes('mlspass')) streamID = "mlspass";
-                    else {
-                        // Extracción genérica si no está en la lista (ej: canal-20.php)
-                        streamID = hrefOriginal.split('/').pop().replace('.php', '').replace('canal-', 'canal');
-                    }
 
-                    // LA LLAVE MAESTRA: 
-                    // Cargamos la página que ejecuta el script de permiso (capoplay.net)
-                    const urlLlave = `https://www.capoplay.net/${streamID}.php`;
-                    const urlFinal = `embed/eventos.html?r=${btoa(urlLlave)}`;
-
-                    canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
+                    // Guardamos la URL de la "cáscara" en un atributo data
+                    canalesHtml += `<a href="#" data-url="${hrefOriginal}" class="canal-link">➤ ${nombreCanal}</a>`;
                 });
                 
                 canalesHtml += '</div>';
@@ -57,22 +37,45 @@ $(document).ready(function() {
                     <div class="evento-contenedor">
                         <div class="evento">
                             <div class="hora">${horaLocal}</div>
-                            <img src="https://i.imgur.com/Vdef5Rz.png" class="evento-icono">
                             <div class="info-evento">${titulo}</div>
-                            <div class="flecha">›</div>
                         </div>
                         ${canalesHtml}
                     </div>`;
                 agendaLista.append(eventoHtml);
             });
-        } catch (error) {
-            console.error("Error en agenda:", error);
-        }
+        } catch (error) { console.error("Error agenda"); }
     }
 
-    agendaLista.on('click', '.canal-link', function(e) {
+    // EL DETECTIVE: Al hacer clic, buscamos el iframe real
+    agendaLista.on('click', '.canal-link', async function(e) {
         e.preventDefault();
-        window.open($(this).attr('href'), '_blank');
+        const btn = $(this);
+        const urlCascara = btn.attr('data-url');
+        
+        btn.text('⌛ Cargando...');
+
+        try {
+            // Entramos a la página de RojaDirecta/Pirlo/Elitegol en segundo plano
+            const response = await fetch(PROXY_URL + encodeURIComponent(urlCascara));
+            const data = await response.json();
+            const pageDoc = new DOMParser().parseFromString(data.contents, 'text/html');
+            
+            // BUSCAMOS EL IFRAME DE CAPOPLAY
+            const iframe = pageDoc.querySelector('iframe[src*="capoplay.net"]');
+            
+            if (iframe) {
+                const urlRealCapo = iframe.src;
+                // Ahora sí, mandamos la URL real a tu reproductor
+                window.open(`embed/eventos.html?r=${btoa(urlRealCapo)}`, '_blank');
+            } else {
+                // Si no hay iframe de capo, mandamos la original como respaldo
+                window.open(`embed/eventos.html?r=${btoa(urlCascara)}`, '_blank');
+            }
+        } catch (err) {
+            console.error("Error al extraer");
+        } finally {
+            btn.text('➤ ' + btn.text().replace('⌛ Cargando...', '').trim());
+        }
     });
 
     agendaLista.on('click', '.evento', function() {
