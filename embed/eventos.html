@@ -10,129 +10,86 @@
 
 <style>
 :root {
-    --bg-page: #0a0a0c;
-    --bg-player: #000;
-    --accent: #22c55e;
-    --maik-blue: #1e40af;
-    --text: #fff;
+    --bg-page:#0a0a0c;
+    --maik-blue:#1e40af;
+    --accent:#22c55e;
 }
 
-/* BASE */
-body {
+body{
     margin:0;
-    background: var(--bg-page);
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
+    background:var(--bg-page);
+    font-family:sans-serif;
+    color:white;
+    overflow-x:hidden;
 }
 
-/* LAYOUT */
-.layout {
-    display: grid;
-    grid-template-columns: 160px 1fr 160px;
-    max-width: 1800px;
-    margin: auto;
-}
-
-/* ADS LATERALES */
-.ad-side {
+/* CONTENEDOR GENERAL */
+.page {
     display:flex;
     justify-content:center;
-    padding-top:40px;
+    width:100%;
 }
 
-.ad-box {
-    width:120px;
-    height:600px;
-    border-radius:10px;
-    border:1px dashed #333;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#555;
-}
-
-/* CENTRO */
-.main-content {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-/* CONTENEDOR PLAYER */
-.cinema-container {
+/* CONTENIDO CENTRAL */
+.container {
     width:95%;
-    max-width:1400px;
-    margin-top:20px;
+    max-width:1200px;
 }
 
-/* VIDEO */
-.player-wrapper {
+/* PLAYER */
+.player-wrapper{
     position:relative;
     width:100%;
     padding-bottom:56.25%;
     background:black;
-    border-radius:12px;
+    border-radius:10px;
     overflow:hidden;
-    box-shadow:0 0 40px rgba(30,64,175,0.3);
 }
 
-iframe {
+iframe{
     position:absolute;
     width:100%;
     height:100%;
     top:0;
     left:0;
-    border:none;
 }
 
 /* GUARD */
-#maik-guard {
+#maik-guard{
     position:absolute;
     width:100%;
     height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     background:rgba(0,0,0,0.4);
-    display:flex;
-    align-items:center;
-    justify-content:center;
     cursor:pointer;
-    z-index:50;
+    z-index:5;
 }
 
-#maik-guard i {
+#maik-guard i{
     font-size:50px;
-    background:rgba(30,64,175,0.9);
-    width:80px;
-    height:80px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    background:var(--maik-blue);
+    padding:20px;
     border-radius:50%;
-    transition:0.3s;
-}
-
-#maik-guard:hover i {
-    transform:scale(1.2);
 }
 
 /* CONTROLES */
-.maik-controls {
-    background:rgba(20,20,23,0.8);
-    backdrop-filter:blur(10px);
-    padding:12px;
+.controls{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    border-radius:0 0 12px 12px;
+    padding:10px;
+    background:#141417;
 }
 
-/* LIVE */
-.live-indicator {
+.live{
     display:flex;
     gap:8px;
     font-size:13px;
 }
 
-.live-dot {
+.dot{
     width:10px;
     height:10px;
     background:var(--accent);
@@ -140,71 +97,56 @@ iframe {
     animation:pulse 1.5s infinite;
 }
 
-@keyframes pulse {
+@keyframes pulse{
     0%{opacity:1}
     50%{opacity:0.3}
     100%{opacity:1}
 }
 
-/* BOTONES */
-.ctrl-right {
+.btns{
     display:flex;
     gap:10px;
 }
 
-.ctrl-btn {
+.btn{
     width:40px;
     height:40px;
     border:none;
-    border-radius:6px;
     background:#27272a;
     color:white;
-    cursor:pointer;
-    transition:0.2s;
+    border-radius:6px;
 }
 
-.ctrl-btn:hover {
-    background:var(--maik-blue);
-    transform:scale(1.1);
-}
-
-.ctrl-btn.close {
-    background:#7f1d1d;
-}
-
-/* BANNER ABAJO */
-.ads-bottom {
-    width:100%;
-    max-width:900px;
-    margin:20px;
+/* ADS ABAJO */
+.ad-bottom{
+    margin:20px 0;
     padding:15px;
-    text-align:center;
     border:1px dashed #333;
+    text-align:center;
     border-radius:10px;
+}
+
+/* ADS LATERALES SOLO EN PC GRANDE */
+.ads-side{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+    width:120px;
+    height:600px;
+    border:1px dashed #333;
+    display:none;
+    align-items:center;
+    justify-content:center;
     color:#555;
 }
 
-/* RESPONSIVE */
-@media(max-width:1200px){
-    .layout {
-        grid-template-columns:1fr;
-    }
+.ads-left{ left:10px; }
+.ads-right{ right:10px; }
 
-    .ad-side {
-        display:none;
-    }
-
-    .cinema-container {
-        width:100%;
-        margin-top:0;
-    }
-
-    .player-wrapper {
-        border-radius:0;
-    }
-
-    .maik-controls {
-        border-radius:0;
+/* SOLO PC */
+@media(min-width:1300px){
+    .ads-side{
+        display:flex;
     }
 }
 </style>
@@ -212,64 +154,40 @@ iframe {
 
 <body>
 
-<div class="layout">
+<!-- ADS LATERALES -->
+<div class="ads-side ads-left">Publicidad</div>
+<div class="ads-side ads-right">Publicidad</div>
 
-    <!-- IZQUIERDA -->
-    <aside class="ad-side">
-        <div class="ad-box">Publicidad</div>
-    </aside>
+<div class="page">
+<div class="container">
 
-    <!-- CENTRO -->
-    <main class="main-content">
+    <div class="player-wrapper">
+        <div id="maik-guard"><i class="fas fa-play"></i></div>
 
-        <div class="cinema-container">
+        <iframe id="video-frame"
+        sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts"
+        allowfullscreen allow="autoplay; encrypted-media">
+        </iframe>
+    </div>
 
-            <div class="player-wrapper">
-                <div id="maik-guard">
-                    <i class="fas fa-play"></i>
-                </div>
-
-                <iframe id="video-frame"
-                sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts"
-                allowfullscreen
-                allow="autoplay; encrypted-media">
-                </iframe>
-            </div>
-
-            <div class="maik-controls">
-                <div class="live-indicator">
-                    <div class="live-dot"></div>
-                    <span>EN VIVO MAIK SPORT</span>
-                </div>
-
-                <div class="ctrl-right">
-                    <button class="ctrl-btn" onclick="location.reload();">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
-
-                    <button class="ctrl-btn" onclick="toggleFS();">
-                        <i class="fas fa-expand"></i>
-                    </button>
-
-                    <button class="ctrl-btn close" onclick="location.href='../agenda.html';">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-
+    <div class="controls">
+        <div class="live">
+            <div class="dot"></div>
+            EN VIVO MAIK SPORT
         </div>
 
-        <div class="ads-bottom">
-            Banner 728x90
+        <div class="btns">
+            <button class="btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i></button>
+            <button class="btn" onclick="toggleFS()"><i class="fas fa-expand"></i></button>
+            <button class="btn" onclick="location.href='../agenda.html'"><i class="fas fa-times"></i></button>
         </div>
+    </div>
 
-    </main>
+    <div class="ad-bottom">
+        Banner 728x90
+    </div>
 
-    <!-- DERECHA -->
-    <aside class="ad-side">
-        <div class="ad-box">Publicidad</div>
-    </aside>
-
+</div>
 </div>
 
 <script>
@@ -291,7 +209,7 @@ guard.addEventListener('click', function() {
 
 function toggleFS() {
     if (!document.fullscreenElement) {
-        document.querySelector('.cinema-container').requestFullscreen();
+        document.querySelector('.player-wrapper').requestFullscreen();
     } else {
         document.exitFullscreen();
     }
