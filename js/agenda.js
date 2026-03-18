@@ -31,19 +31,18 @@ $(document).ready(function() {
                     const hrefOriginal = canal.href;
                     let streamID = "";
 
+                    // Extracción agresiva del ID (ej: winsportsplus)
                     if (hrefOriginal.includes('capoplay.net/')) {
                         streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
-                    } else if (hrefOriginal.includes('live=')) {
-                        const urlParams = new URLSearchParams(hrefOriginal.split('?')[1]);
-                        streamID = urlParams.get('live');
+                    } else if (hrefOriginal.includes('canal-')) {
+                        streamID = hrefOriginal.split('canal-')[1].replace('.php', '');
                     }
 
                     let urlFinal;
                     if (streamID) {
-                        // AQUÍ EL TRUCO: Usamos una URL que oculte nuestro origen real
-                        // y apuntamos al capo2.php
-                        const urlCapo = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
-                        urlFinal = `embed/eventos.html?r=${btoa(urlCapo)}`;
+                        // Construimos la URL del reproductor real de Capo
+                        const urlCapoDirecto = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
+                        urlFinal = `embed/eventos.html?r=${btoa(urlCapoDirecto)}`;
                     } else {
                         urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
                     }
@@ -52,7 +51,6 @@ $(document).ready(function() {
                 });
                 
                 canalesHtml += '</div>';
-                
                 const eventoHtml = `
                     <div class="evento-contenedor">
                         <div class="evento">
@@ -70,13 +68,9 @@ $(document).ready(function() {
         }
     }
 
-    // INTERCEPTOR MEJORADO PARA SALTAR BLOQUEO 403 / COPYRIGHT
     agendaLista.on('click', '.canal-link', function(e) {
         e.preventDefault();
-        const urlConParametro = $(this).attr('href');
-        
-        // Abrimos el reproductor eventos.html
-        window.open(urlConParametro, '_blank');
+        window.open($(this).attr('href'), '_blank');
     });
 
     agendaLista.on('click', '.evento', function() {
