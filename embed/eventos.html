@@ -2,63 +2,99 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canales de Deportes - Reproductor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Maik Sport - Reproductor Pro</title>
     <meta name="referrer" content="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { background: linear-gradient(0deg, #0d1b2a, #1b263b); color: #e0e0e0; overflow-x: hidden; }
-        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 20px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); }
-        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .header-title h1 { color: #ffffff; font-size: 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
-        .soccer-ball { font-size: 38px; color: #ffffff; animation: spin 3s linear infinite; display: inline-block; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .back-button { background: #2a2a2a; border-radius: 50%; width: 50px; height: 50px; color: #ffffff; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
-        .back-button:hover { background: #60a5fa; transform: scale(1.1); }
-        .content-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; text-align: center; }
-        .live-text { font-size: 24px; font-weight: 700; color: #ffffff; margin-bottom: 20px; background: linear-gradient(90deg, #ef4444, #f87171); padding: 10px 20px; border-radius: 12px; display: inline-block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
-        .embed-responsive { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.5); background: #000; }
-        .embed-responsive-item { position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none; }
-        .reload-button { padding: 14px 30px; border: none; border-radius: 12px; background: linear-gradient(90deg, #60a5fa, #3b82f6); color: #ffffff; cursor: pointer; font-size: 20px; font-weight: 600; margin-top: 20px; transition: 0.3s; }
-        .reload-button:hover { transform: scale(1.05); background: #3b82f6; }
+        /* Pantalla completa negra sin scroll */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { 
+            width: 100%; 
+            height: 100%; 
+            background: #000; 
+            overflow: hidden; 
+            font-family: sans-serif;
+        }
+
+        /* El contenedor es el que hace el recorte */
+        .recorte-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* AJUSTE MAESTRO: 
+           Hacemos el iframe más grande que la pantalla (115%) 
+           y lo subimos (-75px) para que el logo de ellos desaparezca arriba.
+        */
+        #videoFrame {
+            position: absolute;
+            width: 100%;
+            height: 125%; /* Más alto para empujar el footer hacia abajo */
+            top: -75px;   /* Sube el contenido para tapar el header de ellos */
+            left: 0;
+            border: none;
+        }
+
+        /* Botón de volver flotante para no perder la navegación */
+        .btn-volver {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Capa invisible para evitar clics accidentales en anuncios laterales */
+        .escudo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px; /* Protege la zona superior */
+            z-index: 999;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="header-title" style="display: flex; align-items: center; gap: 15px;">
-                <span class="soccer-ball">⚽</span>
-                <h1>MAIK SPORT</h1>
-            </div>
-            <a href="javascript:history.back()" class="back-button"><i class="fas fa-arrow-left"></i></a>
-        </div>
-    </header>
-    <div class="content-container">
-        <p class="live-text">EN VIVO</p>
-        <div class="embed-responsive">
-            <iframe class="embed-responsive-item" id="videoFrame" allowfullscreen sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer"></iframe>
-        </div>
-        <button type="button" class="reload-button" onclick="location.reload()">
-            <i class="fas fa-redo"></i> Recargar Reproductor
-        </button>
+
+    <a href="javascript:history.back()" class="btn-volver">⬅ Volver</a>
+    
+    <div class="recorte-container">
+        <div class="escudo"></div>
+        <iframe 
+            id="videoFrame" 
+            src="" 
+            allowfullscreen 
+            sandbox="allow-scripts allow-same-origin" 
+            referrerpolicy="no-referrer">
+        </iframe>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const iframe = document.getElementById("videoFrame");
             const params = new URLSearchParams(window.location.search);
-            const encodedUrl = params.get("r");
-            if (encodedUrl) {
+            const r = params.get("r");
+
+            if (r) {
                 try {
-                    const decodedUrl = atob(encodedUrl);
+                    // Decodifica y carga
+                    const decodedUrl = atob(r);
                     iframe.src = decodedUrl;
                 } catch (e) {
-                    console.error("Error decodificando URL:", e);
-                    document.querySelector('.content-container').innerHTML = "<h2 style='color:white;'>Error en el enlace.</h2>";
+                    console.error("Error en enlace");
                 }
-            } else {
-                document.querySelector('.content-container').innerHTML = "<h2 style='color:white;'>No hay evento seleccionado.</h2>";
             }
         });
     </script>
