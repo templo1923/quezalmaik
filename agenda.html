@@ -1,21 +1,25 @@
 /* global luxon, jQuery */
 const $ = jQuery;
 
+// ✅ CONFIGURACIÓN PARA MAIK SPORT
 const AGENDA_URL = "https://pltvhd.com/diaries.json";
 const IMG_BASE = "https://pltvhd.com"; 
 
 $(document).ready(function () {
-    // Carga la agenda apenas abre la página
+    // 1. Carga inicial
     obtenerAgenda();
 
-    // Abre y cierra los canales al tocar el partido
+    // 2. Acordeón: Al tocar el partido, abre los canales
     $(document).on("click", ".toggle-submenu", function (e) {
+        // Si toca el link directo del canal, que abra el video y no cierre el menú
         if ($(e.target).closest('a').length) return;
-        $(this).find("ul").slideToggle();
-        $(this).toggleClass("active");
+        
+        const $submenu = $(this).find("ul");
+        $(".agenda-list ul").not($submenu).slideUp(); // Cierra otros
+        $submenu.slideToggle(); // Abre este
     });
 
-    // Actualiza cada 2 minutos solito
+    // 3. Auto-refrescar cada 2 minutos
     setInterval(obtenerAgenda, 120000);
 });
 
@@ -23,46 +27,46 @@ async function obtenerAgenda() {
     const menuElement = document.getElementById("menu");
     const titleElement = document.getElementById("title-agenda");
 
-    // Si no encuentra el ID 'menu', no hace nada (evita que la web se rompa)
+    // Si el ID 'menu' no existe en el HTML, el código se detiene aquí
     if (!menuElement) return;
 
     try {
-        const response = await fetch(AGENDA_URL);
+        const response = await fetch(AGENDA_URL, { cache: "no-store" });
         const result = await response.json();
         
-        if (!result.data) return;
+        if (!result || !result.data) return;
 
         let html = "";
         result.data.forEach((evento) => {
             const attr = evento.attributes;
             const embeds = attr.embeds?.data || [];
             
-            // Lógica para que los logos de Champions, NBA, etc., carguen bien
+            // LÓGICA DE ICONOS (Champions, NBA, etc)
             let imageUrl = `${IMG_BASE}/uploads/sin_imagen_d36205f0e8.png`;
             const flagPath = attr.country?.data?.attributes?.image?.data?.attributes?.url;
             if (flagPath) {
                 imageUrl = flagPath.startsWith('http') ? flagPath : `${IMG_BASE}${flagPath}`;
             }
 
-            // Hora en formato HH:mm
+            // HORA LOCAL
             const hora = attr.diary_hour ? attr.diary_hour.substring(0, 5) : "--:--";
 
             html += `
-                <li class="toggle-submenu" style="list-style:none; background:#020617; margin-bottom:12px; padding:15px; border-radius:12px; cursor:pointer; border:1px solid #333;">
+                <li class="toggle-submenu" style="list-style:none; background:#020617; margin-bottom:10px; padding:15px; border-radius:12px; cursor:pointer; border:1px solid #333;">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <time style="background:#22c55e; color:black; padding:5px 10px; border-radius:8px; font-weight:900;">${hora}</time>
                         <img src="${imageUrl}" style="width:28px; height:28px; border-radius:50%; object-fit:cover;">
-                        <span style="color:white; font-weight:800; font-size:1.05rem;">${attr.diary_description}</span>
+                        <span style="color:white; font-weight:800;">${attr.diary_description}</span>
                     </div>
-                    <ul style="display:none; padding:15px 0 5px 45px; list-style:none;">
+                    <ul style="display:none; padding:15px 0 0 45px; list-style:none;">
                         ${embeds.map(emb => {
-                            // Ajuste automático de la ruta del reproductor
-                            let link = emb.attributes.embed_iframe;
-                            if (link.startsWith('/embed/')) link = "." + link;
+                            let finalHref = emb.attributes.embed_iframe;
+                            // Si el link es relativo lo arreglamos para que apunte a tu carpeta
+                            if (finalHref.startsWith('/embed/')) finalHref = "." + finalHref;
 
                             return `
                                 <li style="margin-bottom:10px;">
-                                    <a href="${link}" style="color:#86efac; text-decoration:none; font-weight:bold; display:block;">
+                                    <a href="${finalHref}" style="color:#86efac; text-decoration:none; font-weight:bold; display:block;">
                                        ▶ ${emb.attributes.embed_name}
                                     </a>
                                 </li>`;
@@ -72,9 +76,9 @@ async function obtenerAgenda() {
         });
 
         menuElement.innerHTML = html;
-        if (titleElement) titleElement.innerHTML = "Agenda - Partidos de Hoy";
+        if (titleElement) titleElement.innerHTML = "Agenda Deportiva";
 
     } catch (error) {
-        console.error("Error cargando la agenda");
+        console.error("❌ Fallo en la conexión con el servidor de señales");
     }
 }
