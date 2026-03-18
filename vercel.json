@@ -1,0 +1,19 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.capoplay.net https://*.capoplayer.net https://cdn.jsdelivr.net; connect-src 'self' https://*.capoplay.net; frame-src *; img-src *; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/ads.tiogolhd.com/(.*)", "destination": "/404" },
+    { "source": "/bvtpk.com/(.*)", "destination": "/404" },
+    { "source": "/waust.at/(.*)", "destination": "/404" },
+    { "source": "/jnbhi.com/(.*)", "destination": "/404" }
+  ]
+}
