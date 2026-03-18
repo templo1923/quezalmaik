@@ -71,55 +71,55 @@
     <div class="content-container">
         <p class="live-text">EN VIVO</p>
 
-        <div class="embed-responsive">
-<iframe 
-    class="embed-responsive-item" 
-    id="videoFrame" 
-    allowfullscreen 
-    allow="autoplay; encrypted-media; picture-in-picture"
-    referrerpolicy="no-referrer">
-</iframe>
-        </div>
-
-        <button type="button" class="reload-button" onclick="location.reload()">
-            <i class="fas fa-redo"></i> Recargar Reproductor
-        </button>
-    </div>
+<div class="embed-responsive" id="wrapper" style="position: relative;">
+    <div id="fake-click-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; cursor: pointer;"></div>
+    
+    <iframe 
+        class="embed-responsive-item" 
+        id="videoFrame" 
+        allowfullscreen 
+        allow="autoplay; encrypted-media"
+        referrerpolicy="no-referrer">
+    </iframe>
+</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const iframe = document.getElementById("videoFrame");
+        const layer = document.getElementById("fake-click-layer");
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
 
-        // 1. CARGA DEL VIDEO
-        if (r) {
-            try {
-                const decodedUrl = atob(r);
-                iframe.src = decodedUrl;
-            } catch (e) {
-                console.error("Error cargando señal");
-                document.querySelector('.content-container').innerHTML = "<h2 style='color:white;'>Error en la señal.</h2>";
-            }
-        }
+        if (r) { iframe.src = atob(r); }
 
-        // 2. ESCUDO ANTI-POPUPS (Lo que realmente frena la basura)
-        // Bloqueamos la función de abrir ventanas antes de que el iframe haga de las suyas
+        // 1. MATAMOS LA FUNCIÓN DE ABRIR VENTANAS (ADBLOCK MANUAL)
         window.open = function() { 
-            console.log("🛡️ Maik-Guard: Popup bloqueado");
+            console.log("🛡️ Maik-Guard: Intento de Popup bloqueado");
             return null; 
         };
 
-        // 3. TRUCO DE ENFOQUE (Para que los clics al 'Play' no abran pestañas)
+        // 2. EL ESCUDO DE CLICS
+        layer.addEventListener("click", function() {
+            console.log("🛡️ Maik-Guard: Primer clic interceptado.");
+            
+            // Forzamos el foco a nuestra web, no al anuncio
+            window.focus();
+            
+            // Quitamos la capa para que el siguiente clic sea el PLAY real
+            layer.style.display = "none";
+            
+            // Pequeño truco: si el anuncio intentó abrirse, esto lo cierra
+            setTimeout(() => { window.focus(); }, 100);
+        });
+
+        // 3. SEGURO ADICIONAL
+        // Si el usuario logra pasar la capa, seguimos vigilando el foco
         setInterval(() => {
             if (document.activeElement === iframe) {
-                // Si el usuario toca el iframe, le quitamos el foco rápido 
-                // para que el popup no gane el 'permiso' del navegador.
                 setTimeout(() => { window.focus(); }, 150);
             }
-        }, 500);
+        }, 1000);
     });
 </script>
-
 </body>
 </html>
