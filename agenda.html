@@ -1,84 +1,57 @@
-/* global luxon, jQuery */
-const $ = jQuery;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quetzalito Sport - Agenda Deportiva</title>
+    <title>Maik Sport - Agenda Deportiva</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
+</head>
+<body>
 
-// ✅ CONFIGURACIÓN PARA MAIK SPORT
-const AGENDA_URL = "https://pltvhd.com/diaries.json";
-const IMG_BASE = "https://pltvhd.com"; 
+    <header>
+        <div class="header-content">
+             <div class="header-title">
+                <span class="soccer-ball">⚽</span>
+                <h1>QUETZALITO SPORT</h1>
+                <h1>MAIK SPORT</h1>
+                </div>
+            <button class="back-button">←</button>
+            <a href="/home.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </header>
 
-$(document).ready(function () {
-    // 1. Carga inicial
-    obtenerAgenda();
+    <main>
+        <div class="agenda-header">
+            <h2 id="agenda-titulo">AGENDA - CARGANDO...</h2>
+        </div>
 
-    // 2. Acordeón: Al tocar el partido, abre los canales
-    $(document).on("click", ".toggle-submenu", function (e) {
-        // Si toca el link directo del canal, que abra el video y no cierre el menú
-        if ($(e.target).closest('a').length) return;
-        
-        const $submenu = $(this).find("ul");
-        $(".agenda-list ul").not($submenu).slideUp(); // Cierra otros
-        $submenu.slideToggle(); // Abre este
-    });
+        <div class="agenda-lista" id="agenda-lista">
+            </div>
+    </main>
 
-    // 3. Auto-refrescar cada 2 minutos
-    setInterval(obtenerAgenda, 120000);
-});
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item">
+        <a href="home.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>home</span>
+        </a>
+        <a href="#" class="nav-item active">
+        <a href="agenda.html" class="nav-item active">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Agenda</span>
+        </a>
+        <a href="#" class="nav-item">
+        <a href="television.html" class="nav-item">
+            <i class="fas fa-tv"></i>
+            <span>TV</span>
+        </a>
+    </nav>
 
-async function obtenerAgenda() {
-    const menuElement = document.getElementById("menu");
-    const titleElement = document.getElementById("title-agenda");
-
-    // Si el ID 'menu' no existe en el HTML, el código se detiene aquí
-    if (!menuElement) return;
-
-    try {
-        const response = await fetch(AGENDA_URL, { cache: "no-store" });
-        const result = await response.json();
-        
-        if (!result || !result.data) return;
-
-        let html = "";
-        result.data.forEach((evento) => {
-            const attr = evento.attributes;
-            const embeds = attr.embeds?.data || [];
-            
-            // LÓGICA DE ICONOS (Champions, NBA, etc)
-            let imageUrl = `${IMG_BASE}/uploads/sin_imagen_d36205f0e8.png`;
-            const flagPath = attr.country?.data?.attributes?.image?.data?.attributes?.url;
-            if (flagPath) {
-                imageUrl = flagPath.startsWith('http') ? flagPath : `${IMG_BASE}${flagPath}`;
-            }
-
-            // HORA LOCAL
-            const hora = attr.diary_hour ? attr.diary_hour.substring(0, 5) : "--:--";
-
-            html += `
-                <li class="toggle-submenu" style="list-style:none; background:#020617; margin-bottom:10px; padding:15px; border-radius:12px; cursor:pointer; border:1px solid #333;">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <time style="background:#22c55e; color:black; padding:5px 10px; border-radius:8px; font-weight:900;">${hora}</time>
-                        <img src="${imageUrl}" style="width:28px; height:28px; border-radius:50%; object-fit:cover;">
-                        <span style="color:white; font-weight:800;">${attr.diary_description}</span>
-                    </div>
-                    <ul style="display:none; padding:15px 0 0 45px; list-style:none;">
-                        ${embeds.map(emb => {
-                            let finalHref = emb.attributes.embed_iframe;
-                            // Si el link es relativo lo arreglamos para que apunte a tu carpeta
-                            if (finalHref.startsWith('/embed/')) finalHref = "." + finalHref;
-
-                            return `
-                                <li style="margin-bottom:10px;">
-                                    <a href="${finalHref}" style="color:#86efac; text-decoration:none; font-weight:bold; display:block;">
-                                       ▶ ${emb.attributes.embed_name}
-                                    </a>
-                                </li>`;
-                        }).join('')}
-                    </ul>
-                </li>`;
-        });
-
-        menuElement.innerHTML = html;
-        if (titleElement) titleElement.innerHTML = "Agenda Deportiva";
-
-    } catch (error) {
-        console.error("❌ Fallo en la conexión con el servidor de señales");
-    }
-}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/agenda.js"></script>
+</body>
+</html>
+</html>
