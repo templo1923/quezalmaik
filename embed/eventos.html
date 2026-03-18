@@ -34,52 +34,47 @@
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
 
-        async function cargarSeñal() {
-            if (!r) {
-                document.getElementById("loader").innerHTML = "<p style='color:red;'>Error: No se recibió parámetro de señal.</p>";
-                return;
-            }
+async function cargarSeñal() {
+    if (!r) return;
+    const urlDecodificada = atob(r);
+    const queryParams = urlDecodificada.split('?')[1];
 
-            try {
-                // 1. Decodificamos el Base64 (ej: https://tvtvhd.com/canales.php?stream=espn)
-                const urlDecodificada = atob(r);
-                
-                // Extraemos los parámetros de la URL decodificada (lo que va después del ?)
-                const queryParams = urlDecodificada.split('?')[1];
+    try {
+        const response = await fetch(`/api/get-source?${queryParams}`);
+        const htmlCode = await response.text();
+        const match = htmlCode.match(/var playbackURL = "(.*?)";/);
 
-                // 2. Consultamos a través de TU PROPIO PROXY en Vercel (más rápido y sin error 522)
-                const response = await fetch(`/api/get-source?${queryParams}`);
-                const htmlCode = await response.text();
+        if (match && match[1]) {
+            let m3u8Limpio = match[1];
+            
+            // LA MAGIA: Pasamos el link del video por nuestro proxy de Vercel
+            // Esto oculta que vienes de tu web y ayuda a saltar el 403
+            const videoProxy = m3u8Limpio.replace("https://", "/api/video/");
 
-                // 3. Buscamos la variable playbackURL en el código fuente obtenido
-                const match = htmlCode.match(/var playbackURL = "(.*?)";/);
+            document.getElementById("loader").style.display = "none";
 
-                if (match && match[1]) {
-                    const m3u8Limpio = match[1];
-                    
-                    // Ocultamos el cargador
-                    document.getElementById("loader").style.display = "none";
-
-                    // 4. Iniciamos el reproductor Clappr con el link real extraído
-                    new Clappr.Player({
-                        source: m3u8Limpio,
-                        parentId: "#player",
-                        width: "100%",
-                        height: "100%",
-                        autoPlay: true,
-                        mediacontrol: {seekbar: "#22c55e", buttons: "#FFFFFF"},
-                        mimeType: "application/x-mpegURL",
-                        // Ajuste para evitar que el reproductor original intente disparar popups
-                        disableVideoTagContextMenu: true
-                    });
-                } else {
-                    document.getElementById("loader").innerHTML = "<p style='color:red;'>Señal no encontrada en el origen. Intenta recargar.</p>";
-                }
-            } catch (error) {
-                console.error("Error Maik Sport:", error);
-                document.getElementById("loader").innerHTML = "<p style='color:white;'>Error de conexión. Por favor, recarga la página.</p>";
-            }
+            new Clappr.Player({
+                source: videoProxy,
+                parentId: "#player",
+                width: "100%",
+                height: "100%",
+                autoPlay: true,
+                // Agregamos esto para que el navegador no envíe tu dominio en el referer
+                hlsjsConfig: {
+                    xhrSetup: function(xhr, url) {
+                        xhr.withCredentials = false;
+                    }
+                },
+                mediacontrol: {seekbar: "#22c55e", buttons: "#FFFFFF"},
+                mimeType: "application/x-mpegURL"
+            });
+        } else {
+            document.getElementById("loader").innerHTML = "<p style='color:red;'>Señal no encontrada.</p>";
         }
+    } catch (error) {
+        document.getElementById("loader").innerHTML = "<p style='color:white;'>Error de conexión. Reintenta.</p>";
+    }
+}
 
         // Ejecutar la función
         cargarSeñal();
