@@ -3,7 +3,7 @@ const $ = jQuery;
 
 // ✅ Usamos la ruta interna configurada en vercel.json
 const AGENDA_URL = "/api/agenda"; 
-const IMG_BASE = "https://cnd.pltvhd.com";
+const IMG_BASE = "https://cdn.pltvhd.com";
 
 $(document).ready(function () {
     obtenerAgenda();
