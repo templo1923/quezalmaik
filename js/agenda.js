@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    // Cambiamos la URL a la de Rojadirecta usando un Proxy de CORS para que funcione en Vercel
+    // Cambiamos la fuente a Rojadirecta usando un Proxy para Vercel
     const PROXY_URL = "https://api.allorigins.win/get?url=";
     const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     const AGENDA_URL = PROXY_URL + TARGET_URL;
@@ -8,24 +8,16 @@ $(document).ready(function() {
     const agendaLista = $('#agenda-lista');
     const tituloAgenda = $('#agenda-titulo');
 
-    // Mantenemos tu función de hora actualizándola para el formato de la nueva web
-    function convertirHora(horaTexto) {
-        if(!horaTexto) return "--:--";
-        // La web suele dar la hora en formato HH:mm directamente
-        return horaTexto;
-    }
-
     async function cargarAgenda() {
         try {
             const respuesta = await fetch(AGENDA_URL);
             const data = await respuesta.json();
-            const htmlContent = data.contents; // El HTML puro de la web externa
+            const htmlContent = data.contents; 
 
-            // Convertimos el texto a HTML manipulable
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlContent, 'text/html');
             
-            // Buscamos los partidos (en Rojadirecta están en la clase .menu > li)
+            // Estructura de la web robusta: los partidos están en .menu > li
             const partidosRaw = doc.querySelectorAll('.menu > li');
 
             agendaLista.empty();
@@ -37,16 +29,12 @@ $(document).ready(function() {
                 const linkPrincipal = partido.querySelector('a');
                 if (!linkPrincipal) return;
 
-                // Extraemos el título del partido (limpiando espacios)
                 const titulo = linkPrincipal.textContent.split('\n')[0].trim();
                 const horaLocal = linkPrincipal.querySelector('.t')?.textContent.trim() || "--:--";
 
-                // Icono por defecto de Maik Sport
                 let urlIcono = "https://i.imgur.com/Vdef5Rz.png"; 
 
                 let canalesHtml = '<div class="canales">';
-                
-                // Buscamos los enlaces de canales dentro del submenú <ul>
                 const subitems = partido.querySelectorAll('ul li a');
                 
                 if (subitems.length > 0) {
@@ -54,16 +42,17 @@ $(document).ready(function() {
                         const nombreCanal = canal.textContent.trim();
                         const hrefOriginal = canal.href;
 
-                        // Lógica para extraer el parámetro 'r' (URL real) si existe
-                        let urlDestino = hrefOriginal;
+                        let urlFinal = hrefOriginal;
+                        // Extraemos el parámetro 'r' que contiene el stream real
                         if (hrefOriginal.includes('?r=')) {
                             const params = new URLSearchParams(hrefOriginal.split('?')[1]);
                             const r = params.get("r");
-                            // Enviamos directamente a tu reproductor de TV En Vivo limpio
-                            urlDestino = `Tvenvivo.html?stream=${r}`;
+                            
+                            // IMPORTANTE: Redirigimos a TU archivo vivo.html para limpiar anuncios
+                            urlFinal = `vivo.html?stream=${r}`;
                         }
 
-                        canalesHtml += `<a href="${urlDestino}" class="canal-link">➤ ${nombreCanal}</a>`;
+                        canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
                     });
                 } else {
                     canalesHtml += `<span class="sin-canales">Próximamente...</span>`;
@@ -85,12 +74,12 @@ $(document).ready(function() {
             });
 
         } catch (error) {
-            console.error("Error al cargar la agenda robusta:", error);
-            agendaLista.html('<p class="error">No se pudo sincronizar la agenda.</p>');
+            console.error("Error al sincronizar agenda:", error);
+            agendaLista.html('<p class="error">No se pudo cargar la agenda robusta.</p>');
         }
     }
 
-    // Mantenemos tu lógica de acordeón para mostrar los canales
+    // Tu lógica de acordeón original
     agendaLista.on('click', '.evento', function() {
         const subMenu = $(this).siblings('.canales');
         $('.canales').not(subMenu).slideUp('fast');
@@ -98,6 +87,5 @@ $(document).ready(function() {
     });
 
     cargarAgenda();
-    // Actualización automática cada minuto
     setInterval(cargarAgenda, 60000);
 });
