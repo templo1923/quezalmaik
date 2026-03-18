@@ -1,63 +1,83 @@
+mira lo corregi mejor ajora si 
+
+q ke pudes poner pro a esto 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Señal en Vivo</title>
+    <title>MAIK SPORT - Live</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
         
-        /* Body flexible: centra todo y evita que nada se salga */
+        /* Ocupamos el 100% de la pantalla sin scroll */
         body, html { 
-            height: 100%; background: #0d1b2a; color: #e0e0e0; 
-            display: flex; flex-direction: column; overflow: hidden; 
+            height: 100%; 
+            background: #0d1b2a; 
+            color: #e0e0e0; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
         }
 
         header { 
             background: linear-gradient(90deg, #1e3a8a, #60a5fa); 
-            padding: 12px 20px; flex-shrink: 0;
+            padding: 10px 20px; 
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); 
+            flex-shrink: 0; /* Que el header no se encoja */
         }
         .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .header-title h1 { color: #ffffff; font-size: 22px; font-weight: 900; }
         
-        /* Contenedor que se adapta: sube los botones y ajusta el video */
+        .back-button { 
+            background: rgba(255,255,255,0.1); border-radius: 50%; width: 35px; height: 35px; 
+            color: #ffffff; display: flex; align-items: center; justify-content: center; text-decoration: none; 
+        }
+
+        /* EL TRUCO: El contenedor ocupa el resto de la pantalla */
         .main-container {
-            flex: 1; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
         }
 
-        /* REPRODUCTOR TAMAÑO YOUTUBE (Corta lo negro de los lados) */
-        .video-wrapper { 
-            width: 90%; /* En PC ocupa casi todo el ancho para no dejar negro */
-            max-width: 1200px; /* Límite lógico para que no se deforme */
-            aspect-ratio: 16 / 9; /* Forma perfecta de TV */
-            background: #000; border-radius: 12px; position: relative;
-            overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        /* El video no puede ser más alto que el 70% de la pantalla */
+        .video-box { 
+            width: 100%;
+            max-width: 1000px; /* Ancho máximo para que no se vea estirado */
+            max-height: 70vh; /* Máximo 70% del alto de la pantalla */
+            position: relative; 
+            aspect-ratio: 16 / 9; 
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
 
-        iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        iframe { width: 100%; height: 100%; border: none; }
 
-        /* Capa de protección Maikol */
         #maik-guard {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 10; cursor: pointer; background: rgba(0,0,0,0.5);
             display: flex; align-items: center; justify-content: center;
         }
-        #maik-guard i { font-size: 45px; color: white; background: #3b82f6; padding: 18px; border-radius: 50%; }
+        #maik-guard i { font-size: 40px; color: white; background: #3b82f6; padding: 15px; border-radius: 50%; }
 
-        /* Botones que suben y dejan espacio abajo */
-        .action-btns { margin-top: 15px; display: flex; gap: 12px; flex-shrink: 0; }
+        .action-btns { margin-top: 15px; display: flex; gap: 10px; flex-shrink: 0; }
         .btn-pro { 
-            padding: 10px 22px; border: none; border-radius: 10px; 
+            padding: 10px 20px; border: none; border-radius: 8px; 
             background: linear-gradient(90deg, #3b82f6, #1e40af); 
             color: #ffffff; cursor: pointer; font-size: 14px; font-weight: 600;
             display: flex; align-items: center; gap: 8px;
         }
 
-        /* AJUSTE PARA MÓVILES: No se sale de la pantalla */
         @media (max-width: 768px) {
-            .video-wrapper { width: 100%; border-radius: 0; }
+            .video-box { border-radius: 0; max-height: none; }
             .main-container { padding: 0; }
         }
     </style>
@@ -68,9 +88,9 @@
         <div class="header-content">
             <div style="display: flex; align-items: center; gap: 10px;">
                 <span style="font-size: 25px;">⚽</span>
-                <h1 style="font-size: 22px; font-weight: 900;">MAIK SPORT</h1>
+                <h1>MAIK SPORT</h1>
             </div>
-            <a href="../agenda.html" style="color: white; font-size: 20px;"><i class="fas fa-arrow-left"></i></a>
+            <a href="../agenda.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
         </div>
     </header>
 
@@ -79,7 +99,7 @@
             EN VIVO
         </div>
 
-        <div class="video-wrapper">
+        <div class="video-box">
             <div id="maik-guard"><i class="fas fa-play"></i></div>
             <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen></iframe>
         </div>
@@ -91,7 +111,7 @@
     </div>
 
     <script>
-        // Blindaje Maikol
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
         const r = new URLSearchParams(window.location.search).get("r");
         if (r) document.getElementById("vFrame").src = atob(r);
 
@@ -101,7 +121,7 @@
         });
 
         function toggleFS() {
-            const el = document.querySelector('.video-wrapper');
+            const el = document.querySelector('.video-box');
             if (!document.fullscreenElement) el.requestFullscreen();
             else document.exitFullscreen();
         }
