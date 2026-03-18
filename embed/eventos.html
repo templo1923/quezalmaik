@@ -3,78 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Live</title>
+    <title>MAIK SPORT - Live Streaming Premium</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        /* RESET Y FUENTES PREMIUM */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         
-        /* Ocupamos el 100% de la pantalla sin scroll */
+        /* EL TRUCO DEL TAMAÑO (NO SE TOCA) */
         body, html { 
             height: 100%; 
-            background: #0d1b2a; 
-            color: #e0e0e0; 
+            background: radial-gradient(circle, #1e293b 0%, #0f172a 100%); /* Fondo degradado sutil */
+            color: #f1f5f9; 
             display: flex; 
             flex-direction: column; 
             overflow: hidden; 
         }
 
+        /* HEADER DISEÑO CHIMBA (Glassmorphism) */
         header { 
-            background: linear-gradient(90deg, #1e3a8a, #60a5fa); 
-            padding: 10px 20px; 
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); 
-            flex-shrink: 0; /* Que el header no se encoja */
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 12px 20px; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+            z-index: 100;
         }
-        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .header-title h1 { color: #ffffff; font-size: 22px; font-weight: 900; }
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        
+        .header-title { display: flex; align-items: center; gap: 12px; }
+        .header-title i { color: #60a5fa; font-size: 24px; filter: drop-shadow(0 0 8px #60a5fa); }
+        .header-title h1 { color: #ffffff; font-size: 22px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
         
         .back-button { 
-            background: rgba(255,255,255,0.1); border-radius: 50%; width: 35px; height: 35px; 
+            background: rgba(255,255,255,0.05); border-radius: 50%; width: 40px; height: 40px; 
             color: #ffffff; display: flex; align-items: center; justify-content: center; text-decoration: none; 
+            transition: all 0.3s; border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        .back-button:hover { background: #ef4444; transform: rotate(-90deg); box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); }
 
-        /* EL TRUCO: El contenedor ocupa el resto de la pantalla */
+        /* CONTENEDOR MAESTRO (MISMA LÓGICA) */
         .main-container {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 10px;
+            padding: 20px;
+            animation: fadeInDown 0.8s ease;
         }
 
-        /* El video no puede ser más alto que el 70% de la pantalla */
+        /* EN VIVO CHIMBA */
+        .live-badge { 
+            background: linear-gradient(90deg, #ef4444, #f87171); 
+            padding: 5px 15px; 
+            border-radius: 20px; 
+            font-size: 11px; 
+            font-weight: 900; 
+            margin-bottom: 15px; 
+            display: flex; align-items: center; gap: 6px;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+            letter-spacing: 1px;
+        }
+        .dot { width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite; }
+
+        /* VIDEO BOX (MISMA LÓGICA DE TAMAÑO) */
         .video-box { 
             width: 100%;
-            max-width: 1000px; /* Ancho máximo para que no se vea estirado */
-            max-height: 70vh; /* Máximo 70% del alto de la pantalla */
+            max-width: 1100px; /* Un poco más ancho para PC, sigue siendo pro */
+            max-height: 70vh; 
             position: relative; 
             aspect-ratio: 16 / 9; 
             background: #000;
-            border-radius: 12px;
+            border-radius: 15px; /* Bordes más redondeados */
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 15px rgba(96, 165, 250, 0.15); /* Sombra pro */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
         }
+        .video-box:hover { transform: translateY(-5px); box-shadow: 0 25px 70px rgba(0,0,0,1), 0 0 25px rgba(96, 165, 250, 0.25); }
 
-        iframe { width: 100%; height: 100%; border: none; }
+        iframe { width: 100%; height: 100%; border: none; z-index: 1; }
 
+        /* GUARD CON DISEÑO PRO */
         #maik-guard {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; cursor: pointer; background: rgba(0,0,0,0.5);
+            z-index: 10; cursor: pointer; 
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.7) 100%);
             display: flex; align-items: center; justify-content: center;
+            transition: 0.5s;
         }
-        #maik-guard i { font-size: 40px; color: white; background: #3b82f6; padding: 15px; border-radius: 50%; }
+        #maik-guard i { 
+            font-size: 50px; color: white; 
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8); 
+            width: 90px; height: 90px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 50%; border: 3px solid #93c5fd;
+            box-shadow: 0 0 30px rgba(96, 165, 250, 0.5);
+            animation: bounceIn 0.6s ease;
+        }
+        #maik-guard:hover i { transform: scale(1.1); box-shadow: 0 0 40px rgba(96, 165, 250, 0.8); }
 
-        .action-btns { margin-top: 15px; display: flex; gap: 10px; flex-shrink: 0; }
+        /* BOTONES CHIMBA */
+        .action-btns { margin-top: 20px; display: flex; gap: 15px; flex-shrink: 0; animation: fadeInUp 0.8s ease; }
         .btn-pro { 
-            padding: 10px 20px; border: none; border-radius: 8px; 
-            background: linear-gradient(90deg, #3b82f6, #1e40af); 
-            color: #ffffff; cursor: pointer; font-size: 14px; font-weight: 600;
-            display: flex; align-items: center; gap: 8px;
+            padding: 12px 25px; border: none; border-radius: 12px; 
+            background: linear-gradient(135deg, #1f2937, #111827); 
+            color: #ffffff; cursor: pointer; font-size: 14px; font-weight: 700;
+            display: flex; align-items: center; gap: 10px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-pro:hover { 
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8); 
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); 
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .btn-pro i { font-size: 16px; color: #60a5fa; }
+        .btn-pro:hover i { color: white; }
+
+        /* PUBLICIDAD EXTERNA (Para después) */
+        .ads-placeholder {
+            margin-top: 25px; padding: 20px;
+            width: 100%; max-width: 1100px;
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: #475569; text-align: center;
+            font-size: 12px;
+            animation: fadeInUp 1s ease;
         }
 
+        /* ANIMACIONES YOUTUBE/PREMIUM */
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.3); } 50% { opacity: 1; transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+
+        /* AJUSTE PARA MÓVILES (Sigue siendo lógico) */
         @media (max-width: 768px) {
             .video-box { border-radius: 0; max-height: none; }
-            .main-container { padding: 0; }
+            .main-container { padding: 0; margin-top: 10px; }
+            .btn-pro { padding: 10px 18px; font-size: 12px; }
+            .action-btns { gap: 10px; margin-bottom: 20px; }
+            .live-badge { font-size: 10px; }
         }
     </style>
 </head>
@@ -82,44 +157,70 @@
 
     <header>
         <div class="header-content">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 25px;">⚽</span>
-                <h1>MAIK SPORT</h1>
+            <div class="header-title">
+                <i class="fas fa-satellite-dish"></i>
+                <h1>MAIK SPORT LIVE</h1>
             </div>
-            <a href="../agenda.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+            <a href="../agenda.html" class="back-button" title="Volver a la Agenda"><i class="fas fa-arrow-left"></i></a>
         </div>
     </header>
 
     <div class="main-container">
-        <div style="background: #ef4444; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; margin-bottom: 10px;">
-            EN VIVO
+        <div class="live-badge">
+            <div class="dot"></div> EN VIVO
         </div>
 
         <div class="video-box">
             <div id="maik-guard"><i class="fas fa-play"></i></div>
-            <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen></iframe>
+            <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
         </div>
 
         <div class="action-btns">
-            <button class="btn-pro" onclick="location.reload()"><i class="fas fa-redo"></i> Recargar</button>
-            <button class="btn-pro" onclick="toggleFS()"><i class="fas fa-expand"></i> Pantalla Completa</button>
+            <button class="btn-pro" onclick="location.reload()" title="Sincronizar Señal">
+                <i class="fas fa-sync-alt"></i> Recargar
+            </button>
+            <button class="btn-pro" onclick="toggleFS()" title="Modo Cine">
+                <i class="fas fa-expand-arrows-alt"></i> Pantalla Completa
+            </button>
+        </div>
+
+        <div class="ads-placeholder">
+            <i class="fas fa-dollar-sign"></i> Zona de Publicidad Premium Maik Sport (Banner 728x90 aquí)
         </div>
     </div>
 
     <script>
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
+        // EL MISMO SW QUE SÍ FUNCIONA (No tocar)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../sw.js').then(reg => {
+                console.log('🛡️ Maik Shield Elite: ON');
+            });
+        }
+
         const r = new URLSearchParams(window.location.search).get("r");
-        if (r) document.getElementById("vFrame").src = atob(r);
+        if (r) {
+            try {
+                document.getElementById("vFrame").src = atob(r);
+            } catch (e) {
+                console.error("Error decodificando la URL");
+            }
+        }
 
         document.getElementById('maik-guard').addEventListener('click', function() {
-            this.remove();
-            window.open = () => null;
+            this.style.opacity = '0';
+            setTimeout(() => this.remove(), 500);
+            window.open = function() { return null; };
         });
 
         function toggleFS() {
             const el = document.querySelector('.video-box');
-            if (!document.fullscreenElement) el.requestFullscreen();
-            else document.exitFullscreen();
+            if (!document.fullscreenElement) {
+                el.requestFullscreen().catch(err => {
+                    document.getElementById("vFrame").requestFullscreen();
+                });
+            } else {
+                document.exitFullscreen();
+            }
         }
     </script>
 </body>
