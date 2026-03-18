@@ -1,81 +1,85 @@
-$(document).ready(function() {
-    const PROXY_URL = "https://api.allorigins.win/get?url=";
-    const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
-    const AGENDA_URL = PROXY_URL + TARGET_URL;
-    
-    const agendaLista = $('#agenda-lista');
-    const tituloAgenda = $('#agenda-titulo');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canales de Deportes - Reproductor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Estilos base y reseteo */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background: linear-gradient(0deg, #0d1b2a, #1b263b); color: #e0e0e0; overflow-x: hidden; }
 
-    async function cargarAgenda() {
-        try {
-            const respuesta = await fetch(AGENDA_URL);
-            const data = await respuesta.json();
-            const doc = new DOMParser().parseFromString(data.contents, 'text/html');
-            const partidosRaw = doc.querySelectorAll('.menu > li');
+        /* Header con degradado Maik Sport */
+        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 20px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .header-title h1 { color: #ffffff; font-size: 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
 
-            agendaLista.empty();
-            tituloAgenda.text('AGENDA - ' + new Date().getDate() + ' DE ' + new Date().toLocaleString('es-ES', { month: 'long' }).toUpperCase());
+        /* Animación de la pelota */
+        .soccer-ball { font-size: 38px; color: #ffffff; animation: spin 3s linear infinite; display: inline-block; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-            partidosRaw.forEach(partido => {
-                const linkPrincipal = partido.querySelector('a');
-                if (!linkPrincipal) return;
+        /* Botón de volver */
+        .back-button { background: #2a2a2a; border-radius: 50%; width: 50px; height: 50px; color: #ffffff; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
+        .back-button:hover { background: #60a5fa; transform: scale(1.1); }
 
-                const titulo = linkPrincipal.textContent.split('\n')[0].trim();
-                const horaLocal = linkPrincipal.querySelector('.t')?.textContent.trim() || "--:--";
+        /* Contenedor de video */
+        .content-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; text-align: center; }
+        .live-text { font-size: 24px; font-weight: 700; color: #ffffff; margin-bottom: 20px; background: linear-gradient(90deg, #ef4444, #f87171); padding: 10px 20px; border-radius: 12px; display: inline-block; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
 
-                let canalesHtml = '<div class="canales">';
-                const subitems = partido.querySelectorAll('ul li a');
-                
-                subitems.forEach(canal => {
-                    const nombreCanal = canal.textContent.trim();
-                    const hrefOriginal = canal.href;
-                    let streamID = "";
+        /* Iframe Responsivo */
+        .embed-responsive { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.5); background: #000; }
+        .embed-responsive-item { position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none; }
 
-                    // Extracción agresiva del ID (ej: winsportsplus)
-                    if (hrefOriginal.includes('capoplay.net/')) {
-                        streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
-                    } else if (hrefOriginal.includes('canal-')) {
-                        streamID = hrefOriginal.split('canal-')[1].replace('.php', '');
-                    }
+        /* Botón recargar */
+        .reload-button { padding: 14px 30px; border: none; border-radius: 12px; background: linear-gradient(90deg, #60a5fa, #3b82f6); color: #ffffff; cursor: pointer; font-size: 20px; font-weight: 600; margin-top: 20px; transition: 0.3s; }
+        .reload-button:hover { transform: scale(1.05); background: #3b82f6; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-title" style="display: flex; align-items: center; gap: 15px;">
+                <span class="soccer-ball">⚽</span>
+                <h1>MAIK SPORT</h1>
+            </div>
+            <a href="javascript:history.back()" class="back-button"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </header>
 
-                    let urlFinal;
-                    if (streamID) {
-                        // Construimos la URL del reproductor real de Capo
-                        const urlCapoDirecto = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
-                        urlFinal = `embed/eventos.html?r=${btoa(urlCapoDirecto)}`;
-                    } else {
-                        urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
-                    }
+    <div class="content-container">
+        <p class="live-text">EN VIVO</p>
 
-                    canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
-                });
-                
-                canalesHtml += '</div>';
-                const eventoHtml = `
-                    <div class="evento-contenedor">
-                        <div class="evento">
-                            <div class="hora">${horaLocal}</div>
-                            <img src="https://i.imgur.com/Vdef5Rz.png" class="evento-icono">
-                            <div class="info-evento">${titulo}</div>
-                            <div class="flecha">›</div>
-                        </div>
-                        ${canalesHtml}
-                    </div>`;
-                agendaLista.append(eventoHtml);
-            });
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    }
+        <div class="embed-responsive">
+            <iframe class="embed-responsive-item" id="videoFrame" allowfullscreen sandbox="allow-scripts allow-same-origin"></iframe>
+        </div>
 
-    agendaLista.on('click', '.canal-link', function(e) {
-        e.preventDefault();
-        window.open($(this).attr('href'), '_blank');
-    });
+        <button type="button" class="reload-button" onclick="location.reload()">
+            <i class="fas fa-redo"></i> Recargar Reproductor
+        </button>
+    </div>
 
-    agendaLista.on('click', '.evento', function() {
-        $(this).siblings('.canales').slideToggle('fast');
-    });
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const iframe = document.getElementById("videoFrame");
+            const params = new URLSearchParams(window.location.search);
+            const encodedUrl = params.get("r"); // Captura el parámetro 'r' enviado por la agenda
 
-    cargarAgenda();
-});
+            if (encodedUrl) {
+                try {
+                    // Decodifica la URL de Capo7 o el stream directo
+                    const decodedUrl = atob(encodedUrl);
+                    iframe.src = decodedUrl;
+                } catch (e) {
+                    console.error("Error decodificando URL:", e);
+                    document.querySelector('.content-container').innerHTML = "<h2 style='color:white;'>Error en el enlace del canal.</h2>";
+                }
+            } else {
+                document.querySelector('.content-container').innerHTML = "<h2 style='color:white;'>No se ha seleccionado ningún evento.</h2>";
+            }
+        });
+    </script>
+</body>
+</html>
