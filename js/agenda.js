@@ -27,31 +27,36 @@ $(document).ready(function() {
                 let canalesHtml = '<div class="canales">';
                 const subitems = partido.querySelectorAll('ul li a');
                 
-                subitems.forEach(canal => {
-                    const nombreCanal = canal.textContent.trim();
-                    const hrefOriginal = canal.href;
-                    let streamID = "";
+                // Actualiza esta parte dentro de tu eventos.forEach en js/agenda.js
+subitems.forEach(canal => {
+    const nombreCanal = canal.textContent.trim();
+    const hrefOriginal = canal.href;
+    let streamID = "";
 
-                    // LÓGICA DE EXTRACCIÓN DEL ID (ej: winsportsplus)
-                    if (hrefOriginal.includes('capoplay.net/')) {
-                        streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
-                    } else if (hrefOriginal.includes('canal-')) {
-                        streamID = hrefOriginal.split('canal-')[1].replace('.php', '');
-                    }
+    // Lógica para extraer el ID (ej: winsportsplus) de los diferentes dominios
+    if (hrefOriginal.includes('capoplay.net/')) {
+        streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
+    } else if (hrefOriginal.includes('canal-')) {
+        // Para links tipo canal-20.php
+        streamID = hrefOriginal.split('/').pop().replace('.php', '');
+    } else if (hrefOriginal.includes('winsports')) {
+        streamID = "winsportsplus"; // Forzado para ese canal específico
+    }
 
-                    let urlFinal;
-                    if (streamID && streamID !== "") {
-                        // CONSTRUCCIÓN DIRECTA: Saltamos la web de RojaDirecta e info innecesaria
-                        // Usamos capo2.php que es el reproductor limpio
-                        const urlCapoDirecto = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
-                        urlFinal = `embed/eventos.html?r=${btoa(urlCapoDirecto)}`;
-                    } else {
-                        // Respaldo si no se detecta el patrón de Capo
-                        urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
-                    }
+    let urlFinal;
+    if (streamID) {
+        // Construimos el link DIRECTO al servidor de video (capo2.php)
+        // Esto elimina todo el layout de RojaDirecta/EliteGol
+        const urlLimpia = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
+        urlFinal = `embed/eventos.html?r=${btoa(urlLimpia)}`;
+    } else {
+        // Respaldo si no detectamos el patrón
+        urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
+    }
 
-                    canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
-                });
+    canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
+});
+
                 
                 canalesHtml += '</div>';
                 const eventoHtml = `
