@@ -31,7 +31,7 @@ $(document).ready(function() {
                     const hrefOriginal = canal.href;
                     let streamID = "";
 
-                    // Extracción agresiva del ID (ej: winsportsplus)
+                    // Extracción del ID del canal (ej: winsportsplus)
                     if (hrefOriginal.includes('capoplay.net/')) {
                         streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
                     } else if (hrefOriginal.includes('canal-')) {
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
                     let urlFinal;
                     if (streamID) {
-                        // Construimos la URL del reproductor real de Capo
+                        // Construimos la URL del reproductor real de Capo saltando la web de Roja Directa
                         const urlCapoDirecto = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
                         urlFinal = `embed/eventos.html?r=${btoa(urlCapoDirecto)}`;
                     } else {
@@ -64,10 +64,11 @@ $(document).ready(function() {
                 agendaLista.append(eventoHtml);
             });
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Error cargando la agenda:", error);
         }
     }
 
+    // Interceptor para abrir en tu reproductor eventos.html
     agendaLista.on('click', '.canal-link', function(e) {
         e.preventDefault();
         window.open($(this).attr('href'), '_blank');
