@@ -9,15 +9,14 @@
     <style>
         body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
         .wrapper { position: relative; width: 100%; height: 100vh; }
+        /* El sandbox es el que evita que se abran pestañas nuevas */
         iframe { width: 100%; height: 100%; border: none; }
         
-        /* Capa invisible de protección (Su idea original que funcionaba) */
         #maik-guard {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 10; cursor: pointer; background: rgba(0,0,0,0);
         }
 
-        /* Su Diseño Vacano encima */
         header {
             position: absolute; top: 0; left: 0; width: 100%;
             background: linear-gradient(90deg, #1e3a8a, #60a5fa);
@@ -36,38 +35,36 @@
 
         <div id="maik-guard"></div>
 
-        <iframe id="video-frame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        <iframe id="video-frame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
     </div>
 
     <script>
-        <script>
-    // 1. ACTIVAR EL ESCUDO (Service Worker)
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('../sw.js')
-            .then(reg => console.log('🛡️ Escudo Maik Sport Activo'))
-            .catch(err => console.error('❌ Error al activar escudo', err));
-    }
+        // 1. ACTIVAR EL ESCUDO (Service Worker)
+        if ('serviceWorker' in navigator) {
+            // Asegúrate que sw.js esté en la raíz de tu proyecto
+            navigator.serviceWorker.register('../sw.js')
+                .then(reg => console.log('🛡️ Escudo Maik Sport Activo'))
+                .catch(err => console.error('❌ Error al activar escudo', err));
+        }
 
-    // ... aquí sigue el resto de tu código de carga ...
-
-        
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
         const iframe = document.getElementById('video-frame');
         const guard = document.getElementById('maik-guard');
 
         if (r) {
-            // Carga directa sin proxies que fallen
+            // Cargamos la URL que viene de la agenda
             iframe.src = atob(r);
         }
 
         // Blindaje original de Maikol
         guard.addEventListener('click', function() {
             this.style.display = 'none';
+            // Mata los intentos de abrir ventanas nuevas al hacer clic
             window.open = function() { return null; };
         });
 
-        // Evitar que el iframe robe el foco para abrir basura
+        // Evitar que el iframe robe el foco
         setInterval(() => {
             if (document.activeElement === iframe) {
                 window.focus();
