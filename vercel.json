@@ -1,13 +1,11 @@
 {
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self' https://*.capoplay.net https://*.capoplayer.net data: blob: 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.capoplay.net https://*.capoplayer.net https://cdnjs.cloudflare.com https://code.jquery.com https://cdn.jsdelivr.net; connect-src 'self' https://*.capoplay.net https://*.capoplayer.net; frame-src 'self' https://*.capoplay.net https://*.capoplayer.net; img-src * data:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;"
-        }
-      ]
-    }
+  "rewrites": [
+    { "source": "/waust.at/(.*)", "destination": "https://google.com/404" },
+    { "source": "/bvtpk.com/(.*)", "destination": "https://google.com/404" },
+    { "source": "/ads.tiogolhd.com/(.*)", "destination": "https://google.com/404" },
+    { "source": "/jnbhi.com/(.*)", "destination": "https://google.com/404" },
+    { "source": "/acscdn.com/(.*)", "destination": "https://google.com/404" },
+    { "source": "/deepz.cyou/(.*)", "destination": "https://google.com/404" },
+    { "source": "/googletagmanager.com/(.*)", "destination": "https://google.com/404" }
   ]
 }
