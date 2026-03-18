@@ -1,11 +1,8 @@
 {
   "rewrites": [
-    { "source": "/:path*acscdn.com/:path*", "destination": "/404" },
-    { "source": "/:path*waust.at/:path*", "destination": "/404" },
-    { "source": "/:path*bvtpk.com/:path*", "destination": "/404" },
-    { "source": "/:path*adexchangeclear.com/:path*", "destination": "/404" },
-    { "source": "/:path*histats.com/:path*", "destination": "/404" },
-    { "source": "/:path*usrpubtrk.com/:path*", "destination": "/404" },
-    { "source": "/:path*tiogolhd.com/:path*", "destination": "/404" }
+    {
+      "source": "/api/agenda",
+      "destination": "https://pltvhd.com/diaries.json"
+    }
   ]
 }
