@@ -8,12 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --bg-page: #0a0a0c; /* Fondo oscuro de la página (donde irán los banners) */
-            --bg-player: #000000; /* Fondo negro puro del reproductor */
-            --accent: #22c55e; /* Verde neón para el "EN VIVO" */
-            --maik-blue: #1e40af; /* Azul para botones */
+            --bg-page: #0a0a0c;
+            --bg-player: #000000;
+            --accent: #22c55e;
+            --maik-blue: #1e40af;
             --text: #ffffff;
-            --player-max-width: 1000px; /* Ancho perfecto para PC, responsivo para móvil */
+
+            /* --- ESTA ES LA LÍNEA QUE TIENES QUE CAMBIAR --- */
+            /* Antes estaba en 1000px, ahora la subimos a 1250px para PC */
+            --player-max-width: 1250px; 
+            /* ----------------------------------------------- */
         }
 
         body, html { 
@@ -24,19 +28,18 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* -----------------------------------------------------------
-           CONTENEDOR CINE (El Jefe del Diseño)
-           Este contenedor centra el reproductor y deja espacio a los lados
-        ----------------------------------------------------------- */
+        /* ... El resto del CSS sigue exactamente igual ... */
+
         .cinema-container {
             width: 100%;
             max-width: var(--player-max-width);
-            margin-top: 30px; /* Espacio arriba para que no pegue al techo */
-            padding: 0 15px; /* Margen de seguridad en móviles */
+            margin-top: 25px; /* Bajé un poquito el margen superior para que quepa mejor */
+            padding: 0 15px;
             box-sizing: border-box;
             position: relative;
             animation: fadeIn 0.8s ease;
         }
+
 
         /* EL REPRODUCTOR (El marco melo) */
         .player-wrapper {
