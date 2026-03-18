@@ -44,34 +44,35 @@
                 const htmlCode = await response.text();
                 
                 // 2. Buscamos el link del m3u8
-                const match = htmlCode.match(/var playbackURL = "(.*?)";/);
+// 2. Buscamos el link del m3u8
+            const match = htmlCode.match(/var playbackURL = "(.*?)";/);
 
-                if (match && match[1]) {
-                    const m3u8Limpio = match[1];
-                    
-                    // 3. LA MAGIA: Pasamos el link por el proxy profesional api/proxy.js
-                    // Usamos encodeURIComponent para que el token y los símbolos no se rompan
-                    const videoProxy = `/api/video-proxy?url=${encodeURIComponent(m3u8Limpio)}`;
+            if (match && match[1]) {
+                // Nombre fijo: m3u8Real
+                const m3u8Real = match[1];
+                
+                // Nombre fijo: videoProxy (este es el que el reproductor va a usar)
+                const videoProxy = `/api/video-proxy?url=${encodeURIComponent(m3u8Real)}`;
 
-                    document.getElementById("loader").style.display = "none";
+                document.getElementById("loader").style.display = "none";
 
-                    new Clappr.Player({
-                        source: videoProxy,
-                        parentId: "#player",
-                        width: "100%",
-                        height: "100%",
-                        autoPlay: true,
-                        hlsjsConfig: {
-                            xhrSetup: function(xhr, url) {
-                                xhr.withCredentials = false;
-                            }
-                        },
-                        mediacontrol: {seekbar: "#22c55e", buttons: "#FFFFFF"},
-                        mimeType: "application/x-mpegURL"
-                    });
-                } else {
-                    document.getElementById("loader").innerHTML = "<p style='color:red;'>Señal no encontrada en el origen.</p>";
-                }
+                new Clappr.Player({
+                    source: videoProxy, // Usamos la variable que tiene el proxy
+                    parentId: "#player",
+                    width: "100%",
+                    height: "100%",
+                    autoPlay: true,
+                    hlsjsConfig: {
+                        xhrSetup: function(xhr, url) {
+                            xhr.withCredentials = false;
+                        }
+                    },
+                    mediacontrol: {seekbar: "#22c55e", buttons: "#FFFFFF"},
+                    mimeType: "application/x-mpegURL"
+                });
+            } else {
+                document.getElementById("loader").innerHTML = "<p style='color:red;'>Señal no encontrada en el origen.</p>";
+            }
             } catch (error) {
                 console.error(error);
                 document.getElementById("loader").innerHTML = "<p style='color:white;'>Error de conexión. Reintenta.</p>";
