@@ -1,96 +1,91 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="referrer" content="no-referrer">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Reproductor Oficial</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        /* MANTENEMOS TUS ESTILOS ORIGINALES */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { background: linear-gradient(0deg, #0d1b2a, #1b263b); color: #e0e0e0; overflow-x: hidden; }
+$(document).ready(function() {
+    // CAMBIO DE PROXY: Este es mucho más veloz y no da error 408
+    const PROXY = "https://corsproxy.io/?";
+    const TARGET = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
+    const agendaLista = $('#agenda-lista');
 
-        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 20px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); }
-        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .header-title h1 { color: #ffffff; font-size: 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
+    async function cargarAgenda() {
+        try {
+            // Petición directa y limpia
+            const res = await fetch(PROXY + TARGET);
+            const htmlContent = await res.text(); // corsproxy devuelve texto directo, es más rápido
+            
+            const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
+            const partidos = doc.querySelectorAll('.menu > li');
 
-        .soccer-ball { font-size: 38px; color: #ffffff; animation: spin 3s linear infinite; display: inline-block; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        .back-button { background: #2a2a2a; border-radius: 50%; width: 50px; height: 50px; color: #ffffff; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
-        .back-button:hover { background: #60a5fa; transform: scale(1.1); }
-
-        .content-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; text-align: center; }
-        .live-text { font-size: 24px; font-weight: 700; color: #ffffff; margin-bottom: 20px; background: linear-gradient(90deg, #ef4444, #f87171); padding: 10px 20px; border-radius: 12px; display: inline-block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
-
-        /* AJUSTE PARA EL IFRAME */
-        .embed-responsive { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.5); background: #000; }
-        .embed-responsive-item { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            bottom: 0; 
-            right: 0; 
-            width: 100%; 
-            height: 100%; 
-            border: none;
-            /* Si el canal tiene un header pequeño, lo compensamos aquí */
-            /* transform: scale(1.05); */
-        }
-
-        .reload-button { padding: 14px 30px; border: none; border-radius: 12px; background: linear-gradient(90deg, #60a5fa, #3b82f6); color: #ffffff; cursor: pointer; font-size: 20px; font-weight: 600; margin-top: 20px; transition: 0.3s; }
-        .reload-button:hover { transform: scale(1.05); background: #3b82f6; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="header-content">
-            <div class="header-title" style="display: flex; align-items: center; gap: 15px;">
-                <span class="soccer-ball">⚽</span>
-                <h1>MAIK SPORT</h1>
-            </div>
-            <a href="javascript:history.back()" class="back-button"><i class="fas fa-arrow-left"></i></a>
-        </div>
-    </header>
-
-    <div class="content-container">
-        <p class="live-text">EN VIVO</p>
-
-        <div class="embed-responsive">
-<iframe 
-        class="embed-responsive-item" 
-        id="videoFrame" 
-        allowfullscreen 
-        allow="autoplay; encrypted-media"
-        sandbox="allow-scripts allow-same-origin allow-forms"
-        referrerpolicy="no-referrer">
-    </iframe>
-        </div>
-
-        <button type="button" class="reload-button" onclick="location.reload()">
-            <i class="fas fa-redo"></i> Recargar Reproductor
-        </button>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const iframe = document.getElementById("videoFrame");
-            const params = new URLSearchParams(window.location.search);
-            const r = params.get("r");
-
-            if (r) {
-                try {
-                    // Decodifica la URL (que será https://www.capoplay.net/ID.php)
-                    const decodedUrl = atob(r);
-                    iframe.src = decodedUrl;
-                } catch (e) {
-                    console.error("Error cargando señal");
-                    document.querySelector('.content-container').innerHTML = "<h2 style='color:white;'>Error en la señal.</h2>";
-                }
+            if (partidos.length === 0) {
+                console.log("No hay partidos");
+                return;
             }
-        });
-    </script>
-</body>
-</html>
+            
+            agendaLista.empty();
+
+            partidos.forEach(partido => {
+                const link = partido.querySelector('a');
+                if (!link) return;
+
+                const titulo = link.textContent.split('\n')[0].trim();
+                const hora = link.querySelector('.t')?.textContent.trim() || "--:--";
+
+                let canalesHtml = '<div class="canales" style="display:none;">';
+                const linksCanales = partido.querySelectorAll('ul li a');
+
+                linksCanales.forEach(c => {
+                    const nombre = c.textContent.trim();
+                    // Guardamos la URL de la web original (Pirlo, Elitegol, etc.)
+                    canalesHtml += `<a href="#" data-capo="${c.href}" class="canal-link">➤ ${nombre}</a>`;
+                });
+                canalesHtml += '</div>';
+
+                const html = `
+                    <div class="evento-contenedor">
+                        <div class="evento" style="cursor:pointer; padding:12px; border-bottom:1px solid #333; color:white;">
+                            <span style="color:#ff4d4d; font-weight:bold;">${hora}</span> - ${titulo}
+                        </div>
+                        ${canalesHtml}
+                    </div>`;
+                agendaLista.append(html);
+            });
+        } catch (e) { 
+            console.error("Fallo total");
+            agendaLista.html("<p style='color:white;'>Error de conexión. Refresca la página.</p>");
+        }
+    }
+
+    // EL EXTRACTOR (Lo que me pediste: Sacar el canal de CapoPlay al dar clic)
+    agendaLista.on('click', '.canal-link', async function(e) {
+        e.preventDefault();
+        const btn = $(this);
+        const urlOriginal = btn.attr('data-capo');
+        
+        btn.text('⌛ Limpiando señal...');
+
+        try {
+            // Usamos el mismo proxy rápido para entrar a la página del partido
+            const res = await fetch(PROXY + encodeURIComponent(urlOriginal));
+            const html = await res.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            
+            // Buscamos el iframe de CapoPlay que es el que tiene el video puro
+            const iframe = doc.querySelector('iframe[src*="capoplay"], iframe[src*="capoplayer"]');
+            
+            if (iframe && iframe.src) {
+                // Abrimos tu eventos.html con el link del motor de CapoPlay
+                window.open(`embed/eventos.html?r=${btoa(iframe.src)}`, '_blank');
+            } else {
+                // Si no lo encuentra, abre la original (mejor eso que nada)
+                window.open(`embed/eventos.html?r=${btoa(urlOriginal)}`, '_blank');
+            }
+        } catch (err) {
+            window.open(`embed/eventos.html?r=${btoa(urlOriginal)}`, '_blank');
+        } finally {
+            btn.text('➤ ' + btn.text().replace('⌛ Limpiando señal...', '').trim());
+        }
+    });
+
+    agendaLista.on('click', '.evento', function() {
+        $(this).siblings('.canales').slideToggle('fast');
+    });
+
+    cargarAgenda();
+});
