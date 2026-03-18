@@ -2,87 +2,39 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Agenda Oficial</title>
-    
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+    <title>MAIK SPORT - Player</title>
     <style>
-        body { margin: 0; background: radial-gradient(circle at top, #0f172a, #020617); font-family: system-ui, sans-serif; color: white; min-height: 100vh; padding: 20px; }
-        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 20px; text-align: center; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #wraper-agenda { max-width: 800px; margin: 0 auto; background: rgba(11, 18, 32, 0.8); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .agenda-list { list-style: none; padding: 0; }
-        .evento { background: #020617; margin-bottom: 12px; padding: 18px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.08); cursor: pointer; transition: 0.3s; }
-        .evento:hover { border-color: #22c55e; transform: translateY(-2px); }
-        .fila { display: flex; align-items: center; gap: 15px; }
-        time { min-width: 65px; text-align: center; background: linear-gradient(135deg, #22c55e, #16a34a); color: #022c22; padding: 6px 10px; border-radius: 10px; font-weight: 900; font-size: 0.9rem; }
-        .evento img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1px solid rgba(255,255,255,0.2); }
-        .evento span { font-weight: 800; font-size: 1.05rem; color: #f8fafc; flex: 1; }
-        .canales { display: none; margin-top: 15px; padding-left: 45px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
-        .canales a { color: #bbf7d0; text-decoration: none; display: block; margin-bottom: 10px; font-weight: 700; font-size: 0.95rem; }
-        .canales a::before { content: "▶  "; color: #22c55e; }
-        .loading { text-align: center; padding: 40px; color: #86efac; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; height: 100vh; display: flex; flex-direction: column; }
+        .embed-responsive { position: relative; width: 100%; flex-grow: 1; background: #000; }
+        iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        #fake-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; cursor: pointer; }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1 style="margin:0; letter-spacing: 2px;">⚽ MAIK SPORT</h1>
-        <p id="title-agenda" style="margin:10px 0 0; color: #86efac; font-weight: bold;">Cargando partidos...</p>
-    </header>
-
-    <div id="wraper-agenda">
-        <ul id="menu" class="agenda-list">
-            <div class="loading"><i class="fas fa-spinner fa-spin"></i> Buscando eventos...</div>
-        </ul>
+    <div class="embed-responsive">
+        <div id="fake-layer"></div>
+        <iframe id="videoFrame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
     </div>
 
     <script>
-        const AGENDA_URL = "https://pltvhd.com/diaries.json";
-        const IMG_BASE = "https://pltvhd.com";
+        const iframe = document.getElementById("videoFrame");
+        const layer = document.getElementById("fake-layer");
+        const params = new URLSearchParams(window.location.search);
+        const r = params.get("r");
 
-        async function cargar() {
-            try {
-                const res = await fetch(AGENDA_URL);
-                const json = await res.json();
-                let html = "";
+        if (r) { iframe.src = atob(r); }
 
-                if(!json.data) return;
+        // Bloqueo de ventanas emergentes
+        window.open = function() { return null; };
 
-                json.data.forEach(ev => {
-                    const attr = ev.attributes;
-                    // Hora local (Luxon)
-                    const hora = luxon.DateTime.fromFormat(attr.diary_hour, "HH:mm:ss", { zone: "America/Lima" }).toLocal().toFormat("HH:mm");
-                    const flag = attr.country?.data?.attributes?.image?.data?.attributes?.url;
-                    const img = flag ? (flag.startsWith('http') ? flag : IMG_BASE + flag) : "https://img.icons8.com/color/48/football--v1.png";
-
-                    html += `
-                        <li class="evento" onclick="$(this).find('.canales').slideToggle('fast')">
-                            <div class="fila">
-                                <time>${hora}</time>
-                                <img src="${img}" alt="flag">
-                                <span>${attr.diary_description}</span>
-                            </div>
-                            <div class="canales">
-                                ${attr.embeds.data.map(em => {
-                                    let path = em.attributes.embed_iframe;
-                                    if(path.startsWith('/embed/')) path = "." + path;
-                                    return `<a href="${path}">Ver en ${em.attributes.embed_name}</a>`;
-                                }).join('')}
-                            </div>
-                        </li>`;
-                });
-                
-                document.getElementById("menu").innerHTML = html;
-                document.getElementById("title-agenda").innerText = "Agenda de Partidos";
-            } catch (e) { 
-                document.getElementById("title-agenda").innerText = "Error de conexión"; 
-            }
-        }
-        cargar();
-        setInterval(cargar, 120000); // Recarga cada 2 minutos
+        // Eliminar capa al primer clic para dejar jugar
+        layer.addEventListener("click", function() {
+            layer.style.display = "none";
+            window.focus();
+        });
     </script>
 </body>
 </html>
