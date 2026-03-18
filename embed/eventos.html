@@ -73,65 +73,40 @@
         </button>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const iframe = document.getElementById("videoFrame");
-            const params = new URLSearchParams(window.location.search);
-            const r = params.get("r");
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const iframe = document.getElementById("videoFrame");
+        const params = new URLSearchParams(window.location.search);
+        const r = params.get("r");
 
-            if (r) {
-                try {
-                    // Decodifica la URL (que será https://www.capoplay.net/ID.php)
-                    const decodedUrl = atob(r);
-                    iframe.src = decodedUrl;
-                } catch (e) {
-                    console.error("Error cargando señal");
-                    document.querySelector('.content-container').innerHTML = "<h2 style='color:white;'>Error en la señal.</h2>";
-                }
+        // 1. CARGA DEL VIDEO
+        if (r) {
+            try {
+                const decodedUrl = atob(r);
+                iframe.src = decodedUrl;
+            } catch (e) {
+                console.error("Error cargando señal");
+                document.querySelector('.content-container').innerHTML = "<h2 style='color:white;'>Error en la señal.</h2>";
             }
-        });
+        }
 
-document.addEventListener("DOMContentLoaded", function () {
-    // 1. LISTA NEGRA DE SCRIPTS
-    const blackList = [
-        'waust.at', 
-        'bvtpk.com', 
-        'tiogolhd.com', 
-        'acscdn.com', 
-        'googletagmanager.com'
-    ];
+        // 2. ESCUDO ANTI-POPUPS (Lo que realmente frena la basura)
+        // Bloqueamos la función de abrir ventanas antes de que el iframe haga de las suyas
+        window.open = function() { 
+            console.log("🛡️ Maik-Guard: Popup bloqueado");
+            return null; 
+        };
 
-    // 2. EL "PORTERO" (MutationObserver)
-    // Vigila cada vez que se intenta agregar algo nuevo al HTML
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            mutation.addedNodes.forEach((node) => {
-                // Si es un script o un iframe sospechoso
-                if (node.tagName === 'SCRIPT' || node.tagName === 'IFRAME') {
-                    const src = node.src || "";
-                    if (blackList.some(domain => src.includes(domain))) {
-                        console.log("🛡️ Maik-Guard: Bloqueado ->", src);
-                        node.type = 'text/plain'; // Lo vuelve inofensivo
-                        node.remove(); // Lo borra del mapa
-                    }
-                }
-            });
-        });
+        // 3. TRUCO DE ENFOQUE (Para que los clics al 'Play' no abran pestañas)
+        setInterval(() => {
+            if (document.activeElement === iframe) {
+                // Si el usuario toca el iframe, le quitamos el foco rápido 
+                // para que el popup no gane el 'permiso' del navegador.
+                setTimeout(() => { window.focus(); }, 150);
+            }
+        }, 500);
     });
+</script>
 
-    observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true
-    });
-
-    // 3. BLOQUEO DE POPUPS (Forzado)
-    window.open = function() { 
-        console.log("🛡️ Maik-Guard: Intento de Popup bloqueado");
-        return null; 
-    };
-});
-
-        
-    </script>
 </body>
 </html>
