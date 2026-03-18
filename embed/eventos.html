@@ -5,60 +5,93 @@
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAIK SPORT - En Vivo</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        /* TU DISEÑO VISUAL */
+        /* CSS DEL DISEÑO VACANO Y PROFESIONAL */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
-        body { background: #000; height: 100vh; display: flex; flex-direction: column; color: #e0e0e0; overflow: hidden; }
+        body { background: radial-gradient(circle at top, #0f172a, #020617); color: #e0e0e0; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
 
-        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 15px 20px; z-index: 1000; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); }
-        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .header-title h1 { color: #ffffff; font-size: 24px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
+        /* Header Azul (Tu marca) */
+        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 15px 20px; z-index: 1000; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        .header-title h1 { color: #ffffff; font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
         .soccer-ball { font-size: 28px; color: #ffffff; animation: spin 3s linear infinite; display: inline-block; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
-        .back-button { background: #2a2a2a; border-radius: 50%; width: 40px; height: 40px; color: #ffffff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
-        .back-button:hover { background: #ef4444; transform: scale(1.1); }
+        /* Botón de Volver Pro */
+        .back-button { background: rgba(255,255,255,0.1); border-radius: 50%; width: 40px; height: 40px; color: #ffffff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; border: 1px solid rgba(255,255,255,0.2); }
+        .back-button:hover { background: #ef4444; transform: scale(1.1); color: white; border-color: #ef4444; }
 
-        /* EL REPRODUCTOR QUE FUNCIONA (TU CÓDIGO) */
-        .embed-responsive { position: relative; width: 100%; flex-grow: 1; background: #000; }
+        /* Contenedor Principal (Lo que hacía que se viera bien antes) */
+        .reproductor-container { max-width: 980px; margin: 30px auto; padding: 0 15px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; }
+        
+        /* Texto "EN VIVO" Animado */
+        .live-text { font-size: 16px; font-weight: 700; color: #ffffff; margin-bottom: 20px; background: linear-gradient(90deg, #ef4444, #f87171); padding: 8px 16px; border-radius: 8px; display: inline-block; animation: pulse 2s infinite; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); }
+        @keyframes pulse { 0% { opacity: 0.8; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); } 50% { opacity: 1; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.6); } 100% { opacity: 0.8; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); } }
+
+        /* Botón de Recargar Pro */
+        .reload-button { padding: 12px 25px; border: none; border-radius: 10px; background: linear-gradient(90deg, #374151, #111827); color: #ffffff; cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 25px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: inline-block; text-decoration: none; }
+        .reload-button:hover { background: #3b82f6; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(59, 130, 246, 0.5); color: white; }
+
+        /* --- TU REPRODUCTOR BLINDADO (Tu código sagrado) --- */
+        .embed-responsive { position: relative; width: 100%; padding-top: 56.25%; /* Relación de aspecto 16:9 */ border-radius: 15px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.7); background: #000; border: 2px solid rgba(255,255,255,0.05); }
         iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        #fake-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; cursor: pointer; }
+        #fake-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; cursor: pointer; background: rgba(0,0,0,0.01); /* Capa casi invisible */ }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <div class="header-title" style="display: flex; align-items: center; gap: 10px;">
+            <div class="header-title" style="display: flex; align-items: center; gap: 12px;">
                 <span class="soccer-ball">⚽</span>
                 <h1>MAIK SPORT</h1>
             </div>
-            <a href="agenda.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+            <a href="../agenda.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
         </div>
     </header>
 
-    <div class="embed-responsive">
-        <div id="fake-layer"></div>
-        <iframe id="videoFrame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    <div class="reproductor-container">
+        <p class="live-text"><i class="fas fa-circle" style="font-size: 10px; margin-right: 5px; color: #fff;"></i> En Vivo Ahora</p>
+
+        <div class="embed-responsive" id="wrapper">
+            <div id="fake-layer"></div>
+            <iframe id="videoFrame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        </div>
+
+        <a href="#" class="reload-button" onclick="location.reload(); return false;">
+            <i class="fas fa-redo-alt" style="margin-right: 8px;"></i> Recargar Señal
+        </a>
     </div>
 
     <script>
-        // TU LÓGICA ORIGINAL (SIN CAMBIOS)
         const iframe = document.getElementById("videoFrame");
         const layer = document.getElementById("fake-layer");
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
 
+        // Carga la señal Base64 dinámica
         if (r) { iframe.src = atob(r); }
 
-        // Bloqueo de ventanas emergentes
+        // Bloqueo de ventanas emergentes (Maik Guard Pro)
         window.open = function() { return null; };
 
-        // Eliminar capa al primer clic para dejar jugar
+        // Eliminar capa fantasma al primer clic para dejar jugar
         layer.addEventListener("click", function() {
             layer.style.display = "none";
             window.focus();
+            // Forzamos el foco de vuelta para cerrar intentos de popup ocultos
+            setTimeout(() => { window.focus(); }, 150);
         });
+
+        // Seguro de foco (Evita que el iframe robe el control para abrir ads)
+        setInterval(() => {
+            if (document.activeElement === iframe) {
+                setTimeout(() => { window.focus(); }, 200);
+            }
+        }, 1000);
     </script>
 </body>
 </html>
