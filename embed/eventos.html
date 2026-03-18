@@ -4,67 +4,140 @@
     <meta charset="UTF-8">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Señal Activa</title>
+    <title>MAIK SPORT - Live Streaming</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
-        .wrapper { position: relative; width: 100%; height: 100vh; }
-        /* El sandbox es el que evita que se abran pestañas nuevas */
-        iframe { width: 100%; height: 100%; border: none; }
-        
-        #maik-guard {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; cursor: pointer; background: rgba(0,0,0,0);
+        :root {
+            --primary: #1e40af;
+            --accent: #60a5fa;
+            --bg: #050505;
         }
 
+        body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); overflow: hidden; font-family: 'Segoe UI', Roboto, sans-serif; }
+        
+        /* Contenedor principal con efecto de profundidad */
+        .wrapper { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; }
+
+        /* HEADER PREMIUM (Glassmorphism) */
         header {
             position: absolute; top: 0; left: 0; width: 100%;
-            background: linear-gradient(90deg, #1e3a8a, #60a5fa);
-            padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;
-            z-index: 20; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100;
+            box-sizing: border-box;
+            animation: slideDown 0.5s ease;
         }
+
+        .brand { display: flex; align-items: center; gap: 10px; color: white; }
+        .brand i { color: var(--accent); font-size: 1.4rem; filter: drop-shadow(0 0 8px var(--accent)); }
+        .brand span { font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; }
+
+        .btn-exit { 
+            color: rgba(255,255,255,0.7); font-size: 22px; text-decoration: none; 
+            transition: 0.3s; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; background: rgba(255,255,255,0.05);
+        }
+        .btn-exit:hover { color: white; background: rgba(220, 38, 38, 0.8); transform: rotate(90deg); }
+
+        /* REPRODUCTOR */
+        iframe { width: 100%; height: 100%; border: none; z-index: 1; }
+
+        /* CAPA DE PROTECCIÓN MAIK GUARD */
+        #maik-guard {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 50; cursor: pointer;
+            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.5s;
+        }
+        #maik-guard i { 
+            color: white; font-size: 60px; opacity: 0.8; 
+            background: rgba(30, 64, 175, 0.6); width: 100px; height: 100px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 50%; border: 2px solid var(--accent);
+            box-shadow: 0 0 30px rgba(96, 165, 250, 0.4);
+        }
+
+        /* LOADER DE CARGA */
+        #loader {
+            position: absolute; width: 100%; height: 100%; background: var(--bg);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 150; color: white;
+        }
+        .shimmer {
+            width: 150px; height: 4px; background: #1a1a1a; border-radius: 10px;
+            position: relative; overflow: hidden; margin-top: 20px;
+        }
+        .shimmer::after {
+            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        /* ANIMACIONES */
+        @keyframes loading { 100% { left: 100%; } }
+        @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
 
+    <div id="loader">
+        <i class="fas fa-futbol fa-3x fa-spin" style="color: var(--accent);"></i>
+        <div class="shimmer"></div>
+        <p style="text-transform: uppercase; font-size: 12px; letter-spacing: 2px; margin-top: 15px; opacity: 0.6;">Sincronizando señal Maik Sport...</p>
+    </div>
+
     <div class="wrapper">
         <header>
-            <div style="color:white; font-weight:900;">⚽ MAIK SPORT</div>
-            <a href="../agenda.html" style="color:white; font-size:20px;"><i class="fas fa-times"></i></a>
+            <div class="brand">
+                <i class="fas fa-broadcast-tower"></i>
+                <span>Maik Sport <span style="color:var(--accent); font-weight: 300;">LIVE</span></span>
+            </div>
+            <a href="../agenda.html" class="btn-exit"><i class="fas fa-times"></i></a>
         </header>
 
-        <div id="maik-guard"></div>
+        <div id="maik-guard">
+            <i class="fas fa-play"></i>
+        </div>
 
         <iframe id="video-frame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
     </div>
 
     <script>
-        // 1. ACTIVAR EL ESCUDO (Service Worker)
+        // REGISTRO DEL ESCUDO SW
         if ('serviceWorker' in navigator) {
-            // Asegúrate que sw.js esté en la raíz de tu proyecto
-            navigator.serviceWorker.register('../sw.js')
-                .then(reg => console.log('🛡️ Escudo Maik Sport Activo'))
-                .catch(err => console.error('❌ Error al activar escudo', err));
+            navigator.serviceWorker.register('../sw.js').then(reg => {
+                console.log('🛡️ Escudo Maik Sport Nivel Pro');
+            });
         }
 
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
         const iframe = document.getElementById('video-frame');
         const guard = document.getElementById('maik-guard');
+        const loader = document.getElementById('loader');
 
         if (r) {
-            // Cargamos la URL que viene de la agenda
             iframe.src = atob(r);
+            // Quitamos el loader después de un par de segundos para asegurar carga
+            iframe.onload = () => {
+                setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.remove(), 500); }, 1500);
+            };
         }
 
-        // Blindaje original de Maikol
+        // Blindaje Maikol mejorado
         guard.addEventListener('click', function() {
-            this.style.display = 'none';
-            // Mata los intentos de abrir ventanas nuevas al hacer clic
+            this.style.opacity = '0';
+            setTimeout(() => this.remove(), 500);
             window.open = function() { return null; };
         });
 
-        // Evitar que el iframe robe el foco
+        // Anti-robo de foco
         setInterval(() => {
             if (document.activeElement === iframe) {
                 window.focus();
