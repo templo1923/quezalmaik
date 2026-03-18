@@ -11,7 +11,6 @@
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
         #player { width: 100%; height: 100%; }
         
-        /* Pantalla de carga profesional */
         #loader {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; display: flex; flex-direction: column;
@@ -34,52 +33,52 @@
         const params = new URLSearchParams(window.location.search);
         const r = params.get("r");
 
-async function cargarSeñal() {
-    if (!r) return;
-    const urlDecodificada = atob(r);
-    const queryParams = urlDecodificada.split('?')[1];
+        async function cargarSeñal() {
+            if (!r) return;
+            const urlDecodificada = atob(r);
+            const queryParams = urlDecodificada.split('?')[1];
 
-    try {
-        const response = await fetch(`/api/get-source?${queryParams}`);
-        const htmlCode = await response.text();
-        const match = htmlCode.match(/var playbackURL = "(.*?)";/);
+            try {
+                // 1. Obtenemos el código fuente de la página de canales
+                const response = await fetch(`/api/get-source?${queryParams}`);
+                const htmlCode = await response.text();
+                
+                // 2. Buscamos el link del m3u8
+                const match = htmlCode.match(/var playbackURL = "(.*?)";/);
 
-        if (match && match[1]) {
-            let m3u8Limpio = match[1];
-            
-            // LA MAGIA: Pasamos el link del video por nuestro proxy de Vercel
-            // Esto oculta que vienes de tu web y ayuda a saltar el 403
-            const videoProxy = m3u8Limpio.replace("https://", "/api/video/");
+                if (match && match[1]) {
+                    const m3u8Limpio = match[1];
+                    
+                    // 3. LA MAGIA: Pasamos el link por el proxy profesional api/proxy.js
+                    // Usamos encodeURIComponent para que el token y los símbolos no se rompan
+                    const videoProxy = `/api/video-proxy?url=${encodeURIComponent(m3u8Limpio)}`;
 
-            document.getElementById("loader").style.display = "none";
+                    document.getElementById("loader").style.display = "none";
 
-            new Clappr.Player({
-                source: videoProxy,
-                parentId: "#player",
-                width: "100%",
-                height: "100%",
-                autoPlay: true,
-                // Agregamos esto para que el navegador no envíe tu dominio en el referer
-                hlsjsConfig: {
-                    xhrSetup: function(xhr, url) {
-                        xhr.withCredentials = false;
-                    }
-                },
-                mediacontrol: {seekbar: "#22c55e", buttons: "#FFFFFF"},
-                mimeType: "application/x-mpegURL"
-            });
-        } else {
-            document.getElementById("loader").innerHTML = "<p style='color:red;'>Señal no encontrada.</p>";
+                    new Clappr.Player({
+                        source: videoProxy,
+                        parentId: "#player",
+                        width: "100%",
+                        height: "100%",
+                        autoPlay: true,
+                        hlsjsConfig: {
+                            xhrSetup: function(xhr, url) {
+                                xhr.withCredentials = false;
+                            }
+                        },
+                        mediacontrol: {seekbar: "#22c55e", buttons: "#FFFFFF"},
+                        mimeType: "application/x-mpegURL"
+                    });
+                } else {
+                    document.getElementById("loader").innerHTML = "<p style='color:red;'>Señal no encontrada en el origen.</p>";
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById("loader").innerHTML = "<p style='color:white;'>Error de conexión. Reintenta.</p>";
+            }
         }
-    } catch (error) {
-        document.getElementById("loader").innerHTML = "<p style='color:white;'>Error de conexión. Reintenta.</p>";
-    }
-}
 
-        // Ejecutar la función
         cargarSeñal();
-
-        // Blindaje total contra ventanas emergentes
         window.open = function() { return null; };
     </script>
 </body>
