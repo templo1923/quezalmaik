@@ -90,6 +90,48 @@
                 }
             }
         });
+
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. LISTA NEGRA DE SCRIPTS
+    const blackList = [
+        'waust.at', 
+        'bvtpk.com', 
+        'tiogolhd.com', 
+        'acscdn.com', 
+        'googletagmanager.com'
+    ];
+
+    // 2. EL "PORTERO" (MutationObserver)
+    // Vigila cada vez que se intenta agregar algo nuevo al HTML
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                // Si es un script o un iframe sospechoso
+                if (node.tagName === 'SCRIPT' || node.tagName === 'IFRAME') {
+                    const src = node.src || "";
+                    if (blackList.some(domain => src.includes(domain))) {
+                        console.log("🛡️ Maik-Guard: Bloqueado ->", src);
+                        node.type = 'text/plain'; // Lo vuelve inofensivo
+                        node.remove(); // Lo borra del mapa
+                    }
+                }
+            });
+        });
+    });
+
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+    });
+
+    // 3. BLOQUEO DE POPUPS (Forzado)
+    window.open = function() { 
+        console.log("🛡️ Maik-Guard: Intento de Popup bloqueado");
+        return null; 
+    };
+});
+
+        
     </script>
 </body>
 </html>
