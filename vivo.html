@@ -3341,6 +3341,32 @@ video::-webkit-media-controls-overlay-play-button {
         // Configurar el nuevo botón de favoritos
         setupFavoritesToggle();
     });
+
+
+
+// Al final de los scripts en vivo.html
+document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const stream = params.get('stream');
+    
+    if (stream) {
+        // Si el stream parece codificado (base64), lo decodificamos, si no, lo usamos directo
+        let urlFinal = stream;
+        try {
+            if (!stream.startsWith('http')) {
+                urlFinal = atob(stream); 
+            }
+        } catch(e) { urlFinal = stream; }
+
+        // Llamamos a tu función de toda la vida para cargar el video
+        setTimeout(() => {
+            if (typeof cambiarCanal === 'function') {
+                cambiarCanal(urlFinal, "Evento Agenda", "Deportes", "https://i.imgur.com/Vdef5Rz.png");
+            }
+        }, 500);
+    }
+});
+    
 </script>    
 </body>
 </html>
