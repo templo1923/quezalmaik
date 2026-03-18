@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // Usamos AllOrigins para saltar el bloqueo de CORS en Vercel
     const PROXY_URL = "https://api.allorigins.win/get?url=";
     const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
     const AGENDA_URL = PROXY_URL + TARGET_URL;
@@ -32,33 +31,30 @@ $(document).ready(function() {
                     const hrefOriginal = canal.href;
                     let streamID = "";
 
-                    // 1. Intentamos extraer el ID del canal directamente de la URL de Rojadirecta
+                    // 1. LÓGICA MEJORADA: Buscamos el ID del canal en cualquier parte del link
                     if (hrefOriginal.includes('capoplay.net/')) {
-                        // Extrae el nombre del archivo antes del .php (ej: winsportsplus)
-                        streamID = hrefOriginal.split('capoplay.net/')[1].split('.php')[0];
-                    } 
-                    else if (hrefOriginal.includes('?r=')) {
-                        // Si viene codificado, lo decodificamos para buscar el ID
+                        streamID = hrefOriginal.split('capoplay.net/')[1].replace('.php', '');
+                    } else if (hrefOriginal.includes('live=')) {
+                        const urlParams = new URLSearchParams(hrefOriginal.split('?')[1]);
+                        streamID = urlParams.get('live');
+                    } else if (hrefOriginal.includes('?r=')) {
                         try {
                             const r = new URLSearchParams(hrefOriginal.split('?')[1]).get("r");
                             const decoded = atob(r);
                             if (decoded.includes('live=')) {
                                 streamID = new URLSearchParams(decoded.split('?')[1]).get("live");
                             }
-                        } catch(e) { console.error("Error decodificando r:", e); }
+                        } catch(e) {}
                     }
 
                     let urlFinal;
-                    if (streamID) {
-                        // 2. Construimos el link DIRECTO al reproductor de Capo (capo2.php)
+                    if (streamID && streamID !== "") {
+                        // 2. CONSTRUCCIÓN DIRECTA: Forzamos la señal de Capo2 (la limpia)
                         const urlCapoDirecto = `https://capo7play.com/capo2.php?player=desktop&live=${streamID}`;
                         urlFinal = `embed/eventos.html?r=${btoa(urlCapoDirecto)}`;
                     } else {
-                        // Link de respaldo usando el parámetro original
-                        const rParam = hrefOriginal.includes('?r=') ? 
-                            new URLSearchParams(hrefOriginal.split('?')[1]).get("r") : 
-                            btoa(hrefOriginal);
-                        urlFinal = `embed/eventos.html?r=${rParam}`;
+                        // Respaldo si no encontramos ID: mandamos el link original codificado
+                        urlFinal = `embed/eventos.html?r=${btoa(hrefOriginal)}`;
                     }
 
                     canalesHtml += `<a href="${urlFinal}" class="canal-link">➤ ${nombreCanal}</a>`;
@@ -79,15 +75,14 @@ $(document).ready(function() {
                 agendaLista.append(eventoHtml);
             });
         } catch (error) {
-            console.error("Error cargando agenda:", error);
+            console.error("Error:", error);
         }
     }
 
-    // INTERCEPTOR DE CLIC: Forzamos la apertura en tu reproductor
+    // INTERCEPTOR: Forzamos apertura en nueva pestaña para eventos de la agenda
     agendaLista.on('click', '.canal-link', function(e) {
         e.preventDefault();
         const urlDestino = $(this).attr('href');
-        // Abrimos en una ventana nueva para mantener el contexto limpio
         window.open(urlDestino, '_blank');
     });
 
