@@ -4,22 +4,46 @@
     <meta charset="UTF-8">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAIK SPORT - Player</title>
+    <title>MAIK SPORT - En Vivo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; height: 100vh; display: flex; flex-direction: column; }
+        /* TU DISEÑO VISUAL */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background: #000; height: 100vh; display: flex; flex-direction: column; color: #e0e0e0; overflow: hidden; }
+
+        header { background: linear-gradient(90deg, #1e3a8a, #60a5fa); padding: 15px 20px; z-index: 1000; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.5); }
+        .header-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .header-title h1 { color: #ffffff; font-size: 24px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
+        .soccer-ball { font-size: 28px; color: #ffffff; animation: spin 3s linear infinite; display: inline-block; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        .back-button { background: #2a2a2a; border-radius: 50%; width: 40px; height: 40px; color: #ffffff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
+        .back-button:hover { background: #ef4444; transform: scale(1.1); }
+
+        /* EL REPRODUCTOR QUE FUNCIONA (TU CÓDIGO) */
         .embed-responsive { position: relative; width: 100%; flex-grow: 1; background: #000; }
         iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         #fake-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 999; cursor: pointer; }
     </style>
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            <div class="header-title" style="display: flex; align-items: center; gap: 10px;">
+                <span class="soccer-ball">⚽</span>
+                <h1>MAIK SPORT</h1>
+            </div>
+            <a href="agenda.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </header>
+
     <div class="embed-responsive">
         <div id="fake-layer"></div>
         <iframe id="videoFrame" allowfullscreen allow="autoplay; encrypted-media"></iframe>
     </div>
 
     <script>
+        // TU LÓGICA ORIGINAL (SIN CAMBIOS)
         const iframe = document.getElementById("videoFrame");
         const layer = document.getElementById("fake-layer");
         const params = new URLSearchParams(window.location.search);
