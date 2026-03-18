@@ -1,10 +1,9 @@
 $(document).ready(function() {
-    // Usamos el proxy que normalmente es más estable
     const PROXY = "https://api.allorigins.win/get?url=";
     const TARGET = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
-    
     const agendaLista = $('#agenda-lista');
 
+    // MOTOR 1: CARGAR LA AGENDA (Rápido y simple)
     async function cargarAgenda() {
         try {
             const res = await fetch(PROXY + TARGET);
@@ -13,7 +12,6 @@ $(document).ready(function() {
             const partidos = doc.querySelectorAll('.menu > li');
 
             if (partidos.length === 0) return;
-
             agendaLista.empty();
 
             partidos.forEach(partido => {
@@ -23,30 +21,59 @@ $(document).ready(function() {
                 const titulo = link.textContent.split('\n')[0].trim();
                 const hora = link.querySelector('.t')?.textContent.trim() || "--:--";
 
-                let canales = '<div class="canales" style="display:none;">';
+                let canalesHtml = '<div class="canales" style="display:none;">';
                 const linksCanales = partido.querySelectorAll('ul li a');
 
                 linksCanales.forEach(c => {
                     const nombre = c.textContent.trim();
-                    // Mandamos el link original codificado en Base64 para eventos.html
-                    const urlFinal = `embed/eventos.html?r=${btoa(c.href)}`;
-                    canales += `<a href="${urlFinal}" class="canal-link" style="display:block; padding:10px; color:#60a5fa;">➤ ${nombre}</a>`;
+                    // Guardamos la URL de RojaDirecta en un atributo 'data-capo'
+                    canalesHtml += `<a href="#" data-capo="${c.href}" class="canal-link">➤ ${nombre}</a>`;
                 });
-                canales += '</div>';
+                canalesHtml += '</div>';
 
                 const html = `
-                    <div class="evento-contenedor" style="border-bottom:1px solid #333;">
-                        <div class="evento" style="padding:15px; cursor:pointer; color:white;">
-                            <span style="color:red; font-weight:bold;">${hora}</span> ${titulo}
+                    <div class="evento-contenedor">
+                        <div class="evento" style="cursor:pointer; padding:12px; border-bottom:1px solid #333;">
+                            <span style="color:#ff4d4d; font-weight:bold;">${hora}</span> - <span style="color:white;">${titulo}</span>
                         </div>
-                        ${canales}
+                        ${canalesHtml}
                     </div>`;
                 agendaLista.append(html);
             });
-        } catch (e) {
-            console.error("Error cargando agenda");
-        }
+        } catch (e) { console.error("Error agenda"); }
     }
+
+    // MOTOR 2: EL EXTRACTOR (Se activa al dar CLIC)
+    agendaLista.on('click', '.canal-link', async function(e) {
+        e.preventDefault();
+        const btn = $(this);
+        const urlOriginal = btn.attr('data-capo'); // La web de RojaDirecta con anuncios
+        
+        btn.text('⌛ Limpiando señal...');
+
+        try {
+            // Entramos un segundo a la web de ellos para "robar" el link de CapoPlay
+            const res = await fetch(PROXY + encodeURIComponent(urlOriginal));
+            const data = await res.json();
+            const doc = new DOMParser().parseFromString(data.contents, 'text/html');
+            
+            // Buscamos el iframe que realmente tiene el video (CapoPlay o CapoPlayer)
+            const iframe = doc.querySelector('iframe[src*="capoplay"], iframe[src*="capoplayer"]');
+            
+            if (iframe && iframe.src) {
+                // EXITO: Tenemos el link limpio de CapoPlay
+                const linkLimpio = iframe.src;
+                window.open(`embed/eventos.html?r=${btoa(linkLimpio)}`, '_blank');
+            } else {
+                // FALLBACK: Si no encontramos el link limpio, abrimos el original para no fallar
+                window.open(`embed/eventos.html?r=${btoa(urlOriginal)}`, '_blank');
+            }
+        } catch (err) {
+            window.open(`embed/eventos.html?r=${btoa(urlOriginal)}`, '_blank');
+        } finally {
+            btn.text('➤ ' + btn.text().replace('⌛ Limpiando señal...', '').trim());
+        }
+    });
 
     agendaLista.on('click', '.evento', function() {
         $(this).siblings('.canales').slideToggle('fast');
