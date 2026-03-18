@@ -1,54 +1,69 @@
 $(document).ready(function() {
 
-    const AGENDA_URL = "https://golazoplay.com/agenda.json";
+    // Cambiamos la URL a la de Rojadirecta usando un Proxy de CORS para que funcione en Vercel
+    const PROXY_URL = "https://api.allorigins.win/get?url=";
+    const TARGET_URL = encodeURIComponent("https://www.rojadirectatv3.pl/agenda.php");
+    const AGENDA_URL = PROXY_URL + TARGET_URL;
+    
     const agendaLista = $('#agenda-lista');
     const tituloAgenda = $('#agenda-titulo');
 
-    function convertirHora(utcHour) {
-        const DateTime = luxon.DateTime;
-        const utcDateTime = DateTime.fromISO(utcHour, { zone: "America/Lima" });
-        return utcDateTime.toLocal().toFormat("HH:mm");
+    // Mantenemos tu función de hora actualizándola para el formato de la nueva web
+    function convertirHora(horaTexto) {
+        if(!horaTexto) return "--:--";
+        // La web suele dar la hora en formato HH:mm directamente
+        return horaTexto;
     }
 
     async function cargarAgenda() {
         try {
             const respuesta = await fetch(AGENDA_URL);
-            const json = await respuesta.json();
-            const eventos = json.data;
+            const data = await respuesta.json();
+            const htmlContent = data.contents; // El HTML puro de la web externa
+
+            // Convertimos el texto a HTML manipulable
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlContent, 'text/html');
+            
+            // Buscamos los partidos (en Rojadirecta están en la clase .menu > li)
+            const partidosRaw = doc.querySelectorAll('.menu > li');
 
             agendaLista.empty();
 
             const hoy = new Date();
             tituloAgenda.text('AGENDA - ' + hoy.getDate() + ' DE ' + hoy.toLocaleString('es-ES', { month: 'long' }).toUpperCase() + ' DE ' + hoy.getFullYear());
 
-            eventos.sort((a, b) => a.attributes.diary_hour.localeCompare(b.attributes.diary_hour));
+            partidosRaw.forEach(partido => {
+                const linkPrincipal = partido.querySelector('a');
+                if (!linkPrincipal) return;
 
-            eventos.forEach(evento => {
-                const attr = evento.attributes;
-                const horaLocal = convertirHora(attr.diary_hour);
-                const titulo = attr.diary_description;
+                // Extraemos el título del partido (limpiando espacios)
+                const titulo = linkPrincipal.textContent.split('\n')[0].trim();
+                const horaLocal = linkPrincipal.querySelector('.t')?.textContent.trim() || "--:--";
 
+                // Icono por defecto de Maik Sport
                 let urlIcono = "https://i.imgur.com/Vdef5Rz.png"; 
-                if (attr.country?.data?.attributes?.image?.data?.attributes?.url) {
-                    urlIcono = "https://img.golazoplay.com" + attr.country.data.attributes.image.data.attributes.url;
-                }
 
                 let canalesHtml = '<div class="canales">';
-                if (attr.embeds && attr.embeds.data.length > 0) {
-                    attr.embeds.data.forEach(embed => {
-                        const nombreCanal = embed.attributes.embed_name;
-                        
-                        // --- INICIO DE LA CORRECCIÓN FINAL ---
-                        // La URL del JSON viene así: "/embed/eventos.html?r=URL_REAL_CODIFICADA"
-                        const urlRelativaConParametro = embed.attributes.embed_iframe;
+                
+                // Buscamos los enlaces de canales dentro del submenú <ul>
+                const subitems = partido.querySelectorAll('ul li a');
+                
+                if (subitems.length > 0) {
+                    subitems.forEach(canal => {
+                        const nombreCanal = canal.textContent.trim();
+                        const hrefOriginal = canal.href;
 
-                        // 1. Extraemos solo el parámetro "r" (la URL real codificada)
-                        const params = new URLSearchParams(urlRelativaConParametro.split('?')[1]);
-                        const urlRealCodificada = params.get("r");
-                        
-                        // 2. Usamos esa URL real codificada para nuestro reproductor
-                        canalesHtml += `<a href="embed/eventos.html?r=${urlRealCodificada}" target="_blank" class="canal-link">➤ ${nombreCanal}</a>`;
-                        // --- FIN DE LA CORRECCIÓN FINAL ---
+                        // Lógica para extraer el parámetro 'r' (URL real) si existe
+                        let urlDestino = hrefOriginal;
+                        if (hrefOriginal.includes('?r=')) {
+                            const params = new URLSearchParams(hrefOriginal.split('?')[1]);
+                            const r = params.get("r");
+                            // Enviamos directamente a tu reproductor de TV En Vivo limpio
+                            urlDestino = `Tvenvivo.html?stream=${r}`;
+                        }
+
+                        canalesHtml += `<a href="${urlDestino}" class="canal-link">➤ ${nombreCanal}</a>`;
                     });
                 } else {
                     canalesHtml += `<span class="sin-canales">Próximamente...</span>`;
@@ -70,11 +85,12 @@ $(document).ready(function() {
             });
 
         } catch (error) {
-            console.error("Error al cargar la agenda:", error);
-            agendaLista.html('<p class="error">No se pudo cargar la agenda.</p>');
+            console.error("Error al cargar la agenda robusta:", error);
+            agendaLista.html('<p class="error">No se pudo sincronizar la agenda.</p>');
         }
     }
 
+    // Mantenemos tu lógica de acordeón para mostrar los canales
     agendaLista.on('click', '.evento', function() {
         const subMenu = $(this).siblings('.canales');
         $('.canales').not(subMenu).slideUp('fast');
@@ -82,5 +98,6 @@ $(document).ready(function() {
     });
 
     cargarAgenda();
+    // Actualización automática cada minuto
     setInterval(cargarAgenda, 60000);
 });
