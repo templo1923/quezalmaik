@@ -8,14 +8,15 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
-/* FONDO */
+/* FONDO MEJORADO */
 body, html { 
     height: 100%; 
     background: radial-gradient(circle, #1e293b 0%, #080c14 100%); 
     color: #f1f5f9; 
     display: flex; 
     flex-direction: column; 
-    overflow: hidden; 
+    overflow-x: hidden;
+    overflow-y: auto; /* Permite bajar si el contenido es grande */
 }
 
 /* HEADER */
@@ -26,6 +27,9 @@ header {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); 
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 .header-content { 
     max-width: 1400px; 
@@ -44,16 +48,19 @@ header {
     width: 38px; height: 38px; 
     display: flex; align-items: center; justify-content: center; 
     color: white; text-decoration: none;
+    transition: 0.3s;
 }
+.back-button:hover { background: #ef4444; }
 
-/* CONTENEDOR */
+/* CONTENEDOR PRINCIPAL */
 .main-container {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 10px;
+    justify-content: flex-start; /* Subimos un poco el contenido */
+    padding: 20px 10px;
+    width: 100%;
 }
 
 /* LIVE BADGE */
@@ -63,24 +70,17 @@ header {
     border-radius: 20px; 
     font-size: 10px; 
     font-weight: 800; 
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     display: flex; 
     align-items: center; 
     gap: 6px;
-}
-.live-dot { 
-    width: 8px; 
-    height: 8px; 
-    background: white; 
-    border-radius: 50%; 
-    animation: pulse 1.5s infinite; 
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 }
 
 /* VIDEO BOX */
 .video-box { 
     width: 100%;
     max-width: 1000px; 
-    max-height: 70vh; 
     position: relative; 
     aspect-ratio: 16 / 9; 
     background: #000;
@@ -89,17 +89,17 @@ header {
     box-shadow: 0 20px 50px rgba(0,0,0,0.8);
 }
 
-/* 🔥 RECORTE LATERAL PRO */
+/* RECORTE LATERAL AJUSTADO (Aumentado a 124% para quitar el negro) */
 .video-box iframe {
     position: absolute;
-    width: 120%;
+    width: 124%;
     height: 100%;
-    left: -10%;
+    left: -12%;
     top: 0;
     border: none;
 }
 
-/* GUARD */
+/* GUARD INVISIBLE (Sin icono azul) */
 #maik-guard {
     position: absolute; 
     width: 100%; 
@@ -107,25 +107,14 @@ header {
     display: flex; 
     align-items: center; 
     justify-content: center;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.1); /* Casi transparente */
     cursor: pointer;
     z-index: 10;
 }
 
-#maik-guard i { 
-    font-size: 50px; 
-    background: #3b82f6; 
-    width: 80px; height: 80px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    border-radius: 50%;
-}
-
 /* BOTONES */
 .action-btns { 
-    margin-top: 10px; 
-    margin-bottom: 20px; /* espacio para ads */
+    margin: 20px 0;
     display: flex; 
     gap: 12px;
 }
@@ -134,60 +123,57 @@ header {
     padding: 10px 20px; 
     border-radius: 10px; 
     background: #1e40af;
-    border: none; 
+    border: 1px solid rgba(255,255,255,0.1); 
     color: white; 
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
 }
+.btn-pro:hover { background: #2563eb; transform: translateY(-2px); }
 
-/* ADS ABAJO */
+/* ADS CENTRADOS */
 .ads-row {
     width: 100%;
     max-width: 1000px;
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    margin-top: 10px;
 }
 
 .ad-box {
     flex: 1;
     height: 90px;
-    border: 1px dashed rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.1);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666;
+    color: #4b5563;
+    font-size: 12px;
 }
 
-/* ANIMACIÓN */
 @keyframes pulse { 
     0% { opacity: 1; } 
     50% { opacity: 0.4; } 
     100% { opacity: 1; } 
 }
 
-/* 📱 MÓVIL */
+/* MÓVIL AJUSTADO */
 @media (max-width: 768px) {
-
     .video-box { 
         border-radius: 0; 
-        max-height: none; 
     }
-
-    /* 🔥 ajuste recorte en móvil */
     .video-box iframe {
-        width: 135%;
-        left: -17.5%;
+        width: 140%;
+        left: -20%;
     }
-
     .main-container { padding: 0; }
-
     .ads-row {
         flex-direction: column;
+        padding: 10px;
     }
-
-    .ad-box {
-        height: 70px;
-    }
+    .ad-box { height: 70px; }
 }
 </style>
 </head>
@@ -205,11 +191,12 @@ header {
 
     <div class="main-container">
         <div class="live-badge">
-            <div class="live-dot"></div> EN VIVO
+            <div style="width:8px; height:8px; background:white; border-radius:50%; animation:pulse 1.5s infinite;"></div> 
+            EN VIVO
         </div>
 
         <div class="video-box">
-            <div id="maik-guard"><i class="fas fa-play"></i></div>
+            <div id="maik-guard"></div>
             <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
         </div>
 
@@ -221,15 +208,14 @@ header {
                 <i class="fas fa-expand-arrows-alt"></i> Pantalla Completa
             </button>
         </div>
-    </div>
 
-<div class="ads-row">
-    <div class="ad-box">Ad</div>
-    <div class="ad-box">Ad</div>
-</div>
+        <div class="ads-row">
+            <div class="ad-box">Publicidad 1</div>
+            <div class="ad-box">Publicidad 2</div>
+        </div>
+    </div>
     
     <script>
-        // EL MISMO SW QUE SÍ FUNCIONA (Blindaje Maikol)
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
         const r = new URLSearchParams(window.location.search).get("r");
         if (r) document.getElementById("vFrame").src = atob(r);
@@ -237,7 +223,7 @@ header {
         document.getElementById('maik-guard').addEventListener('click', function() {
             this.style.opacity = '0';
             setTimeout(() => this.remove(), 500);
-            window.open = () => null;
+            window.open = function() { return null; };
         });
 
         function toggleFS() {
