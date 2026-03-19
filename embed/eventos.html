@@ -24,10 +24,7 @@ header {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); 
     flex-shrink: 0;
 }
-.header-content { 
-    max-width: 1400px; margin: 0 auto; 
-    display: flex; align-items: center; justify-content: space-between; 
-}
+.header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
 .header-title h1 { color: #ffffff; font-size: 20px; font-weight: 900; }
 
 .main-container {
@@ -47,20 +44,20 @@ header {
     overflow: hidden; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.8);
 }
 
-/* 🔥 ESTA ES LA CORRECCIÓN PARA QUE NADA SE CORTE 🔥 */
+/* 🔥 ESTO ES LO QUE SÍ SIRVE PARA EL VIDEO INTERNO 🔥 */
 .video-box iframe {
     position: absolute;
-    /* Ajustamos el ancho para que los botones de los lados no se salgan */
-    width: 110%; 
-    height: 100%; 
-    left: -5%; /* Centrado con menos margen para no moche el volumen */
+    width: 100%;
+    height: 100%;
     top: 0;
+    left: 0;
     border: none;
-    /* Forzamos que el contenido intente caber */
-    object-fit: contain; 
+    /* Escalamos un 8% para limpiar bordes negros sin perder los botones de las esquinas */
+    transform: scale(1.08);
+    transform-origin: center center;
 }
 
-#maik-guard { position: absolute; width: 100%; height: 100%; z-index: 10; cursor: pointer; }
+#maik-guard { position: absolute; width: 100%; height: 100%; z-index: 10; cursor: pointer; background: rgba(0,0,0,0.01); }
 
 .action-btns { margin-top: 10px; display: flex; gap: 10px; }
 .btn-pro { padding: 8px 18px; border-radius: 8px; background: #1e40af; border: none; color: white; cursor: pointer; font-size: 13px; font-weight: 600; }
@@ -74,8 +71,7 @@ header {
     body, html { overflow-y: auto; }
     .main-container { padding: 0; justify-content: flex-start; }
     .video-box { border-radius: 0; max-height: none; }
-    /* Ajuste para móvil para que el dedo alcance los botones */
-    .video-box iframe { width: 100%; left: 0; } 
+    .video-box iframe { transform: scale(1); } /* En móvil mejor que se vea original */
 }
 </style>
 </head>
