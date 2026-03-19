@@ -8,17 +8,15 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
 
-/* FONDO SIN SCROLL EN PC */
 body, html { 
     height: 100%; 
     background: radial-gradient(circle, #1e293b 0%, #080c14 100%); 
     color: #f1f5f9; 
     display: flex; 
     flex-direction: column; 
-    overflow: hidden; /* Evita que la pantalla se mueva en PC */
+    overflow: hidden; 
 }
 
-/* HEADER FIJO */
 header { 
     background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(12px);
@@ -27,108 +25,61 @@ header {
     flex-shrink: 0;
 }
 .header-content { 
-    max-width: 1400px; 
-    margin: 0 auto; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
+    max-width: 1400px; margin: 0 auto; 
+    display: flex; align-items: center; justify-content: space-between; 
 }
 .header-title h1 { color: #ffffff; font-size: 20px; font-weight: 900; }
 
-/* CONTENEDOR QUE AJUSTA TODO AL ALTO */
 .main-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Centra todo verticalmente */
-    padding: 10px;
-    width: 100%;
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 10px; width: 100%;
 }
 
 .live-badge { 
-    background: #ef4444; 
-    padding: 4px 12px; 
-    border-radius: 20px; 
-    font-size: 10px; 
-    font-weight: 800; 
-    margin-bottom: 8px;
+    background: #ef4444; padding: 4px 12px; border-radius: 20px; 
+    font-size: 10px; font-weight: 800; margin-bottom: 8px;
     display: flex; align-items: center; gap: 6px;
 }
 
-/* VIDEO BOX: El truco para que quepa todo */
 .video-box { 
-    width: 100%;
-    max-width: 950px; 
-    max-height: 65vh; /* Limita el alto al 65% de la pantalla */
-    aspect-ratio: 16 / 9; 
-    background: #000;
-    border-radius: 12px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+    width: 100%; max-width: 950px; max-height: 65vh; 
+    aspect-ratio: 16 / 9; background: #000; border-radius: 12px;
+    overflow: hidden; position: relative; box-shadow: 0 15px 40px rgba(0,0,0,0.8);
 }
 
-/* RECORTE LATERAL PARA QUITAR LO NEGRO */
+/* 🔥 ESTA ES LA CORRECCIÓN PARA QUE NADA SE CORTE 🔥 */
 .video-box iframe {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    left: -8%;
+    /* Ajustamos el ancho para que los botones de los lados no se salgan */
+    width: 110%; 
+    height: 100%; 
+    left: -5%; /* Centrado con menos margen para no moche el volumen */
     top: 0;
     border: none;
+    /* Forzamos que el contenido intente caber */
+    object-fit: contain; 
 }
 
 #maik-guard { position: absolute; width: 100%; height: 100%; z-index: 10; cursor: pointer; }
 
-/* BOTONES SUBIDOS */
-.action-btns { 
-    margin-top: 10px; 
-    display: flex; 
-    gap: 10px;
-}
-.btn-pro { 
-    padding: 8px 18px; 
-    border-radius: 8px; 
-    background: #1e40af;
-    border: none; 
-    color: white; 
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 600;
-}
+.action-btns { margin-top: 10px; display: flex; gap: 10px; }
+.btn-pro { padding: 8px 18px; border-radius: 8px; background: #1e40af; border: none; color: white; cursor: pointer; font-size: 13px; font-weight: 600; }
 
-/* ADS ROW: Ahora sí se verán */
-.ads-row {
-    width: 100%;
-    max-width: 950px;
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-.ad-box {
-    flex: 1;
-    height: 70px; /* Bajamos un poco el alto para que quepa */
-    border: 1px dashed rgba(255,255,255,0.2);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    color: #555; font-size: 11px;
-}
+.ads-row { width: 100%; max-width: 950px; display: flex; gap: 10px; margin-top: 10px; }
+.ad-box { flex: 1; height: 70px; border: 1px dashed rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #555; font-size: 11px; }
 
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-/* MÓVIL: Aquí sí permitimos scroll si es necesario */
 @media (max-width: 768px) {
     body, html { overflow-y: auto; }
     .main-container { padding: 0; justify-content: flex-start; }
     .video-box { border-radius: 0; max-height: none; }
-    .video-box iframe { width: 140%; left: -20%; }
-    .ads-row { flex-direction: column; padding: 10px; }
+    /* Ajuste para móvil para que el dedo alcance los botones */
+    .video-box iframe { width: 100%; left: 0; } 
 }
 </style>
 </head>
 <body>
-
     <header>
         <div class="header-content">
             <div class="header-title">
@@ -140,38 +91,25 @@ header {
     </header>
 
     <div class="main-container">
-        <div class="live-badge">
-            <div style="width:8px; height:8px; background:white; border-radius:50%; animation:pulse 1.5s infinite;"></div> 
-            EN VIVO
-        </div>
-
+        <div class="live-badge"><div style="width:8px; height:8px; background:white; border-radius:50%; animation:pulse 1.5s infinite;"></div> EN VIVO</div>
         <div class="video-box">
             <div id="maik-guard"></div>
-            <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+            <iframe id="vFrame" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts" allowfullscreen></iframe>
         </div>
-
         <div class="action-btns">
             <button class="btn-pro" onclick="location.reload()"><i class="fas fa-sync-alt"></i> Recargar</button>
             <button class="btn-pro" onclick="toggleFS()"><i class="fas fa-expand-arrows-alt"></i> Pantalla Completa</button>
         </div>
-
-        <div class="ads-row">
-            <div class="ad-box">Banner Ads 1</div>
-            <div class="ad-box">Banner Ads 2</div>
-        </div>
+        <div class="ads-row"><div class="ad-box">Banner Ads 1</div><div class="ad-box">Banner Ads 2</div></div>
     </div>
-    
     <script>
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
         const r = new URLSearchParams(window.location.search).get("r");
         if (r) document.getElementById("vFrame").src = atob(r);
-
         document.getElementById('maik-guard').addEventListener('click', function() {
-            this.style.opacity = '0';
-            setTimeout(() => this.remove(), 500);
+            this.style.opacity = '0'; setTimeout(() => this.remove(), 500);
             window.open = function() { return null; };
         });
-
         function toggleFS() {
             const el = document.querySelector('.video-box');
             if (!document.fullscreenElement) el.requestFullscreen();
